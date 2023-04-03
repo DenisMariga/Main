@@ -90,4 +90,5 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
+    
 }

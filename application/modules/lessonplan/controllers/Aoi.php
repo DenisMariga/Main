@@ -106,7 +106,7 @@ class Aoi extends MY_Controller {
 
               // check if subject is exist in aois table
               $school = $this->aois->get_school_by_id($data['school_id']);
-              $exist = $this->aois->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'],  'topic_details_id'=>$data['topic_details_id'], 'academic_year_id'=> $school->academic_year_id));
+              $exist = $this->aois->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'academic_year_id'=> $school->academic_year_id));
               if($exist){
                   $this->aois->update('aois', $data, array('id' => $exist->id));
                   $insert_id = $exist->id;
