@@ -45,11 +45,12 @@
                                             <option value="<?php echo $obj->id; ?>" <?php if(isset($school_id) && $school_id == $obj->id){ echo 'selected="selected"';} ?> > <?php echo $obj->school_name; ?></option>
                                         <?php } ?>   
                                     </select>
-                            
+
+
                                     <select  class="form-control col-md-7 col-xs-12" id="class_id" name="class_id" onchange="get_subject_by_class(this.value, '', '');" style="width:auto;">
                                          <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                         
-                                    </select>   
-                            
+                                    </select>  
+                                    
                                     <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_" name="subject_id" id="subject_id" style="width: auto;">                                
                                         <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                                                                  
                                     </select>   

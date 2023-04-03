@@ -15,7 +15,7 @@ class Lessonplan_Model extends MY_Model {
             return;
         }
         
-        $this->db->select('T.*, SC.school_name, LD.title, LD.start_date, LD.end_date, LD.complete_status, LD.complete_date, C.name AS class_name, S.name AS subject, AY.session_year');
+        $this->db->select('T.*, SC.school_name, LD.Ltitle, LD.start_date, LD.end_date, LD.complete_status, LD.complete_date, C.name AS class_name, S.name AS subject, AY.session_year');
         $this->db->from('lp_topics AS T');
         $this->db->join('lp_lesson_details AS LD', 'LD.id = T.lesson_detail_id', 'left');
         $this->db->join('classes AS C', 'C.id = T.class_id', 'left');
