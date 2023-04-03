@@ -110,7 +110,7 @@
                                             <td><?php echo $obj->subject; ?></td>
                                             <td>
                                                 <div  class="fn_lesson_container">
-                                                    <?php echo $obj->title; ?><br/>
+                                                    <?php echo $obj->Ltitle; ?><br/>
                                                     <input type="text" name="" id="lesson_start_<?php echo $obj->lesson_detail_id; ?>" class="fn_start_date form-control col-md-7 col-xs-12" placeholder="<?php echo $this->lang->line('start_date'); ?>" value="<?php echo $obj->start_date ? date('d-m-Y', strtotime($obj->start_date)) : ''; ?>" />
                                                     <input type="text" name="" id="lesson_end_<?php echo $obj->lesson_detail_id; ?>" class="fn_end_date form-control col-md-7 col-xs-12" placeholder="<?php echo $this->lang->line('end_date'); ?>" value="<?php echo $obj->end_date ? date('d-m-Y', strtotime($obj->end_date)) : ''; ?>" />
                                                     <input type="button" name="find" value="<?php echo $this->lang->line('update'); ?>" onclick="update_lesson('<?php echo $obj->lesson_detail_id; ?>');" class="btn btn-success btn-sm"/>

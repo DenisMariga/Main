@@ -112,7 +112,7 @@
                                             <td><?php echo $obj->subject; ?></td>
                                             <td>
                                                 <div  class="fn_lesson_container">
-                                                    <?php echo $obj->title; ?><br/>
+                                                    <?php echo $obj->Ltitle; ?><br/>
                                                     <input type="text" class="fn_start_date form-control col-md-7 col-xs-12" placeholder="<?php echo $this->lang->line('start_date'); ?>" value="<?php echo $obj->start_date ? date('d-m-Y', strtotime($obj->start_date)) : ''; ?>" readonly="readonly" />
                                                     <input type="text" class="fn_end_date form-control col-md-7 col-xs-12" placeholder="<?php echo $this->lang->line('end_date'); ?>" value="<?php echo $obj->end_date ? date('d-m-Y', strtotime($obj->end_date)) : ''; ?>"  readonly="readonly"/>
                                                     <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_" onchange="update_lesson_status(this.value, '<?php echo $obj->lesson_detail_id; ?>');" style="width: auto;">
