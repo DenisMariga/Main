@@ -1097,9 +1097,9 @@ class Ajax extends My_Controller {
      public function get_topic_by_lesson()
      {
         # code to get topic by lessons...
-        $school_id = $this->input->input('school_id');
-        $lesson_detail_id= $this->input->input('lesson_detail_id');
-        $topic_details_id = $this->input->input('topic_details_id');
+        $school_id = $this->input->post('school_id');
+        $lesson_detail_id= $this->input->post('lesson_detail_id');
+        $topic_details_id = $this->input->post('topic_details_id');
 
         $school = $this->ajax->get_school_by_id($school_id);
         $topics = $this->ajax->get_topic_by_lesson($lesson_detail_id, @$school->academic_year_id);

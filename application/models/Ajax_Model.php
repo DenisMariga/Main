@@ -90,5 +90,16 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
-    
+    public function get_topic_by_lesson($lesson_detail_id, $academic_year_id)
+    {
+        # code...
+
+        $this->db->select('TP.*');
+        $this->db->from('lp_topic_details AS TP');
+        $this->db->join('lp_topics AS T', 'T.id = TP.topic_id','left');
+        $this->db->where('T.lesson_detail_id', $lesson_detail_id);
+        $this->db->where('T.academic_year_id', $academic_year_id);
+        $this->db->order_by('TP.id', 'ASC');
+        return $this->db->get()->result();
+    }
 }

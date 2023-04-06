@@ -9,9 +9,8 @@ class Aoi_Model extends MY_Model {
         parent::__construct();
     }
 
-    public function get_aoi_list($school_id, $class_id = null,  $subject_id = null, $academic_year_id = null){
-        # code...
-        $this->db->select('A.*,  SC.school_name, LD.Ltitle, Tp.title, C.name AS class_name, S.name AS subject, AY.session_year');
+    public function get_aoi_list($school_id, $class_id = null, $subject_id = null, $academic_year_id = null){
+        $this->db->select('A.*,  SC.school_name, LD.Ltitle, Tp.title, C.name AS class_name, S.name AS subject,S.teacher_id, AY.session_year');
         $this->db->from('aois AS A');   
         $this->db->join('lp_lesson_details AS LD', 'LD.id = A.lesson_detail_id', 'left');
         $this->db->join('classes AS C', 'C.id = A.class_id', 'left');
@@ -39,8 +38,7 @@ class Aoi_Model extends MY_Model {
 
           
         $this->db->order_by('LD.id', 'ASC');
-        return $this->db->get()->result();        
-        
+        return $this->db->get()->result();
     }
 
     #gets single record and sends it to the aoi controller
@@ -60,6 +58,6 @@ class Aoi_Model extends MY_Model {
        
    }
 
-    }
+}
 
 

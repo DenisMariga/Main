@@ -117,9 +117,9 @@
                                 </thead>
                                 <tbody>   
                                           
-                                    <?php $count = 1; if(isset($aois) && !empty($aois)){ ?>
-                                        <?php foreach($aois as $obj){ ?> 
-                                        <?php 
+                                    <?php $count = 1; if(isset($aoiList) && !empty($aoiList)){ ?>
+                                        <?php foreach($aoiList as $obj){ ?> 
+                                     <?php 
                                             if($this->session->userdata('role_id') == GUARDIAN){
                                                 if (!in_array($obj->class_id, $guardian_class_data)) { continue; }
                                             }elseif($this->session->userdata('role_id') == STUDENT){
@@ -215,7 +215,7 @@
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lesson_detail_id"><?php echo $this->lang->line('lesson'); ?> <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required">
+                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" onchange="get_topic_by_lesson(this.value, '', 'add_');">
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
                                         </select>
                                         <div class="help-block"><?php echo form_error('lesson_detail_id'); ?></div>
@@ -225,7 +225,7 @@
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="topic_details_id"><?php echo $this->lang->line('topic'); ?> <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name=""  id="" required="required">
+                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="topic_details_id"  id="add_topic_details_id" required="required">
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
                                         </select>
                                         <div class="help-block"><?php echo form_error('topic_details_id'); ?></div>
@@ -238,7 +238,7 @@
                                          <table style="width:100%;" class="fn_add_aoi_container responsive">                                             
                                             <tr>               
                                                 <td>
-                                                    <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" placeholder="<?php echo $this->lang->line('AoI_title'); ?>" autocomplete="off" required="required"/>
+                                                    <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="name" placeholder="<?php echo $this->lang->line('AoI_title'); ?>" autocomplete="off" required="required"/>
                                                 </td>
                                             </tr>                                           
                                           </table>
@@ -539,6 +539,7 @@
     <?php if(isset($class_id) && $class_id != '' && isset($subject_id)){ ?>
         get_subject_by_class('<?php echo $class_id; ?>', '<?php echo $subject_id; ?>', '');
     <?php } ?>
+
         
     function get_subject_by_class(class_id, subject_id, form){       
            
@@ -567,7 +568,6 @@
    } 
         
 
-  
    <?php if(isset($aois)){?>
         get_lesson_by_subject('<?php echo $aois->subject_id; ?>', '<?php echo $aois->lesson_detail_id; ?>', 'edit_');
     <?php } ?>    
@@ -616,7 +616,7 @@
         $.ajax({       
             type   : "POST",
             url    : "<?php echo site_url('ajax/get_topic_by_lesson'); ?>",
-            data   : {school_id : school_id,  lesson_detail_id: lesson_detail_id,
+            data   : {school_id : school_id,  lesson_detail_id : lesson_detail_id,
             topic_details_id : topic_details_id},               
             async  : false,
             success: function(response){                                                   
