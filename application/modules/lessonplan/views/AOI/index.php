@@ -242,9 +242,7 @@
                                                 </td>
                                             </tr>                                           
                                           </table>
-                                          <!-- <div class="help-block">                                            
-                                            <a href="javascript:void(0);" class="btn btn-success btn-xs" onclick="add_more('fn_add_aoi_container');"><?php echo $this->lang->line('add_more'); ?></a>
-                                        </div> -->
+                                         
                                     </div>
                                 </div>
                                 
@@ -252,7 +250,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="add Question"><?php echo $this->lang->line('add_question'); ?> <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea required="required" class="form-control" name="question" id="add_question" placeholder="<?php echo $this->lang->line('add_question'); ?>"><?php echo isset($post['question']) ?  $post['question'] : '';  ?></textarea>
+                                        <textarea required="required" class="form-control" name="Question" id="add_question" placeholder="<?php echo $this->lang->line('add_question'); ?>"><?php echo isset($post['Question']) ?  $post['question'] : '';  ?></textarea>
                                         <div class="help-block"><?php echo form_error('question'); ?></div>
                                     </div>
                                 </div> 
@@ -272,7 +270,7 @@
                         <?php if(isset($edit)){ ?>
                             <div  class="tab-pane fade in <?php if(isset($edit)){ echo 'active'; }?>" id="tab_edit_aoi">
                             <div class="x_content"> 
-                               <?php echo form_open(site_url('lessonplan/aoi/edit/'.$aois->id), array('name' => 'edit', 'id' => 'edit', 'class'=>'form-horizontal form-label-left'), ''); ?>
+                               <?php echo form_open(site_url('lessonplan/aoi/edit/'.$aoi->id), array('name' => 'edit', 'id' => 'edit', 'class'=>'form-horizontal form-label-left'), ''); ?>
                                 
                                     <?php $this->load->view('layout/school_list_edit_form'); ?>
                                     <div class="item form-group">
@@ -318,7 +316,21 @@
                                         </div>
                                     </div>
                                 
-                                
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="topic_details_id"><?php echo $this->lang->line('topic'); ?> <span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_"  name="topic_details_id"  id="edit_topic_details_id" required="required">
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option> 
+                                            <?php if(isset($topics) && !empty($topics)){ ?>
+                                                <?php foreach($topics as $obj){ ?>
+                                                    <option value="<?php echo $obj->id; ?>" <?php if($aoi->topic_details_id == $obj->id){ echo 'selected="selected"';} ?>><?php echo $obj->title; ?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block"><?php echo form_error('topic_details_id'); ?></div>
+                                        </div>
+                                    </div>
+                                 
                                     <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('AOI'); ?></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -327,7 +339,7 @@
                                             <tr>               
                                                 <td>                                                  
                                                    <input type="hidden" name="aoi_id[]" value="<?php echo $obj->id; ?>" />
-                                                   <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" value="<?php echo $obj->title; ?>" placeholder="<?php echo $this->lang->line('AOI'); ?>" autocomplete="off" />
+                                                   <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="name" value="<?php echo $obj->name; ?>" placeholder="<?php echo $this->lang->line('AOI'); ?>" autocomplete="off" />
                                               
                                                    <?php if($couter > 1){ ?>
                                                    <a  class="btn btn-danger btn-md " onclick="remove(this, <?php echo $obj->id; ?>);" style="margin-bottom: -0px;" > - </a>
@@ -336,17 +348,15 @@
                                             </tr> 
                                             <?php $couter++; } ?>                                            
                                           </table>
-                                        <div class="help-block">
-                                            <a href="javascript:void(0);" class="btn btn-success btn-xs" onclick="add_more('fn_edit_aoi_container');"><?php echo $this->lang->line('add_more'); ?></a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aoi question"><?php echo $this->lang->line('AOI'); ?> </label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aoi question"><?php echo $this->lang->line('add_question'); ?> </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea  class="form-control col-md-7 col-xs-12"  name="AoIQuiz"  id="note"  placeholder="<?php echo $this->lang->line('AOI'); ?>"> <?php echo isset($aoi->note) ?  $aoi->note : ''; ?></textarea>
-                                            <div class="help-block"><?php echo form_error('note'); ?></div>
+                                            <textarea  class="form-control col-md-7 col-xs-12"  name="Question"  id="add_question"  placeholder="<?php echo $this->lang->line('add_question'); ?>"> <?php echo isset($aoi) ?  $aoi->Question : ''; ?></textarea>
+                                            <div class="help-block"><?php echo form_error('question'); ?></div>
                                         </div>
                                     </div> 
 
@@ -467,7 +477,7 @@
         var class_id = '';
         
         <?php if(isset($edit) && !empty($edit)){ ?>
-            class_id =  '<?php echo $aois->class_id; ?>';           
+            class_id =  '<?php echo $aoi->class_id; ?>';           
          <?php } ?> 
         
         if(!school_id){
@@ -504,8 +514,8 @@
         get_class_by_school('<?php echo $post['school_id']; ?>', '<?php echo $post['class_id']; ?>', 'add_');        
     <?php } ?> 
 
-   <?php if(isset($aois) && !empty($aois)){ ?>
-        get_class_by_school('<?php echo $aois->school_id; ?>', '<?php echo $aois->class_id; ?>', 'edit_');
+   <?php if(isset($aoi) && !empty($aoi)){ ?>
+        get_class_by_school('<?php echo $aoi->school_id; ?>', '<?php echo $aoi->class_id; ?>', 'edit_');
     <?php } ?>    
 
    <?php if(isset($school_id) && $school_id != '' && isset($class_id)){ ?>
@@ -533,8 +543,8 @@
     <?php if(isset($post) && $post['class_id'] != ''){ ?>       
         get_subject_by_class('<?php echo $post['class_id']; ?>', '<?php echo $post['subject_id']; ?>', 'add_');
     <?php } ?>
-   <?php if(isset($aois) && !empty($aois)){  ?>
-        get_subject_by_class('<?php echo $aois->class_id; ?>', '<?php echo $aois->subject_id; ?>', 'edit_');
+   <?php if(isset($aoi) && !empty($aoi)){  ?>
+        get_subject_by_class('<?php echo $aoi->class_id; ?>', '<?php echo $aoi->subject_id; ?>', 'edit_');
     <?php } ?> 
     <?php if(isset($class_id) && $class_id != '' && isset($subject_id)){ ?>
         get_subject_by_class('<?php echo $class_id; ?>', '<?php echo $subject_id; ?>', '');
@@ -568,8 +578,8 @@
    } 
         
 
-   <?php if(isset($aois)){?>
-        get_lesson_by_subject('<?php echo $aois->subject_id; ?>', '<?php echo $aois->lesson_detail_id; ?>', 'edit_');
+   <?php if(isset($aoi)){?>
+        get_lesson_by_subject('<?php echo $aoi->subject_id; ?>', '<?php echo $aoi->lesson_detail_id; ?>', 'edit_');
     <?php } ?>    
     function get_lesson_by_subject(subject_id, lesson_detail_id, form){       
         
@@ -599,8 +609,8 @@
    
 //    #Get Topic by class
 
-<?php if(isset($aois)){?>
-        get_topic_by_lesson('<?php echo $aois->lesson_detail_id; ?>', '<?php echo $aois->topic_details_id; ?>', 'edit_');
+<?php if(isset($aoi)){?>
+        get_topic_by_lesson('<?php echo $aoi->lesson_detail_id; ?>', '<?php echo $aoi->topic_details_id; ?>', 'edit_');
     <?php } ?>   
     
     function get_topic_by_lesson(lesson_detail_id, topic_details_id, form){       

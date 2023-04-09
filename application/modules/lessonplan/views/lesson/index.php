@@ -200,7 +200,7 @@
                                          <table style="width:100%;" class="fn_add_lesson_container responsive">
                                             <tr>               
                                                 <td>
-                                                    <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" placeholder="<?php echo $this->lang->line('lesson'); ?>" autocomplete="off"/>
+                                                    <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="Ltitle[]" placeholder="<?php echo $this->lang->line('lesson'); ?>" autocomplete="off"/>
                                                 </td>
                                             </tr>                                           
                                           </table>
@@ -272,7 +272,7 @@
                                             <tr>               
                                               <td>                                                  
                                                   <input type="hidden" name="lesson_detail_id[]" value="<?php echo $obj->id; ?>" />
-                                                  <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" value="<?php echo $obj->Ltitle; ?>" placeholder="<?php echo $this->lang->line('lesson'); ?>" autocomplete="off" />
+                                                  <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="Ltitle[]" value="<?php echo $obj->Ltitle; ?>" placeholder="<?php echo $this->lang->line('lesson'); ?>" autocomplete="off" />
                                                   <?php if($couter > 1){ ?>
                                                         <a  class="btn btn-danger btn-md " onclick="remove(this, <?php echo $obj->id; ?>);" style="margin-bottom: -0px;" > - </a>
                                                   <?php } ?>

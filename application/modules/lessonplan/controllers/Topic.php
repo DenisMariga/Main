@@ -144,8 +144,7 @@ class Topic extends MY_Controller {
     }
 
     
-    /*****************Function edit*
-     * *********************************
+    /*****************Function edit** *********************************
     * @type            : Function
     * @function name   : edit
     * @description     : Load Update "Topic" user interface                 

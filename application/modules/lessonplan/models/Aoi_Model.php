@@ -10,6 +10,7 @@ class Aoi_Model extends MY_Model {
     }
 
     public function get_aoi_list($school_id, $class_id = null, $subject_id = null, $academic_year_id = null){
+        
         $this->db->select('A.*,  SC.school_name, LD.Ltitle, Tp.title, C.name AS class_name, S.name AS subject,S.teacher_id, AY.session_year');
         $this->db->from('aois AS A');   
         $this->db->join('lp_lesson_details AS LD', 'LD.id = A.lesson_detail_id', 'left');
@@ -33,11 +34,9 @@ class Aoi_Model extends MY_Model {
         if($subject_id){
             $this->db->where('A.subject_id', $subject_id);
         }
-
-        
-
-          
         $this->db->order_by('LD.id', 'ASC');
+        $this->db->order_by('Tp.id', 'ASC');
+
         return $this->db->get()->result();
     }
 
