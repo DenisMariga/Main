@@ -2,16 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Aoi extends MY_Controller {
+class Project extends MY_Controller {
 
     public $data = array();
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Aoi_Model', 'aoi', true);           
+        $this->load->model('Project_Model', 'project', true);           
         
         if($this->session->userdata('role_id') == STUDENT){
-            $this->data['subjects']  = $this->aoi->get_list('subjects',array('status'=>1, 'class_id'=>$this->session->userdata('class_id')), '','', '', 'id', 'ASC'); 
+            $this->data['subjects']  = $this->project->get_list('subjects',array('status'=>1, 'class_id'=>$this->session->userdata('class_id')), '','', '', 'id', 'ASC'); 
         }
         
          // need to check school subscription status
@@ -28,8 +28,8 @@ class Aoi extends MY_Controller {
     // public function greeting(){
     //     // echo "hello there";
     //     $this->data['list'] = TRUE;
-    //     $this->layout->title($this->lang->line('manage_AOI'). ' | ' . SMS);
-    //     $this->layout->view('AOI/index', $this->data);
+    //     $this->layout->title($this->lang->line('manage_project'). ' | ' . SMS);
+    //     $this->layout->view('project/index', $this->data);
     // }
 
     
@@ -49,7 +49,7 @@ class Aoi extends MY_Controller {
         // check_permission(view);
         if(isset($class_id) && !is_numeric($class_id)){
             error($this->lang->line('unexpected_error'));
-            redirect('lessonplan/AOI/index');
+            redirect('lessonplan/project/index');
         }
         
        //  for super admin        
@@ -72,14 +72,14 @@ class Aoi extends MY_Controller {
             $class_id = $this->session->userdata('class_id');    
         }  
                 
-        $school = $this->aoi->get_school_by_id($school_id);
-        $this->data['aoiList'] = $this->aoi->get_aoi_list($school_id, $class_id, $subject_id, @$school->academic_year_id);               
+        $school = $this->project->get_school_by_id($school_id);
+        $this->data['projectList'] = $this->project->get_project_list($school_id, $class_id, $subject_id, @$school->academic_year_id);               
         
         $condition = array();
         $condition['status'] = 1;        
         if($this->session->userdata('role_id') != SUPER_ADMIN){            
             $condition['school_id'] = $this->session->userdata('school_id');
-            $this->data['classes'] = $this->aoi->get_list('classes', $condition, '','', '', 'id', 'ASC');
+            $this->data['classes'] = $this->project->get_list('classes', $condition, '','', '', 'id', 'ASC');
         }
        
         $this->data['schools'] = $this->schools;
@@ -89,15 +89,15 @@ class Aoi extends MY_Controller {
         
          
         $this->data['list'] = TRUE;
-        $this->layout->title($this->lang->line('manage_AOI'). ' | ' . SMS);
-        $this->layout->view('AOI/index', $this->data);
+        $this->layout->title($this->lang->line('manage_Project'). ' | ' . SMS);
+        $this->layout->view('Project/index', $this->data);
      
      }
 /*****************Function add**********************************
     * @type            : Function
     * @function name   : add
-    * @description     : Load "Add new aoi" user interface                 
-    *                    and process to store "aoi" into database 
+    * @description     : Load "Add new project" user interface                 
+    *                    and process to store "project" into database 
     * @param           : null
     * @return          : null 
     * ********************************************************** */
@@ -106,28 +106,27 @@ class Aoi extends MY_Controller {
     check_permission(ADD);
 
       if ($_POST) {
-          $this->_prepare_aois_validation();
+          $this->_prepare_projects_validation();
         //   if ($this->form_validation->run() === TRUE) {
-              $data = $this->_get_posted_aois_data();
+              $data = $this->_get_posted_projects_data();
 
-            // check if subject is exist in aois table
-              $school = $this->aoi->get_school_by_id($data['school_id']);
-            $exist = $this->aoi->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['activity_integration'], 'Question'=>$data['question'], 'academic_year_id'=> $school->academic_year_id));
+            // check if subject is exist in projects table
+              $school = $this->project->get_school_by_id($data['school_id']);
+            $exist = $this->project->get_single('projects', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['project'], 'Question'=>$data['question'], 'academic_year_id'=> $school->academic_year_id));
               if($exist){
-                  $this->aoi->update('aois', $data, array('id' => $exist->id));
+                  $this->project->update('projects', $data, array('id' => $exist->id));
                   $insert_id = $exist->id;
               }else{
-                  $insert_id = $this->aoi->insert('aois', $data);
+                  $insert_id = $this->project->insert('projects', $data);
               }
               if ($insert_id) {
-                  
-                  //$this->aoi->_save_aoi($insert_id);                 
+                               
                   success($this->lang->line('insert_success'));
-                  redirect('lessonplan/aoi/index');
+                  redirect('lessonplan/project/index');
                   
               } else {
                   error($this->lang->line('insert_failed'));
-                  redirect('lessonplan/aoi/add');
+                  redirect('lessonplan/project/add');
               }
          
       }
@@ -136,14 +135,14 @@ class Aoi extends MY_Controller {
        //$school = $this->topic->get_school_by_id($school_id);
       //$this->data['lessons'] = $this->topic->get_topic_list($school_id, $class_id, $subject_id, @$school->academic_year_id); 
       
-      $this->data['aoiList'] = $this->aoi->get_aoi_list('1');     
+      $this->data['projectList'] = $this->project->get_project_list('1');     
     //   echo "Something here";
     //   exit();
        //   $condition = array();
     //   $condition['status'] = 1;        
     //   if($this->session->userdata('role_id') != SUPER_ADMIN){            
     //       $condition['school_id'] = $this->session->userdata('school_id');
-    //       $this->data['classes'] = $this->aois->get_list('classes', $condition, '','', '', 'id', 'ASC');
+    //       $this->data['classes'] = $this->projects->get_list('classes', $condition, '','', '', 'id', 'ASC');
     //   }
       $this->data['schools'] = $this->schools;
     //   $this->data['class_id'] = '';
@@ -152,12 +151,12 @@ class Aoi extends MY_Controller {
 
       $this->data['add'] = TRUE;  
       $this->layout->title($this->lang->line('add') .' | '. SMS);
-      $this->layout->view('aoi/index', $this->data);
+      $this->layout->view('project/index', $this->data);
   }
-   /*****************Function Delete AOI**********************************
+   /*****************Function Delete project**********************************
     * @type            : Function
     * @function name   : save
-    * @description     : delete "AOI" from database                  
+    * @description     : delete "project" from database                  
     *                       
     * @param           : $id integer value
     * @return          : null 
@@ -168,42 +167,42 @@ class Aoi extends MY_Controller {
 
         if(!is_numeric($id)){
              error($this->lang->line('unexpected_error'));
-             redirect('lessonplan/aoi/index');    
+             redirect('lessonplan/project/index');    
         }
                 
-        if ($this->aoi->delete('aois', array('id' => $id))) { 
+        if ($this->project->delete('projects', array('id' => $id))) { 
             
-            $this->aoi->delete('aois', array('id' => $id));
+            $this->project->delete('projects', array('id' => $id));
             success($this->lang->line('delete_success')); 
             
         } else {
             error($this->lang->line('delete_failed'));
         }
         
-        redirect('lessonplan/aoi/index');
+        redirect('lessonplan/project/index');
     }
-  /*****************Function get_single_aoi **********************************
+  /*****************Function get_single_project **********************************
     * @type            : Function
-    * @function name   : get_single_aoi
-    * @description     : Load "Aoi Single AOI " user interface                 
+    * @function name   : get_single_project
+    * @description     : Load "project Single project " user interface                 
     *                       
     * @param           : $class_id integer value
     * @return          : null 
     * 
 
-  # gets the single record data using the get_single_aoi function
-  # and sends the data to "aoi" 
-  # stores the data to the Aoi/get_single_aoi view which is displayed
+  # gets the single record data using the get_single_project function
+  # and sends the data to "project" 
+  # stores the data to the project/get_single_project view which is displayed
   # in the Modal in index.php view
 
   ********************************************************** */
 
-  public function get_single_aoi(){
+  public function get_single_project(){
         
-    $aoi_id = $this->input->post('aoi_id');
-    $this->data['aoi'] = $this->aoi->get_single_aoi($aoi_id);  
-    $this->data['aoi_details'] = get_aoi_detail_by_aoi_id($aoi_id);       
-    echo $this->load->view('AOI/get_single_aoi', $this->data);
+    $project_id = $this->input->post('project_id');
+    $this->data['project'] = $this->project->get_single_project($project_id);  
+    $this->data['project_details'] = get_project_detail_by_project_id($project_id);       
+    echo $this->load->view('project/get_single_project', $this->data);
  }
 
 #### --- End single Records Code ---- ##
@@ -215,13 +214,13 @@ class Aoi extends MY_Controller {
      
      /*****************Function _prepare_topic_validation**********************************
      * @type            : Function
-     * @function name   : _prepare_aois_validation
+     * @function name   : _prepare_projects_validation
      * @description     : Process "topic" user input data validation                 
      *                       
      * @param           : null
      * @return          : null 
      * ********************************************************** */
-     private function _prepare_aois_validation() {
+     private function _prepare_projects_validation() {
          
          $this->load->library('form_validation');
          $this->form_validation->set_error_delimiters('<div class="error-message" style="color: red;">', '</div>');
@@ -231,8 +230,8 @@ class Aoi extends MY_Controller {
          $this->form_validation->set_rules('subject_id', $this->lang->line('subject'), 'trim|required');
          $this->form_validation->set_rules('lesson_detail_id', $this->lang->line('lesson'), 'trim|required');
          $this->form_validation->set_rules('topic_details_id', $this->lang->line('topic'), 'trim|required');
-         $this->form_validation->set_rules('aoi_name', $this->lang->line('AOI'), 'trim|required');
-         $this->form_validation->set_rules('note', $this->lang->line('Aoi_quiz'), 'trim');
+         $this->form_validation->set_rules('project_name', $this->lang->line('Project'), 'trim|required');
+         $this->form_validation->set_rules('project', $this->lang->line('Poject_quiz'), 'trim');
      }    
    /*****************Function edit**********************************
     * @type            : Function
@@ -244,37 +243,35 @@ class Aoi extends MY_Controller {
     * @return          : null 
     * ********************************************************** */
     public function edit($id = null) {
-echo"id";
+
         check_permission(EDIT);
 
         if(!is_numeric($id)){
             error($this->lang->line('unexpected_error'));
-            redirect('lessonplan/aoi/index');
+            redirect('lessonplan/project/index');
         }
         
         if ($_POST) {
-            $this->_prepare_aois_validation();
+            $this->_prepare_projects_validation();
             // if ($this->form_validation->run() === TRUE) {
-                $data = $this->_get_posted_aois_data();
-                $updated = $this->aoi->update('aois', $data, array('id' => $this->input->post('id')));
+                $data = $this->_get_posted_projects_data();
+                $updated = $this->project->update('projects', $data, array('id' => $this->input->post('id')));
 
                 if ($updated) {                   
                     success($this->lang->line('update_success'));
-                    redirect('lessonplan/aoi/index');
+                    redirect('lessonplan/project/index');
                 } else {
                     error($this->lang->line('update_failed'));
-                    redirect('lessonplan/aoi/edit/' . $this->input->post('id'));
+                    redirect('lessonplan/project/edit/' . $this->input->post('id'));
                 }
-            //  else {
-            //     $this->data['aoi'] = $this->aoi->get_single_aoi($this->input->post('id'));
-            // }
+           
         }
 
         if ($id) {
-            $this->data['aoi'] = $this->aoi->get_single_aoi($id);
+            $this->data['project'] = $this->project->get_single_project($id);
 
-            if (!$this->data['aoi']) {
-                redirect('lessonplan/aoi/index');
+            if (!$this->data['project']) {
+                redirect('lessonplan/project/index');
             }
         }
         $condition = array();
@@ -283,13 +280,13 @@ echo"id";
             $condition['school_id'] = $this->session->userdata('school_id');
             $this->data['classes'] = $this->topic->get_list('classes', $condition, '','', '', 'id', 'ASC');
         }  
-        $school_id = $this->data['aoi']->school_id;
-        $class_id = $this->data['aoi']->class_id;
-        $subject_id = $this->data['aoi']->subject_id;
-        $school = $this->aoi->get_school_by_id($school_id);
+        $school_id = $this->data['project']->school_id;
+        $class_id = $this->data['project']->class_id;
+        $subject_id = $this->data['project']->subject_id;
+        $school = $this->project->get_school_by_id($school_id);
         
-        $this->data['aoiList'] = $this->aoi->get_aoi_list($school_id, $class_id, $subject_id, $school->academic_year_id); 
-        $this->data['aoi_details'] = get_aoi_detail_by_aoi_id($this->data['aoi']->id); 
+        $this->data['projectList'] = $this->project->get_project_list($school_id, $class_id, $subject_id, $school->academic_year_id); 
+        $this->data['project_details'] = get_project_detail_by_project_id($this->data['project']->id); 
         
         $this->data['schools'] = $this->schools;
         $this->data['class_id'] = $class_id;
@@ -298,7 +295,7 @@ echo"id";
                
         $this->data['edit'] = TRUE;
         $this->layout->title($this->lang->line('edit') . ' | ' . SMS);
-        $this->layout->view('lessonplan/aoi/index', $this->data);
+        $this->layout->view('lessonplan/project/index', $this->data);
     }
      
      /*****************Function _get_posted_topic_data**********************************
@@ -309,7 +306,7 @@ echo"id";
      * @param           : null
      * @return          : $data array(); value 
      * ********************************************************** */
-     private function _get_posted_aois_data() {
+     private function _get_posted_projects_data() {
  
          $items = array();
          $items[] = 'school_id';
@@ -329,11 +326,11 @@ echo"id";
              $data['status'] = 1; //  will be from post
          } else {
              
-             $school = $this->aoi->get_school_by_id($data['school_id']);
+             $school = $this->project->get_school_by_id($data['school_id']);
              
              if(!$school->academic_year_id){
                  error($this->lang->line('set_academic_year_for_school'));
-                 redirect('lessonplan/aoi/index');  
+                 redirect('lessonplan/project/index');  
              }
              
              $data['academic_year_id'] = $school->academic_year_id;  

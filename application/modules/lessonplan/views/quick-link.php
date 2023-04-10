@@ -12,6 +12,10 @@
     | <a href="<?php echo site_url('lessonplan/AOI/index'); ?>"><?php echo $this->lang->line('AOI'); ?></a>  
 <?php } ?>  
 
+<?php if(has_permission(VIEW, 'lessonplan', 'project')){ ?>    
+    | <a href="<?php echo site_url('lessonplan/Project/index'); ?>"><?php echo $this->lang->line('Project'); ?></a>  
+<?php } ?>  
+
 <?php if(has_permission(VIEW, 'lessonplan', 'timeline')){ ?>    
     | <a href="<?php echo site_url('lessonplan/timeline'); ?>"><?php echo $this->lang->line('lesson_time_line'); ?></a>  
 <?php } ?> 

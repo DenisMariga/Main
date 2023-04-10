@@ -109,6 +109,11 @@ $lang['footer'] = "Footer";
 $lang['title'] = "Title";
 $lang['AoI_title'] = "Add Activity of Integration Title";
 $lang['AoI_QUpdate'] = "Update AOI Question";
+$lang['Project_title'] = "Add Project Title";
+$lang['Project_QUpdate'] = "Update Project Question";
+$lang['Project_Description'] = "Project Description";
+$lang['Add_Project_Description'] = "Add Project Description ";
+
 $lang['total'] = "Total";
 $lang['calendar'] = "Calendar";
 $lang['latest'] = "Latest";
@@ -1063,6 +1068,11 @@ $lang['manage_lesson_plan'] = "Manage Lesson Plan";
 $lang['AOI'] = "Activity of Integration";
 $lang['manage_AOI'] = "Manage Acitivity of Integration";
 $lang['Aoi_quiz'] = "Activity Question";
+$lang['Project'] = "Project Title";
+$lang['Project_quiz'] = "Project to Be Worked On";
+$lang['add_project'] = "Give a Project";
+$lang['manage_Project'] = "Manage Project";
+
 $lang['lesson_plan'] = "Lesson Plan";
 $lang['manage_lesson'] = "Manage Lesson";
 $lang['lesson'] = "Lesson";

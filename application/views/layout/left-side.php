@@ -303,7 +303,10 @@
                             <?php } ?> 
                             <?php if(has_permission(VIEW, 'lessonplan', 'aoi')){ ?>    
                                 <li><a href="<?php echo site_url('lessonplan/AOI/index'); ?>"><?php echo $this->lang->line('AOI'); ?></a></li>  
-                            <?php } ?>                                    
+                            <?php } ?>  
+                            <?php if(has_permission(VIEW, 'lessonplan', 'project')){ ?>    
+                                <li><a href="<?php echo site_url('lessonplan/Project/index'); ?>"><?php echo $this->lang->line('Project'); ?></a></li>  
+                            <?php } ?>                                  
                             <?php if(has_permission(VIEW, 'lessonplan', 'lessonplan')){ ?>    
                                 <li><a href="<?php echo site_url('lessonplan/index'); ?>"><?php echo $this->lang->line('lesson_plan'); ?></a></li>  
                             <?php } ?>  

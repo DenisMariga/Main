@@ -1895,6 +1895,18 @@ if (!function_exists('get_aoi_detail_by_aoi_id')) {
         
     }
 }
+if (!function_exists('get_project_detail_by_project_id')) {
+    function get_project_detail_by_project_id($project_id) {
+        
+        $ci = & get_instance();
+        $ci->db->select('AD.*');
+        $ci->db->from('projects AS AD');
+        $ci->db->where('AD.id', $project_id); 
+        $ci->db->order_by('AD.id', 'ASC'); 
+        return $ci->db->get()->result();     
+        
+    }
+}
 
 if (!function_exists('get_topic_detail_by_aoi_id')) {
     function get_topic_detail_by_aoi_id($aitp_id)
