@@ -112,6 +112,7 @@
                                         <th><?php echo $this->lang->line('topic'); ?> </th>
                                         <th><?php echo $this->lang->line('AOI'); ?> </th>
                                         <th><?php echo $this->lang->line('Aoi_quiz'); ?> </th>
+                                        <th><?php echo $this->lang->line('information'); ?> </th>
                                         <th><?php echo $this->lang->line('action'); ?> </th>                                            
                                     </tr>
                                 </thead>
@@ -139,7 +140,6 @@
                                             <td><?php echo $obj->subject; ?></td>
                                             <td><?php echo $obj->Ltitle; ?></td>
                                             <td><?php echo $obj->title; ?></td>
-
                                           
 
                                              
@@ -155,6 +155,13 @@
                                                 <?php if(isset($aoi_list) && !empty($aoi_list)){ ?>
                                                 <?php foreach($aoi_list AS $ad){ ?>
                                                         <?php echo $ad->Question; ?><br/>
+                                                <?php } } ?>
+                                            </td>
+                                            <td>                                                
+                                                <?php $aoi_list = get_aoi_detail_by_aoi_id($obj->id); ?>                                                
+                                                <?php if(isset($aoi_list) && !empty($aoi_list)){ ?>
+                                                <?php foreach($aoi_list AS $ad){ ?>
+                                                        <?php echo $ad->information; ?><br/>
                                                 <?php } } ?>
                                             </td>
                                             <td>                                                      
@@ -254,7 +261,13 @@
                                         <div class="help-block"><?php echo form_error('question'); ?></div>
                                     </div>
                                 </div> 
-                                                                                           
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="add information"><?php echo $this->lang->line('information'); ?> <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea required="required" class="form-control" name="information" id="add_information" placeholder="<?php echo $this->lang->line('add_information'); ?>"><?php echo isset($post['information']) ?  $post['information'] : '';  ?></textarea>
+                                        <div class="help-block"><?php echo form_error('information'); ?></div>
+                                    </div>
+                                </div>                                                          
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -359,6 +372,15 @@
                                             <div class="help-block"><?php echo form_error('question'); ?></div>
                                         </div>
                                     </div> 
+                                    
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aoi information"><?php echo $this->lang->line('information'); ?> </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea  class="form-control col-md-7 col-xs-12"  name="information"  id="add_information"  placeholder="<?php echo $this->lang->line('add_information'); ?>"> <?php echo isset($aoi) ?  $aoi->information : ''; ?></textarea>
+                                            <div class="help-block"><?php echo form_error('information'); ?></div>
+                                        </div>
+                                    </div>
+                                </div> 
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">

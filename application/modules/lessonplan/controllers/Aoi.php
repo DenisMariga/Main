@@ -112,7 +112,7 @@ class Aoi extends MY_Controller {
 
             // check if subject is exist in aois table
               $school = $this->aoi->get_school_by_id($data['school_id']);
-            $exist = $this->aoi->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['activity_integration'], 'Question'=>$data['question'], 'academic_year_id'=> $school->academic_year_id));
+            $exist = $this->aoi->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['activity_integration'], 'Question'=>$data['question'],'information'=>$data['information'], 'academic_year_id'=> $school->academic_year_id));
               if($exist){
                   $this->aoi->update('aois', $data, array('id' => $exist->id));
                   $insert_id = $exist->id;
@@ -232,7 +232,7 @@ class Aoi extends MY_Controller {
          $this->form_validation->set_rules('lesson_detail_id', $this->lang->line('lesson'), 'trim|required');
          $this->form_validation->set_rules('topic_details_id', $this->lang->line('topic'), 'trim|required');
          $this->form_validation->set_rules('aoi_name', $this->lang->line('AOI'), 'trim|required');
-         $this->form_validation->set_rules('note', $this->lang->line('Aoi_quiz'), 'trim');
+         $this->form_validation->set_rules('information', $this->lang->line('information'), 'trim');
      }    
    /*****************Function edit**********************************
     * @type            : Function
@@ -319,6 +319,7 @@ echo"id";
          $items[] = 'topic_details_id';
          $items[] = 'Question';
          $items[] = 'name';
+         $items[] = 'information';
          
          $data = elements($items, $_POST);
          

@@ -41,5 +41,9 @@
             <th><?php echo $this->lang->line('Aoi_quiz'); ?></th>
             <td><?php echo $aoi->Question; ?></td>
         </tr>           
+        <tr>
+            <th><?php echo $this->lang->line('information'); ?></th>
+            <td><?php echo $aoi->information; ?></td>
+        </tr>           
     </tbody>
 </table>

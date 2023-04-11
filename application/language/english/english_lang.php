@@ -1073,6 +1073,8 @@ $lang['Project_quiz'] = "Project to Be Worked On";
 $lang['add_project'] = "Give a Project";
 $lang['manage_Project'] = "Manage Project";
 
+$lang['information'] = "Any Other relevant information";
+$lang['add_information'] = "Add Any Other relevant information";
 $lang['lesson_plan'] = "Lesson Plan";
 $lang['manage_lesson'] = "Manage Lesson";
 $lang['lesson'] = "Lesson";
