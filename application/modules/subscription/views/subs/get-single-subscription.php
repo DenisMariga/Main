@@ -55,7 +55,7 @@
             <th><?php echo $this->lang->line('is_enable_report'); ?></th>
             <td><?php echo $subscription->is_enable_report ? $this->lang->line('yes') : $this->lang->line('no'); ?></td>
         </tr>
-        <tr>
+        <tr> 
             <th><?php echo $this->lang->line('is_enable_attendance'); ?></th>
             <td><?php echo $subscription->is_enable_attendance ? $this->lang->line('yes') : $this->lang->line('no'); ?></td>
             <th><?php echo $this->lang->line('is_enable_lesson_plan'); ?></th>

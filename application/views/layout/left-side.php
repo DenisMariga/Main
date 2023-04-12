@@ -285,6 +285,8 @@
                             has_permission(VIEW, 'lessonplan', 'lesson') || 
                             has_permission(VIEW, 'lessonplan', 'aoi') || 
                             has_permission(VIEW, 'lessonplan', 'status') || 
+                            has_permission(VIEW, 'lessonplan', 'timeline') || 
+                            has_permission(VIEW, 'lessonplan', 'project') || 
                             has_permission(VIEW, 'lessonplan', 'topic')){ ?>                                              
                         <li><a ><i class="fa fa-bars"></i> <?php echo $this->lang->line('lesson_plan'); ?><span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu"> 
@@ -305,7 +307,7 @@
                                 <li><a href="<?php echo site_url('lessonplan/AOI/index'); ?>"><?php echo $this->lang->line('AOI'); ?></a></li>  
                             <?php } ?>  
                             <?php if(has_permission(VIEW, 'lessonplan', 'project')){ ?>    
-                                <li><a href="<?php echo site_url('lessonplan/Project/index'); ?>"><?php echo $this->lang->line('Project'); ?></a></li>  
+                                <li><a href="<?php echo site_url('lessonplan/Project/index'); ?>"><?php echo $this->lang->line('Project_Url'); ?></a></li>  
                             <?php } ?>                                  
                             <?php if(has_permission(VIEW, 'lessonplan', 'lessonplan')){ ?>    
                                 <li><a href="<?php echo site_url('lessonplan/index'); ?>"><?php echo $this->lang->line('lesson_plan'); ?></a></li>  
@@ -486,7 +488,9 @@
                                     </li> 
                     <?php } ?>
                                              
-                    <?php if(has_permission(VIEW, 'exam', 'mark') || 
+                    
+                    <?php if(has_permission(VIEW, 'exam', 'markaoi') || 
+                               has_permission(VIEW, 'exam', 'mark') ||
                                has_permission(VIEW, 'exam', 'examresult') || 
                                has_permission(VIEW, 'exam', 'finalresult') || 
                                has_permission(VIEW, 'exam', 'meritlist') || 
@@ -498,6 +502,9 @@
                                has_permission(VIEW, 'exam', 'resultsms')){ ?>    
                         <li><a><i class="fa fa-file-text-o"></i> <?php echo $this->lang->line('exam_mark'); ?> <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
+                                <?php if(has_permission(VIEW, 'exam', 'markaoi')){ ?>
+                                    <li><a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a></li>
+                                <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'mark')){ ?>
                                     <li><a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a></li>
                                 <?php } ?>

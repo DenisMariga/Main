@@ -1627,3 +1627,6 @@ $config['my_lessonplan']['aoi']['5'] = '1|1|1|0';
 $config['my_lessonplan']['aoi']['2'] = '1|1|1|0';
 $config['my_lessonplan']['project']['1'] = '1|1|1|1';
 $config['my_lessonplan']['project']['2'] = '1|1|1|0';
+$config['my_exam']['markaoi']['1'] = '1|1|1|1';
+$config['my_exam']['markaoi']['5'] = '1|1|1|0';
+$config['my_lessonplan']['project']['5'] = '0|0|0|0';
