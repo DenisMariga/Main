@@ -957,7 +957,19 @@ if (!function_exists('get_room_types')) {
 }
 
 
-if (!function_exists('get_genders')) {
+if (!function_exists('get_activity_mark ')) {
+
+    function get_activity_mark () {
+        $ci = & get_instance();
+        return array(
+            'ten' => $ci->lang->line('ten'),
+            'nineteen' => $ci->lang->line('nineteen')
+            'twenty eight' => $ci->lang->line('twenty eight')
+        );
+    }
+
+}
+if (!function_exists('get_')) {
 
     function get_genders() {
         $ci = & get_instance();
@@ -968,6 +980,7 @@ if (!function_exists('get_genders')) {
     }
 
 }
+
 
 if (!function_exists('get_paid_types')) {
 

@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col-sm-4  col-sm-offset-4 layout-box">
                         <p>
-                            <h4><?php echo $this->lang->line('exam_mark'); ?></h4>                            
+                            <h4><?php echo $this->lang->line('AOI'); ?></h4>                            
                         </p>
                     </div>
                 </div>            
@@ -105,25 +105,17 @@
                             <th rowspan="2"><?php echo $this->lang->line('roll_no'); ?></th>
                             <th rowspan="2"><?php echo $this->lang->line('name'); ?></th>
                             <th rowspan="2"><?php echo $this->lang->line('photo'); ?></th>
-                            <th colspan="2"><?php echo $this->lang->line('written'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('tutorial'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('practical'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('viva'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('total'); ?></th>                                            
-                            <th rowspan="2"><?php echo $this->lang->line('letter_grade'); ?></th>                                            
-                            <th rowspan="2"><?php echo $this->lang->line('remark'); ?></th>                                            
+                            <th colspan="12" style="text-align: center;"><?php echo $this->lang->line('AOI'); ?></th>                                            
+                                                                       
                         </tr>
                         <tr>                           
                             <th><?php echo $this->lang->line('mark'); ?></th>                                            
                             <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                           
+                            <th><?php echo $this->lang->line('score'); ?></th>                                            
+                            <th><?php echo $this->lang->line('descriptor'); ?></th>                                            
+                            <th><?php echo $this->lang->line('skill'); ?></th>                                            
+                            <th><?php echo $this->lang->line('strengths'); ?></th>                                            
+                            <th><?php echo $this->lang->line('out_of_ten'); ?></th>                                                                                     
                                                                       
                         </tr>
                     </thead>
@@ -162,18 +154,18 @@
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="tutorial_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->tutorial_obtain > 0 ){ echo $mark->tutorial_obtain; }else{ echo ''; } ?>"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                        <input type="text"  id="tutorial_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->tutorial_obtain > 0 ){ echo $mark->tutorial_obtain; }else{ echo ''; } ?>"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  />
                                         <?php } ?>
                                     </td>
                                     
                                     <td>
-                                        <input type="number"  id="practical_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->practical_mark > 0){ echo $mark->practical_mark; }else{ echo '';} ?>"  name="practical_mark[<?php echo $obj->student_id; ?>]" class="form-control col-md-7 form-mark col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                        <textarea type="text"  id="practical_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->practical_mark > 0){ echo $mark->practical_mark; }else{ echo '';} ?>"  name="practical_mark[<?php echo $obj->student_id; ?>]" class="form-control col-md-7 form-mark col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="practical_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->practical_obtain > 0 ){ echo $mark->practical_obtain; }else{ echo ''; } ?>"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <textarea type="text"  id="practical_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->practical_obtain > 0 ){ echo $mark->practical_obtain; }else{ echo ''; } ?>"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
                                         <?php } ?>
@@ -182,7 +174,7 @@
                                     <td>
                                         <input type="number"  id="viva_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_mark > 0){ echo $mark->viva_mark; }else{ echo '';} ?>"  name="viva_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <?php if(!empty($attendance)){ ?>
                                             <input type="number"  id="viva_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_obtain > 0 ){ echo $mark->viva_obtain; }else{ echo ''; } ?>"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                         <?php }else{ ?>
@@ -213,7 +205,7 @@
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php } ?>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <?php } ?>
                         <?php }else{ ?>
