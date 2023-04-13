@@ -19,7 +19,7 @@ class markaoi extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('markaoi_Model', 'mark', true);   
+        $this->load->model('markaoi_Model', 'markaoi', true);   
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
@@ -50,13 +50,13 @@ class markaoi extends MY_Controller {
             $section_id = $this->input->post('section_id');
             $subject_id = $this->input->post('subject_id');
 
-            $school = $this->mark->get_school_by_id($school_id);
+            $school = $this->markaoi->get_school_by_id($school_id);
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
                 redirect('exam/markaoi/index');
             }
             
-            $this->data['students'] = $this->mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id, $school->academic_year_id);
+            $this->data['students'] = $this->markaoi->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id, $school->academic_year_id);
 
             $condition = array(
                 'school_id' => $school_id,
@@ -77,16 +77,16 @@ class markaoi extends MY_Controller {
                 foreach ($this->data['students'] as $obj) {
 
                     $condition['student_id'] = $obj->student_id;
-                    $mark = $this->mark->get_single('marks', $condition);
+                    $markaoi = $this->markaoi->get_single('markaois', $condition);
 
-                    if (empty($mark)) {
+                    if (empty($markaoi)) {
                         
                         $data['section_id'] = $obj->section_id;
                         $data['student_id'] = $obj->student_id;
                         $data['status'] = 1;
                         $data['created_at'] = date('Y-m-d H:i:s');
                         $data['created_by'] = logged_in_user_id();
-                        $this->mark->insert('marks', $data);
+                        $this->markaoi->insert('markaois', $data);
                     }
                 }
             }

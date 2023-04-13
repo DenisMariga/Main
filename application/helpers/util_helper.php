@@ -963,7 +963,7 @@ if (!function_exists('get_activity_mark ')) {
         $ci = & get_instance();
         return array(
             'ten' => $ci->lang->line('ten'),
-            'nineteen' => $ci->lang->line('nineteen')
+            'nineteen' => $ci->lang->line('nineteen'),
             'twenty eight' => $ci->lang->line('twenty eight')
         );
     }

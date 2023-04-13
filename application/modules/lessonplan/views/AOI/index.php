@@ -222,7 +222,7 @@
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lesson_detail_id"><?php echo $this->lang->line('lesson'); ?> <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" onchange="get_topic_by_lesson(this.value, '', 'add_');">
+                                        <select  class="form-control col-md-12 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" onchange="get_topic_by_lesson(this.value, '', 'add_');">
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
                                         </select>
                                         <div class="help-block"><?php echo form_error('lesson_detail_id'); ?></div>

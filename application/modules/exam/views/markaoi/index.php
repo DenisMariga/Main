@@ -72,6 +72,15 @@
                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="item form-group"> 
+                            <div><?php echo $this->lang->line('lesson'); ?>  <span class="required">*</span></div>
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" >
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
+                                        </select>
+                            <div class="help-block"><?php echo form_error('lesson_id'); ?></div>
+                        </div>
+                    </div>
                     </div>
                 
                     <div class="col-md-2 col-sm-2 col-xs-12">
@@ -336,6 +345,18 @@
                if(response)
                {
                   $('#subject_id').html(response);
+               }
+            }
+        });         
+        $.ajax({       
+            type   : "POST",
+            url    : "<?php echo site_url('ajax/get_lesson_by_subject'); ?>",
+            data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id},               
+            async  : false,
+            success: function(response){                                                   
+               if(response)
+               {
+                  $('#lesson_detail_id').html(response);
                }
             }
         });         
