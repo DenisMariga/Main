@@ -1,6 +1,6 @@
 <span><?php echo $this->lang->line('quick_link'); ?>:</span>
 <?php if(has_permission(VIEW, 'exam', 'grade')){ ?>
-    <a href="<?php echo site_url('exam/grade/index'); ?>"><?php echo $this->lang->line('exam_grade'); ?></a>
+   | <a href="<?php echo site_url('exam/grade/index'); ?>"><?php echo $this->lang->line('exam_grade'); ?></a>
 <?php } ?> 
 <?php if(has_permission(VIEW, 'exam', 'exam')){ ?>
    | <a href="<?php echo site_url('exam/index'); ?>"><?php echo $this->lang->line('exam_term'); ?></a>

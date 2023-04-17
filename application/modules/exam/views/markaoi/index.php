@@ -16,7 +16,7 @@
             
             
             <div class="x_content"> 
-                <?php echo form_open_multipart(site_url('exam/markaoi/index'), array('name' => 'mark', 'id' => 'mark', 'class' => 'form-horizontal form-label-left'), ''); ?>
+                <?php echo form_open_multipart(site_url('exam/markaoi/index'), array('name' => 'mark_aoi', 'id' => 'mark_aoi', 'class' => 'form-horizontal form-label-left'), ''); ?>
                 <div class="row">
                     
                     <div class="col-md-10 col-sm-10 col-xs-12">
@@ -66,7 +66,7 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('subject'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required">                                
+                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required" onchange="get_lesson_by_subject(this.value,'','');">                                
                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                             </select>
                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
@@ -75,10 +75,28 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('lesson'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" >
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="lesson_detail_id" required="required" onchange="get_topic_by_lesson(this.value,'','');">                           
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
                                         </select>
                             <div class="help-block"><?php echo form_error('lesson_id'); ?></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="item form-group"> 
+                            <div><?php echo $this->lang->line('topic'); ?>  <span class="required">*</span></div>
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="topic_detail_id"  id="topic_detail_id" required="required" onchange="get_activity_by_topic(this.value,'','');"> 
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
+                                        </select>
+                            <div class="help-block"><?php echo form_error('topic_details_id'); ?></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="item form-group"> 
+                            <div><?php echo $this->lang->line('AOI'); ?>  <span class="required">*</span></div>
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="activity_id"  id="activity_id" required="required" >
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
+                                        </select>
+                            <div class="help-block"><?php echo form_error('question'); ?></div>
                         </div>
                     </div>
                     </div>
@@ -122,9 +140,9 @@
                             <th><?php echo $this->lang->line('obtain'); ?></th>                                            
                             <th><?php echo $this->lang->line('score'); ?></th>                                            
                             <th><?php echo $this->lang->line('descriptor'); ?></th>                                            
+                            <th><?php echo $this->lang->line('out_of_ten'); ?></th>                                            
                             <th><?php echo $this->lang->line('skill'); ?></th>                                            
-                            <th><?php echo $this->lang->line('strengths'); ?></th>                                            
-                            <th><?php echo $this->lang->line('out_of_ten'); ?></th>                                                                                     
+                            <th><?php echo $this->lang->line('strengths'); ?></th>                                                                                     
                                                                       
                         </tr>
                     </thead>
@@ -134,7 +152,7 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php  $mark = get_exam_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <?php  $mark_aoi = get_exam_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
                             <?php  $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
                                 <tr>
                                     <td><?php echo $obj->roll_no; ?></td>
@@ -148,44 +166,43 @@
                                     </td>  
                                     <td>
                                         <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />                                       
-                                        <input type="number" id="written_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->written_mark > 0){ echo $mark->written_mark; }else{ echo '';} ?>"  name="written_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
+                                        <input type="number" id="written_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark_aoi) && $mark_aoi->written_mark > 0){ echo $mark_aoi->written_mark; }else{ echo '';} ?>"  name="written_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="written_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->written_obtain > 0 ){ echo $mark->written_obtain; }else{ echo ''; } ?>"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <input type="number"  id="written_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark_aoi) && $mark_aoi->written_obtain > 0 ){ echo $mark_aoi->written_obtain; }else{ echo ''; } ?>"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
                                     
                                     <td>
-                                        <input type="number"  id="tutorial_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->tutorial_mark > 0){ echo $mark->tutorial_mark; }else{ echo '';} ?>"  name="tutorial_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                        <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark_aoi) && $mark_aoi->written_mark  > 0){ echo $mark_aoi->written_mark ; }else{ echo '';} ?>"  name="activity_score [<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                        <input type="text"  id="tutorial_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->tutorial_obtain > 0 ){ echo $mark->tutorial_obtain; }else{ echo ''; } ?>"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                        <input type="text"  id="activity_descriptor_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark_aoi) && $mark_aoi->written_mark  > 0 ){ echo $mark_aoi->written_mark ; }else{ echo ''; } ?>"  name="activity_descriptor [<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  />
+                                            <input readonly="readonly" type="number" value="0"  name="activity_descriptor [<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  />
                                         <?php } ?>
                                     </td>
-                                    
                                     <td>
-                                        <textarea type="text"  id="practical_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->practical_mark > 0){ echo $mark->practical_mark; }else{ echo '';} ?>"  name="practical_mark[<?php echo $obj->student_id; ?>]" class="form-control col-md-7 form-mark col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
+                                        <input type="number"  id="exam_total_mark_<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark_aoi) && $mark_aoi->exam_total_mark > 0){ echo $mark_aoi->exam_total_mark; }else{ echo '';} ?>"name="exam_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                    </td>
+                                    <td>
+                                        <textarea type="text"  id="activity_skill_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark_aoi) && $mark_aoi->written_mark > 0){ echo $mark_aoi->written_mark; }else{ echo '';} ?>"  name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control col-md-7 form-mark col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                            <textarea type="text"  id="practical_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->practical_obtain > 0 ){ echo $mark->practical_obtain; }else{ echo ''; } ?>"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
+                                            <textarea type="text"  id="activity_strengths_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark_aoi) && $mark_aoi->written_mark > 0 ){ echo $mark_aoi->written_mark; }else{ echo ''; } ?>"  name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"></textarea>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
+                                            <input readonly="readonly" type="number" value="0"  name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
                                         <?php } ?>
                                     </td>
                                     
-                                    <td>
-                                        <input type="number"  id="viva_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_mark > 0){ echo $mark->viva_mark; }else{ echo '';} ?>"  name="viva_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
-                                    </td>
                                     <!-- <td>
                                         <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="viva_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_obtain > 0 ){ echo $mark->viva_obtain; }else{ echo ''; } ?>"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <input type="number"  id="viva_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark_aoi) && $mark_aoi->viva_obtain > 0 ){ echo $mark_aoi->viva_obtain; }else{ echo ''; } ?>"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php } ?>
@@ -234,7 +251,7 @@
                             <input type="hidden" value="<?php echo $class_id; ?>"  name="class_id" />
                             <input type="hidden" value="<?php echo $section_id; ?>"  name="section_id" />
                             <input type="hidden" value="<?php echo $subject_id; ?>"  name="subject_id" />                        
-                            <a href="<?php echo site_url('exam/mark/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
+                            <a href="<?php echo site_url('exam/markaoi/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
                            <button id="send" type="submit" class="btn btn-success"><?php echo $this->lang->line('submit'); ?></button>
                         <?php } ?>
                     </div>
@@ -311,10 +328,10 @@
  <script type="text/javascript">     
   
     <?php if(isset($class_id) && isset($section_id)){ ?>
-        get_section_subject_by_class('<?php echo $class_id; ?>', '<?php echo $section_id; ?>', '<?php echo $subject_id; ?>');
+        get_section_subject_by_class('<?php echo $class_id; ?>', '<?php echo $section_id; ?>', '<?php echo $subject_id; ?>,'<?php echo $lesson_detail_id; ?>','<?php echo $topic_detail_id; ?>','<?php echo $activity_id; ?>'');
     <?php } ?>
     
-    function get_section_subject_by_class(class_id, section_id, subject_id){       
+    function get_section_subject_by_class(class_id, section_id, subject_id,lesson_detail_id,topic_detail_id,activity_id){       
         
         var school_id = $('#school_id').val();      
              
@@ -348,10 +365,59 @@
                }
             }
         });         
+        // $.ajax({       
+        //     type   : "POST",
+        //     url    : "<?php echo site_url('ajax/get_lesson_by_class'); ?>",
+        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id},               
+        //     async  : false,
+        //     success: function(response){                                                   
+        //        if(response)
+        //        {
+        //           $('#lesson_detail_id').html(response);
+        //        }
+        //     }
+        // }); 
+        // $.ajax({       
+        //     type   : "POST",
+        //     url    : "<?php echo site_url('ajax/get_topic_by_class'); ?>",
+        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id, topic_detail_id: topic_detail_id},               
+        //     async  : false,
+        //     success: function(response){                                                   
+        //        if(response)
+        //        {
+        //           $('#topic_detail_id').html(response);
+        //        }
+        //     }
+        // });  
+        // $.ajax({       
+        //     type   : "POST",
+        //     url    : "<?php echo site_url('ajax/get_activity_by_class'); ?>",
+        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id, topic_detail_id: topic_detail_id,activity_id: activity_id},               
+        //     async  : false,
+        //     success: function(response){                                                   
+        //        if(response)
+        //        {
+        //           $('#activity_id').html(response);
+        //        }
+        //     }
+        // });        
+    }
+    <?php if(isset($mark_aoi)){?>
+        get_lesson_by_subject('<?php echo $mark_aoi->subject_id; ?>', '<?php echo $mark_aoi->lesson_detail_id; ?>', 'edit_');
+    <?php } ?>
+    function get_lesson_by_subject(subject_id,lesson_detail_id){       
+        
+        var school_id = $('#school_id').val();      
+             
+        if(!school_id){
+           toastr.error('<?php echo $this->lang->line("select_school"); ?>');
+           return false;
+        } 
+        
         $.ajax({       
             type   : "POST",
             url    : "<?php echo site_url('ajax/get_lesson_by_subject'); ?>",
-            data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id},               
+            data   : {school_id:school_id, subject_id : subject_id , lesson_detail_id : lesson_detail_id},                   
             async  : false,
             success: function(response){                                                   
                if(response)
@@ -359,30 +425,82 @@
                   $('#lesson_detail_id').html(response);
                }
             }
-        });         
+        }); 
+             
+    }
+    <?php if(isset($mark_aoi)){?>
+        get_topic_by_lesson('<?php echo $mark_aoi->lesson_detail_id; ?>', '<?php echo $mark_aoi->topic_detail_id; ?>', 'edit_');
+    <?php } ?>
+    function get_topic_by_lesson(lesson_detail_id,topic_detail_id){       
+        
+        var school_id = $('#school_id').val();      
+             
+        if(!school_id){
+           toastr.error('<?php echo $this->lang->line("select_school"); ?>');
+           return false;
+        } 
+        
+        $.ajax({       
+            type   : "POST",
+            url    : "<?php echo site_url('ajax/get_topic_by_lesson'); ?>",
+            data   : {school_id:school_id, lesson_detail_id : lesson_detail_id,topic_detail_id : topic_detail_id },                   
+            async  : false,
+            success: function(response){                                                   
+               if(response)
+               {
+                  $('#topic_detail_id').html(response);
+               }
+            }
+        }); 
+             
+    }
+    <?php if(isset($mark_aoi)){?>
+        get_activity_by_topic('<?php echo $mark_aoi->topic_details_id; ?>', '<?php echo $mark_aoi->activity_id; ?>', 'edit_');
+    <?php } ?>
+    function get_activity_by_topic(topic_details_id,activity_id){       
+        
+        var school_id = $('#school_id').val();      
+             
+        if(!school_id){
+           toastr.error('<?php echo $this->lang->line("select_school"); ?>');
+           return false;
+        } 
+        
+        $.ajax({       
+            type   : "POST",
+            url    : "<?php echo site_url('ajax/get_activity_by_topic'); ?>",
+            data   : {school_id:school_id,topic_details_id : topic_details_id,activity_id : activity_id},                   
+            async  : false,
+            success: function(response){                                                   
+               if(response)
+               {
+                  $('#activity_id').html(response);
+               }
+            }
+        }); 
+             
     }
   
-  $(document).ready(function(){
+    $(document).ready(function(){
   
-       $('.fn_mark_total').keyup(function(){         
-            var student_id = $(this).attr('itemid');
-          var written_mark       = $('#written_mark_'+student_id).val() ?  parseFloat($('#written_mark_'+student_id).val()) : 0;
-          var written_obtain     = $('#written_obtain_'+student_id).val() ? parseFloat($('#written_obtain_'+student_id).val()) : 0;
-          var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
-          var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
-          var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
-          var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
-          var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
-          var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
-          
-          $('#exam_total_mark_'+student_id).val(written_mark+tutorial_mark+practical_mark+viva_mark);
-          $('#obtain_total_mark_'+student_id).val(written_obtain+tutorial_obtain+practical_obtain+viva_obtain);
-                              
-       }); 
-      
+  $('.fn_mark_total').keyup(function(){         
+       var student_id = $(this).attr('itemid');
+     var written_mark       = $('#written_mark_'+student_id).val() ?  parseFloat($('#written_mark_'+student_id).val()) : 0;
+     var written_obtain     = $('#written_obtain_'+student_id).val() ? parseFloat($('#written_obtain_'+student_id).val()) : 0;
+     var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
+     var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
+     var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
+     var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
+     var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
+     var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
+     
+     $('#exam_total_mark_'+student_id).val(written_obtain/written_mark)*10;
+     $('#obtain_total_mark_'+student_id).val(written_obtain+tutorial_obtain+practical_obtain+viva_obtain);
+                         
   }); 
-  
- $("#mark").validate();  
+ 
+}); 
+ $("#mark_aoi").validate();  
  $("#addmark").validate();  
 </script>
 <style>

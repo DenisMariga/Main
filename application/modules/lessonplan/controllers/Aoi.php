@@ -244,7 +244,7 @@ class Aoi extends MY_Controller {
     * @return          : null 
     * ********************************************************** */
     public function edit($id = null) {
-echo"id";
+
         check_permission(EDIT);
 
         if(!is_numeric($id)){

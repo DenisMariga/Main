@@ -11,21 +11,21 @@ class markaoi_Model extends MY_Model {
     
     public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null, $academic_year_id = null){
         
-        $this->db->select('E.roll_no, E.class_id, E.section_id, C.name AS class_name, S.id AS student_id, S.name AS student_name, S.photo,  S.phone');
-        // $this->db->from('exam_schedules AS ES');        
-        $this->db->join('classes AS C', 'C.id = S.class_id', 'left');
-        $this->db->join('enrollments AS E', 'E.class_id = S.class_id', 'left');        
+        $this->db->select('ES.*, E.roll_no, E.class_id, E.section_id, C.name AS class_name, S.id AS student_id, S.name AS student_name, S.photo,  S.phone');
+        $this->db->from('exam_schedules AS ES');        
+        $this->db->join('classes AS C', 'C.id = ES.class_id', 'left');
+        $this->db->join('enrollments AS E', 'E.class_id = ES.class_id', 'left');        
         $this->db->join('students AS S', 'S.id = E.student_id', 'left');
         
-        $this->db->where('E.school_id', $school_id);
+        $this->db->where('ES.school_id', $school_id);
         $this->db->where('E.academic_year_id', $academic_year_id);       
-        $this->db->where('E.exam_id', $exam_id);
+        $this->db->where('ES.exam_id', $exam_id);
         $this->db->where('E.class_id', $class_id);
         
         if($section_id){
            $this->db->where('E.section_id', $section_id);
         }
-        $this->db->where('E.subject_id', $subject_id);
+        $this->db->where('ES.subject_id', $subject_id);
         $this->db->where('S.status_type', 'regular');
         $this->db->order_by('E.roll_no', 'ASC');
        
@@ -144,14 +144,15 @@ class markaoi_Model extends MY_Model {
     public function get_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $academic_year_id){
         
         $this->db->select('M.exam_total_mark, M.obtain_total_mark, S.name AS subject');
-        $this->db->from('marks AS M'); 
+        $this->db->from('aoi_mark AS M'); 
         $this->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
         $this->db->where('M.school_id', $school_id);
         $this->db->where('M.exam_id', $exam_id);
         $this->db->where('M.class_id', $class_id);
         $this->db->where('M.student_id', $student_id);
         $this->db->where('M.academic_year_id', $academic_year_id); 
-        return $this->db->get()->result(); 
+        return $this->db->get()->result();
+         
     }
-    
+
 }

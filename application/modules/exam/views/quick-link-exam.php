@@ -1,10 +1,10 @@
 <span><?php echo $this->lang->line('quick_link'); ?>:</span>
 
 <?php if(has_permission(VIEW, 'exam', 'mark')){ ?>
-    <a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a>
+   | <a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a>
 <?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'markaoi')){ ?>
-    <a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a>
+   | <a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a>
 <?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
    | <a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a>                 

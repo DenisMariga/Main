@@ -632,6 +632,108 @@ class Ajax extends My_Controller {
      * @param           : null
      * @return          : null 
      * ********************************************************** */
+    public function get_lesson_by_class() {
+
+        $school_id = $this->input->post('school_id');
+        $class_id = $this->input->post('class_id');
+        // $subject_id = $this->input->post('subject_id');
+        $lesson_detail_id = $this->input->post('lesson_detail_id');
+       
+        if($this->session->userdata('role_id') == TEACHER){
+            $lp_lesson_details = $this->ajax->get_list('lp_lesson_details', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        }else{
+            $lp_lesson_details = $this->ajax->get_list('lp_lesson_details', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        }
+       
+        $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       
+        $select = 'selected="selected"';
+        if(!empty($lp_lesson_details)) {
+            foreach ($lp_lesson_details as $obj) {
+                $selected = $lesson_detail_id == $obj->id ? $select : '';
+                $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->Ltitle . '</option>';
+            }
+        }
+
+        echo $str;
+    }
+      
+    /*****************Function get_exam_by_school**********************************
+     * @type            : Function
+     * @function name   : get_exam_by_school
+     * @description     : Load "Exam Listing" by ajax call                
+     *                    and populate user listing
+     * @param           : null
+     * @return          : null 
+     * ********************************************************** */
+    public function get_topic_by_class() {
+
+        $school_id = $this->input->post('school_id');
+        $class_id = $this->input->post('class_id');
+        // $subject_id = $this->input->post('subject_id');
+        $topic_detail_id = $this->input->post('topic_detail_id');
+       
+        if($this->session->userdata('role_id') == TEACHER){
+            $lp_topic_details = $this->ajax->get_list('lp_topic_details', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        }else{
+            $lp_topic_details = $this->ajax->get_list('lp_topic_details', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        }
+       
+        $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       
+        $select = 'selected="selected"';
+        if(!empty($lp_topic_details)) {
+            foreach ($lp_topic_details as $obj) {
+                $selected = $lp_topic_details == $obj->id ? $select : '';
+                $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->title . '</option>';
+            }
+        }
+
+        echo $str;
+    }
+
+         
+    /*****************Function get_exam_by_school**********************************
+     * @type            : Function
+     * @function name   : get_exam_by_school
+     * @description     : Load "Exam Listing" by ajax call                
+     *                    and populate user listing
+     * @param           : null
+     * @return          : null 
+     * ********************************************************** */
+    public function get_activity_by_topic() {
+
+        $school_id = $this->input->post('school_id');
+        $topic_details_id = $this->input->post('topic_details_id');
+        // $subject_id = $this->input->post('subject_id');
+        $activity_id = $this->input->post('activity_id');
+       
+        if($this->session->userdata('role_id') == TEACHER){
+            $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        }else{
+            $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        }
+       
+        $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       
+        $select = 'selected="selected"';
+        if(!empty($aois)) {
+            foreach ($aois as $obj) {
+                $selected = $aois == $obj->id ? $select : '';
+                $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
+            }
+        }
+
+        echo $str;
+    }
+    /*****************Function get_exam_by_school**********************************
+     * @type            : Function
+     * @function name   : get_exam_by_school
+     * @description     : Load "Exam Listing" by ajax call                
+     *                    and populate user listing
+     * @param           : null
+     * @return          : null 
+     * ********************************************************** */
     
     public function get_exam_by_school() {
         
