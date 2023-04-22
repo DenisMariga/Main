@@ -200,9 +200,9 @@ class Aoi extends MY_Controller {
 
   public function get_single_aoi(){
         
-    $aoi_id = $this->input->post('aoi_id');
-    $this->data['aoi'] = $this->aoi->get_single_aoi($aoi_id);  
-    $this->data['aoi_details'] = get_aoi_detail_by_aoi_id($aoi_id);       
+    $activity_id = $this->input->post('activity_id');
+    $this->data['aoi'] = $this->aoi->get_single_aoi($activity_id);  
+    $this->data['aoi_details'] = get_aoi_detail_by_activity_id($activity_id);       
     echo $this->load->view('AOI/get_single_aoi', $this->data);
  }
 
@@ -289,7 +289,7 @@ class Aoi extends MY_Controller {
         $school = $this->aoi->get_school_by_id($school_id);
         
         $this->data['aoiList'] = $this->aoi->get_aoi_list($school_id, $class_id, $subject_id, $school->academic_year_id); 
-        $this->data['aoi_details'] = get_aoi_detail_by_aoi_id($this->data['aoi']->id); 
+        $this->data['aoi_details'] = get_aoi_detail_by_activity_id($this->data['aoi']->id); 
         
         $this->data['schools'] = $this->schools;
         $this->data['class_id'] = $class_id;

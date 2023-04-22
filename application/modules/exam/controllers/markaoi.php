@@ -13,13 +13,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @copyright       : Codetroopers Team	 	
  * ********************************************************** */
 
-class markaoi extends MY_Controller {
+class MarkAoi extends MY_Controller {
 
     public $data = array();
 
     function __construct() {
         parent::__construct();
-        $this->load->model('markaoi_Model', 'mark_aoi', true);   
+        $this->load->model('markaoi_Model', 'aoi_mark', true);   
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
@@ -49,21 +49,27 @@ class markaoi extends MY_Controller {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
             $subject_id = $this->input->post('subject_id');
+            $lesson_detail_id = $this->input->post('lesson_detail_id');
+            $topic_details_id = $this->input->post('topic_details_id');
+            $activity_id = $this->input->post('activity_id');
 
-            $school = $this->mark_aoi->get_school_by_id($school_id);
+            $school = $this->aoi_mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
                 redirect('exam/markaoi/index');
             }
             
-            $this->data['students'] = $this->mark_aoi->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id, $school->academic_year_id);
+            $this->data['students'] = $this->aoi_mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id,$school->academic_year_id,$lesson_detail_id,$topic_details_id, $activity_id);//$lesson_detail_id,$topic_details_id, $aoi_id,
 
             $condition = array(
                 'school_id' => $school_id,
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
                 'academic_year_id' => $school->academic_year_id,
-                'subject_id' => $subject_id
+                'subject_id' => $subject_id,
+                'lesson_detail_id'=> $lesson_detail_id,
+                'topic_details_id'=> $topic_details_id,
+                'activity_id'=> $activity_id
             );
             
             if($section_id){
@@ -77,16 +83,16 @@ class markaoi extends MY_Controller {
                 foreach ($this->data['students'] as $obj) {
 
                     $condition['student_id'] = $obj->student_id;
-                    $mark_aoi = $this->mark_aoi->get_single('aoi_mark', $condition);
+                    $aoi_mark = $this->aoi_mark->get_single('aoi_marks', $condition);
 
-                    if (empty($mark_aoi)) {
+                    if (empty($aoi_mark)) {
                         
                         $data['section_id'] = $obj->section_id;
                         $data['student_id'] = $obj->student_id;
                         $data['status'] = 1;
                         $data['created_at'] = date('Y-m-d H:i:s');
                         $data['created_by'] = logged_in_user_id();
-                        $this->mark_aoi->insert('aoi_mark', $data);
+                        $this->aoi_mark->insert('aoi_marks', $data);
                     }
                 }
             }
@@ -98,10 +104,13 @@ class markaoi extends MY_Controller {
             $this->data['class_id'] = $class_id;
             $this->data['section_id'] = $section_id;
             $this->data['subject_id'] = $subject_id;
+            $this->data['lesson_detail_id'] = $lesson_detail_id;
+            $this->data['topic_details_id'] = $topic_details_id;
+            $this->data['activity_id'] = $activity_id;
             $this->data['academic_year_id'] = $school->academic_year_id;
                         
-            $class = $this->mark_aoi->get_single('classes', array('id'=>$class_id));
-            create_log('Has been process exam mark for class: '. $class->name);
+            $class = $this->aoi_mark->get_single('classes', array('id'=>$class_id));
+            create_log('Has been process aoi exam mark for class: '. $class->name);
             
         }
         
@@ -110,14 +119,14 @@ class markaoi extends MY_Controller {
         $condition['status'] = 1;  
         
         if($this->session->userdata('role_id') != SUPER_ADMIN){
-            $school = $this->mark_aoi->get_school_by_id($this->session->userdata('school_id'));
+            $school = $this->aoi_mark->get_school_by_id($this->session->userdata('school_id'));
             $condition['school_id'] = $this->session->userdata('school_id');
-            $this->data['classes'] = $this->mark_aoi->get_list('classes', $condition, '','', '', 'id', 'ASC');
+            $this->data['classes'] = $this->aoi_mark->get_list('classes', $condition, '','', '', 'id', 'ASC');
             $condition['academic_year_id'] = $school->academic_year_id;
-            $this->data['exams'] = $this->mark_aoi->get_list('exams', $condition, '', '', '', 'id', 'ASC');
+            $this->data['exams'] = $this->aoi_mark->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }  
 
-        $this->layout->title($this->lang->line('manage_mark') . ' | ' . SMS);
+        $this->layout->title($this->lang->line('manage_aoi') . ' | ' . SMS);
         $this->layout->view('markaoi/index', $this->data);
     }
 
@@ -141,8 +150,11 @@ class markaoi extends MY_Controller {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
             $subject_id = $this->input->post('subject_id');
+            $lesson_detail_id = $this->input->post('lesson_detail_id');
+            $topic_details_id = $this->input->post('topic_details_id');
+            $activity_id = $this->input->post('activity_id');
 
-            $school = $this->mark_aoi->get_school_by_id($school_id);
+            $school = $this->aoi_mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
                 redirect('exam/markaoi/index');
@@ -153,7 +165,10 @@ class markaoi extends MY_Controller {
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
                 'academic_year_id' => $school->academic_year_id,
-                'subject_id' => $subject_id
+                'subject_id' => $subject_id,
+                'lesson_detail_id'=> $lesson_detail_id,
+                'topic_details_id' => $topic_details_id,
+                'activity_id' => $activity_id  
             );
             
             if($section_id){
@@ -177,22 +192,16 @@ class markaoi extends MY_Controller {
                     $data['activity_strengths'] = $_POST['activity_strengths'][$value];
                     
                     $data['activity_out_of_ten'] = $_POST['activity_out_of_ten'][$value];
-                    // $data['viva_obtain'] = $_POST['viva_obtain'][$value];
                     
-                    // $data['exam_total_mark'] = $_POST['exam_total_mark'][$value];
-                    // $data['obtain_total_mark'] = $_POST['obtain_total_mark'][$value];
-                    
-                    // $data['grade_id'] = $_POST['grade_id'][$value];                    
-                    // $data['remark'] = $_POST['remark'][$value];
-                    
+            
                     $data['status'] = 1;
                     $data['created_at'] = date('Y-m-d H:i:s');
                     $data['created_by'] = logged_in_user_id();
-                    $this->mark_aoi->update('aoi_mark', $data, $condition);
+                    $this->aoi_mark->update('aoi_marks', $data, $condition);
                 }
             }
             
-            $class = $this->mark_aoi->get_single('classes', array('id'=>$class_id));
+            $class = $this->aoi_mark->get_single('classes', array('id'=>$class_id));
             create_log('Has been process exam mark and save for class: '. $class->name);
             
             success($this->lang->line('insert_success'));

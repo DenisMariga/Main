@@ -297,7 +297,25 @@ if (!function_exists('get_exam_mark')) {
     }
 
 }
+if (!function_exists('get_exam_aoi_mark')) {
 
+    function get_exam_aoi_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
+        $ci = & get_instance();
+        $ci->db->select('A.*');
+        $ci->db->from('aoi_marks AS A');
+        $ci->db->where('A.academic_year_id', $academic_year_id);
+        $ci->db->where('A.school_id', $school_id);
+        $ci->db->where('A.exam_id', $exam_id);
+        $ci->db->where('A.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('A.section_id', $section_id);
+        }
+        $ci->db->where('A.student_id', $student_id);
+        $ci->db->where('A.subject_id', $subject_id);
+        return $ci->db->get()->row();
+    }
+
+}
 
 
 if (!function_exists('get_exam_total_mark')) {
@@ -1896,13 +1914,13 @@ if (!function_exists('get_topic_detail_by_topic_id')) {
     }
 }
 
-if (!function_exists('get_aoi_detail_by_aoi_id')) {
-    function get_aoi_detail_by_aoi_id($aoi_id) {
+if (!function_exists('get_aoi_detail_by_activity_id')) {
+    function get_aoi_detail_by_activity_id($activity_id) {
         
         $ci = & get_instance();
         $ci->db->select('AD.*');
         $ci->db->from('aois AS AD');
-        $ci->db->where('AD.id', $aoi_id); 
+        $ci->db->where('AD.id', $activity_id); 
         $ci->db->order_by('AD.id', 'ASC'); 
         return $ci->db->get()->result();     
         
@@ -1921,8 +1939,8 @@ if (!function_exists('get_project_detail_by_project_id')) {
     }
 }
 
-if (!function_exists('get_topic_detail_by_aoi_id')) {
-    function get_topic_detail_by_aoi_id($aitp_id)
+if (!function_exists('get_topic_detail_by_activity_id')) {
+    function get_topic_detail_by_activity_id($aitp_id)
     {
         # code...
     }

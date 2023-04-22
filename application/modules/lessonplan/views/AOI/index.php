@@ -144,21 +144,21 @@
 
                                              
                                             <td>                                                
-                                                <?php $aoi_list = get_aoi_detail_by_aoi_id($obj->id); ?>                                                
+                                                <?php $aoi_list = get_aoi_detail_by_activity_id($obj->id); ?>                                                
                                                 <?php if(isset($aoi_list) && !empty($aoi_list)){ ?>
                                                 <?php foreach($aoi_list AS $ad){ ?>
                                                         <?php echo $ad->name; ?><br/>
                                                 <?php } } ?>
                                             </td>
                                             <td>                                                
-                                                <?php $aoi_list = get_aoi_detail_by_aoi_id($obj->id); ?>                                                
+                                                <?php $aoi_list = get_aoi_detail_by_activity_id($obj->id); ?>                                                
                                                 <?php if(isset($aoi_list) && !empty($aoi_list)){ ?>
                                                 <?php foreach($aoi_list AS $ad){ ?>
                                                         <?php echo $ad->Question; ?><br/>
                                                 <?php } } ?>
                                             </td>
                                             <td>                                                
-                                                <?php $aoi_list = get_aoi_detail_by_aoi_id($obj->id); ?>                                                
+                                                <?php $aoi_list = get_aoi_detail_by_activity_id($obj->id); ?>                                                
                                                 <?php if(isset($aoi_list) && !empty($aoi_list)){ ?>
                                                 <?php foreach($aoi_list AS $ad){ ?>
                                                         <?php echo $ad->information; ?><br/>
@@ -351,7 +351,7 @@
                                             <?php $couter = 1; foreach($aoi_details as $obj){ ?> 
                                             <tr>               
                                                 <td>                                                  
-                                                   <input type="hidden" name="aoi_id[]" value="<?php echo $obj->id; ?>" />
+                                                   <input type="hidden" name="activity_id[]" value="<?php echo $obj->id; ?>" />
                                                    <input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="name" value="<?php echo $obj->name; ?>" placeholder="<?php echo $this->lang->line('AOI'); ?>" autocomplete="off" />
                                               
                                                    <?php if($couter > 1){ ?>
@@ -423,13 +423,13 @@
 
 <script type="text/javascript">
      
-    function get_aoi_modal(aoi_id){
+    function get_aoi_modal(activity_id){
          
         $('.fn_aoi_data').html('<p style="padding: 20px;"><p style="padding: 20px;text-align:center;"><img src="<?php echo IMG_URL; ?>loading.gif" /></p>');
         $.ajax({       
           type   : "POST",
           url    : "<?php echo site_url('lessonplan/aoi/get_single_aoi'); ?>",
-          data   : {aoi_id : aoi_id},  
+          data   : {activity_id : activity_id},  
           success: function(response){                                                   
              if(response)
              {
