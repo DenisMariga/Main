@@ -7,10 +7,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @type            : vendor
  * @class name      : vendor
  * @description     : Manage school academic vendor for student, guardian, teacer and employee.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Vendor extends MY_Controller {

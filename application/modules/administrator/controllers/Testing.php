@@ -3,11 +3,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Testing.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class *	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Testing extends CI_Controller {

@@ -7,10 +7,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @type            : Class
  * @class name      : Submission
  * @description     : Manage Submission homeword by student to class teacher.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  
  * ********************************************************** */
 

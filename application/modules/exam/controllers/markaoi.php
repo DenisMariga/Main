@@ -59,7 +59,7 @@ class MarkAoi extends MY_Controller {
                 redirect('exam/markaoi/index');
             }
             
-            $this->data['students'] = $this->aoi_mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id,$school->academic_year_id,$lesson_detail_id,$topic_details_id, $activity_id);//$lesson_detail_id,$topic_details_id, $aoi_id,
+            $this->data['students'] = $this->aoi_mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id,$school->academic_year_id);//$lesson_detail_id,$topic_details_id, $aoi_id,
 
             $condition = array(
                 'school_id' => $school_id,

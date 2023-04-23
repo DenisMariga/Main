@@ -3,14 +3,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Setting.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Setting
  * @description     : Manage application general settings.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Setting extends MY_Controller {

@@ -3,14 +3,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Web.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Web
  * @description     : Manage frontend website.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Web extends CI_Controller {
@@ -1222,7 +1222,7 @@ class Web extends CI_Controller {
             
             $this->email->from($this->input->post('email'), $this->input->post('name'));
             $this->email->to($this->data['school']->email);
-            //$this->email->to('yousuf361@gmail.com');
+            //$this->email->to('denismariga50@gmail.com');
             $subject = $this->lang->line('contact_mail_from') . ' - '. $this->data['school']->school_name;
             $this->email->subject($subject);       
 

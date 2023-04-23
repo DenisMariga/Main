@@ -9,7 +9,7 @@ class markaoi_Model extends MY_Model {
         parent::__construct();
     }
     
-    public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null, $academic_year_id = null){
+    public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null,$academic_year_id = null){
         
         $this->db->select('ES.*, E.roll_no, E.class_id, E.section_id, C.name AS class_name, S.id AS student_id, S.name AS student_name, S.photo,  S.phone');
         $this->db->from('exam_schedules AS ES');        
@@ -141,11 +141,14 @@ class markaoi_Model extends MY_Model {
         return $this->db->get()->row(); 
     }
     
-    public function get_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $academic_year_id){
+    public function get_aoi_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $lesson_detail_id,$topic_details_id,$activity_id, $academic_year_id){
         
-        $this->db->select('M.exam_total_mark, M.obtain_total_mark, S.name AS subject');
-        $this->db->from('aoi_mark AS M'); 
+        $this->db->select('M.activity_score, M.activity_out_of_ten,M.activity_descriptor, S.name AS subject');
+        $this->db->from('aoi_marks AS M'); 
         $this->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
+        $this->db->join('lp_lesson_details AS l', 'l.id = M.lesson_detail_id', 'left');
+        $this->db->join('lp_topic_details AS t', 't.id = M.topic_details_id', 'left');
+        $this->db->join('aois AS a', 'a.id = M.activity_id', 'left');
         $this->db->where('M.school_id', $school_id);
         $this->db->where('M.exam_id', $exam_id);
         $this->db->where('M.class_id', $class_id);

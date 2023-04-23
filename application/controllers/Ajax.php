@@ -3,15 +3,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * ***************Ajax.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Ajax
  * @description     : This class used to handle ajax call from view file 
  *                    of whole application.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Ajax extends My_Controller {
@@ -691,7 +691,31 @@ class Ajax extends My_Controller {
 
         echo $str;
     }
+    public function get_activity_by_class() {
 
+        $school_id = $this->input->post('school_id');
+        $class_id = $this->input->post('class_id');
+        // $subject_id = $this->input->post('subject_id');
+        $activity_id = $this->input->post('activity_id');
+       
+        if($this->session->userdata('role_id') == TEACHER){
+            $aois = $this->ajax->get_list('aois', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        }else{
+            $aois = $this->ajax->get_list('aois', array('status' => 1, 'class_id' => $class_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        }
+       
+        $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       
+        $select = 'selected="selected"';
+        if(!empty($aois)) {
+            foreach ($aois as $obj) {
+                $selected = $aois == $obj->id ? $select : '';
+                $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
+            }
+        }
+
+        echo $str;
+    }
          
     /*****************Function get_exam_by_school**********************************
      * @type            : Function

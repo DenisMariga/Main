@@ -4,14 +4,14 @@ error_reporting(E_ALL);
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Text.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Text
  * @description     : Manage sms which are send to students and guardian with student exam mark.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ***********************************************************/
 
 ini_set('max_execution_time', 9000);

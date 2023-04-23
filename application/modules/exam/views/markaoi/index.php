@@ -123,7 +123,7 @@
              <?php } ?>
             
             <div class="x_content">
-                 <?php echo form_open(site_url('exam/markaoi/add'), array('name' => 'addaoimark', 'id' => 'addaoimark', 'class'=>'form-horizontal form-label-left'), ''); ?>
+                 <?php echo form_open(site_url('exam/markaoi/add'), array('name' => 'addmark', 'id' => 'addmark', 'class'=>'form-horizontal form-label-left'), ''); ?>
                
                 
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -152,8 +152,9 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php  $aoi_mark = get_exam_aoi_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <?php  $aoi_mark = get_exam_aoi_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$lesson_detail_id,$topic_details_id,$activity_id); ?>
                             <?php  $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <!-- $lesson_detail_id,$topic_details_id,$activity_id -->
                                 <tr>
                                     <td><?php echo $obj->roll_no; ?></td>
                                     <td><?php echo ucfirst($obj->student_name); ?></td>
@@ -177,7 +178,11 @@
                                     </td>
                                     
                                     <td>
-                                        <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_score  > 0){ echo $aoi_mark->activity_score ; }else{ echo '';} ?>"  name="activity_score [<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                    <?php if(!empty($attendance)){ ?>
+                                        <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_score > 0){ echo $aoi_mark->activity_score; }else{ echo '';} ?>"  name="activity_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                        <?php }else{ ?>
+                                            <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                        <?php } ?>
                                     </td>
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
@@ -187,7 +192,11 @@
                                         <?php } ?>
                                     </td>
                                     <td>
+                                    <?php if(!empty($attendance)){ ?>
                                         <input type="number"  id="activity_out_of_ten_<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_out_of_ten > 0){ echo $aoi_mark->activity_out_of_ten; }else{ echo '';} ?>"name="activity_out_of_ten[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                        <?php }else{ ?>
+                                            <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
+                                        <?php } ?>
                                     </td>
                             
                                 
@@ -206,38 +215,6 @@
                                             <input readonly="readonly" type="text" value=""  name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php } ?>
                                     </td>
-                                    <!-- <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="viva_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->viva_obtain > 0 ){ echo $aoi_mark->viva_obtain; }else{ echo ''; } ?>"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
-                                    </td>                                    
-                                    <td>
-                                        <input type="number"  id="exam_total_mark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->exam_total_mark > 0){ echo $mark->exam_total_mark; }else{ echo '';} ?>"  name="exam_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off" />
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="obtain_total_mark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->obtain_total_mark > 0 ){ echo $mark->obtain_total_mark; }else{ echo ''; } ?>"  name="obtain_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="obtain_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" required="required"  autocomplete="off"/>
-                                        <?php } ?>
-                                    </td>                                    
-                                    <td>
-                                        <select  class="form-control col-md-7 col-xs-12" name="grade_id[<?php echo $obj->student_id; ?>]"  required="required">                                
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
-                                             <?php foreach ($grades as $grade) { ?>
-                                            <option value="<?php echo $grade->id; ?>" <?php if(isset($mark) && $mark->grade_id == $grade->id){ echo 'selected="selected"';} ?>><?php echo $grade->name; ?> [<?php echo $grade->point; ?>]</option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="text"  id="remark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->remark != '' ){ echo $mark->remark; }else{ echo ''; } ?>"  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
-                                    </td> -->
                                 </tr>
                             <?php } ?>
                         <?php }else{ ?>
@@ -493,25 +470,25 @@
   
     $(document).ready(function(){
   
-  $('.fn_mark_total').keyup(function(){         
-       var student_id = $(this).attr('itemid');
-     var activity_mark       = $('#activity_mark_'+student_id).val() ?  parseFloat($('#activity_mark_'+student_id).val()) : 0;
-     var activity_obtain     = $('#activity_obtain_'+student_id).val() ? parseFloat($('#activity_obtain_'+student_id).val()) : 0;
-     var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
-     var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
-     var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
-     var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
-     var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
-     var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
+//   $('.fn_mark_total').keyup(function(){         
+//        var student_id = $(this).attr('itemid');
+//      var activity_mark       = $('#activity_mark_'+student_id).val() ?  parseFloat($('#activity_mark_'+student_id).val()) : 0;
+//      var activity_obtain     = $('#activity_obtain_'+student_id).val() ? parseFloat($('#activity_obtain_'+student_id).val()) : 0;
+//      var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
+//      var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
+//      var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
+//      var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
+//      var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
+//      var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
      
-     $('#exam_total_mark_'+student_id).val(activity_obtain/activity_mark)*10;
-     $('#obtain_total_mark_'+student_id).val(activity_obtain+tutorial_obtain+practical_obtain+viva_obtain);
+//      $('#exam_total_mark_'+student_id).val(activity_obtain/activity_mark)*10;
+//      $('#obtain_total_mark_'+student_id).val(activity_obtain+tutorial_obtain+practical_obtain+viva_obtain);
                          
-  }); 
+//   }); 
  
 }); 
  $("#aoi_mark").validate();  
- $("#addaoimark").validate();  
+ $("#addmark").validate();  
 </script>
 <style>
 #datatable-responsive label.error{display: none !important;}

@@ -2,15 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* * *****************Mark.php**********************************
- * @product name    : Global Multi School Management System Express
+/* * *****************Mark AOI.php**********************************
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Mark
  * @description     : Manage exam mark for student whose are attend in the exam.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Mark extends MY_Controller {
@@ -198,7 +198,7 @@ class Mark extends MY_Controller {
             success($this->lang->line('insert_success'));
             redirect('exam/mark/index');
         }
-
+        $this->data['add'] = TRUE; 
         $this->layout->title($this->lang->line('add')  . ' | ' . SMS);
         $this->layout->view('mark/index', $this->data);
     }

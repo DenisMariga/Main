@@ -6,10 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @type            : Ratting
  * @class name      : Ratting
  * @description     : Manage rating class.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Rating extends MY_Controller {

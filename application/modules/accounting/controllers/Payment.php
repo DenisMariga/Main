@@ -3,14 +3,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Payment.php**********************************
- * @product name    : Global Multi School Management System Express
+ * @product name    : Uganda School ERP
  * @type            : Class
  * @class name      : Payment
  * @description     : Manage all kind of paymnet transaction by integrated payment gateway.  
- * @author          : Codetroopers Team 	
- * @url             : https://themeforest.net/user/codetroopers      
- * @support         : yousuf361@gmail.com	
- * @copyright       : Codetroopers Team	 	
+ * @author          :  Denis Mariga Kamara	
+ * @url             :        
+ * @support         : denismariga50@gmail.com	
+ * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
 class Payment extends My_Controller {
@@ -1655,7 +1655,7 @@ class Payment extends My_Controller {
     public function payumoney_success() {
         
         // print_r($_POST); die();        
-        //mail('yousuf361@gmail.com', 'PayUMoney', json_encode($_POST));
+        //mail('denismariga50@gmail.com', 'PayUMoney', json_encode($_POST));
         
         $invoice_id = $this->uri->segment(4);
         $invoice = $this->invoice->get_single_invoice($invoice_id);
@@ -1899,7 +1899,7 @@ class Payment extends My_Controller {
     * ********************************************************** */
     public function pay_tm_success(){
         
-        //mail('yousuf361@gmail.com', 'PAY TM Return', json_encode($_POST));
+        //mail('denismariga50@gmail.com', 'PAY TM Return', json_encode($_POST));
         
         $invoice_id = $this->uri->segment(4);
         $invoice = $this->invoice->get_single_invoice($invoice_id);
@@ -1921,7 +1921,7 @@ class Payment extends My_Controller {
         $paytmParams = $_POST;        
         $paytmChecksum = isset($_POST["CHECKSUMHASH"]) ? $_POST["CHECKSUMHASH"] : "";
 	
-        //Verify all parameters received from Paytm pg to your application. Like MID received from paytm pg is same as your application’s MID, TXN_AMOUNT and ORDER_ID are same as what was sent by you to Paytm PG for initiating transaction etc.
+        //Verify all parameters received from Paytm pg to your application. Like MID received from paytm pg is same as your applicationï¿½s MID, TXN_AMOUNT and ORDER_ID are same as what was sent by you to Paytm PG for initiating transaction etc.
          $isValidChecksum = verifychecksum_e($paytmParams, $merchantKey, $paytmChecksum);
         
         if($isValidChecksum == "TRUE") {
