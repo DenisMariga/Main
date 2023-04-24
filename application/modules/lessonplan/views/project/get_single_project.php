@@ -18,22 +18,6 @@
             <td><?php echo $project->subject; ?></td>
         </tr>
         <tr>
-            <th><?php echo $this->lang->line('lesson'); ?></th>
-            <td><?php echo $project->Ltitle; ?></td>
-        </tr>
-        <tr>
-            <th><?php echo $this->lang->line('topic'); ?></th>
-            <td><?php echo $project->title; ?></td>
-        </tr>
-        <!-- <tr>
-            <th><?php echo $this->lang->line('topic'); ?></th>
-            <td>
-               <?php foreach($project_details as $obj){ ?>
-                       <?php echo $obj->title; ?><br/>
-                <?php } ?>
-            </td>
-        </tr> -->
-        <tr>
             <th><?php echo $this->lang->line('Project'); ?></th>
             <td><?php echo $project->name; ?></td>
         </tr>  

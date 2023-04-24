@@ -316,7 +316,25 @@ if (!function_exists('get_exam_aoi_mark')) {
     }
 
 }
+if (!function_exists('get_exam_project_mark')) {
 
+    function get_exam_project_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
+        $ci = & get_instance();
+        $ci->db->select('P.*');
+        $ci->db->from('project_marks AS P');
+        $ci->db->where('P.academic_year_id', $academic_year_id);
+        $ci->db->where('P.school_id', $school_id);
+        $ci->db->where('P.exam_id', $exam_id);
+        $ci->db->where('P.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('P.section_id', $section_id);
+        }
+        $ci->db->where('P.student_id', $student_id);
+        $ci->db->where('P.subject_id', $subject_id);
+        return $ci->db->get()->row();
+    }
+
+}
 
 if (!function_exists('get_exam_total_mark')) {
 

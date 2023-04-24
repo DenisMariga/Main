@@ -2,7 +2,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> <?php echo $this->lang->line('manage_mark'); ?></small></h3>
+                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> <?php echo $this->lang->line('manage_project'); ?></small></h3>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>                    
                 </ul>
@@ -16,7 +16,7 @@
             
             
             <div class="x_content"> 
-                <?php echo form_open_multipart(site_url('exam/mark/index'), array('name' => 'mark', 'id' => 'mark', 'class' => 'form-horizontal form-label-left'), ''); ?>
+                <?php echo form_open_multipart(site_url('exam/projectmark/index'), array('name' => 'project_mark', 'id' => 'project_mark', 'class' => 'form-horizontal form-label-left'), ''); ?>
                 <div class="row">
                     
                     <div class="col-md-10 col-sm-10 col-xs-12">
@@ -66,10 +66,20 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('subject'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required">                                
+                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required" onchange="get_project_by_subject(this.value,'','');">                                
                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                             </select>
                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="item form-group"> 
+                            <div><?php echo $this->lang->line('Project'); ?>  <span class="required">*</span></div>
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="project_id"  id="project_id" required="required" >
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
+                                        </select>
+                            <div class="help-block"><?php echo form_error('project_id'); ?></div>
                         </div>
                     </div>
                     </div>
@@ -88,7 +98,7 @@
                 <div class="row">
                     <div class="col-sm-4  col-sm-offset-4 layout-box">
                         <p>
-                            <h4><?php echo $this->lang->line('exam_mark'); ?></h4>                            
+                            <h4><?php echo $this->lang->line('Project'); ?></h4>                            
                         </p>
                     </div>
                 </div>            
@@ -96,7 +106,7 @@
              <?php } ?>
             
             <div class="x_content">
-                 <?php echo form_open(site_url('exam/mark/add'), array('name' => 'addmark', 'id' => 'addmark', 'class'=>'form-horizontal form-label-left'), ''); ?>
+                 <?php echo form_open(site_url('exam/projectmark/add'), array('name' => 'addmark', 'id' => 'addmark', 'class'=>'form-horizontal form-label-left'), ''); ?>
                
                 
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -105,25 +115,14 @@
                             <th rowspan="2"><?php echo $this->lang->line('roll_no'); ?></th>
                             <th rowspan="2"><?php echo $this->lang->line('name'); ?></th>
                             <th rowspan="2"><?php echo $this->lang->line('photo'); ?></th>
-                            <th colspan="2"><?php echo $this->lang->line('written'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('tutorial'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('practical'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('viva'); ?></th>                                            
-                            <th colspan="2"><?php echo $this->lang->line('total'); ?></th>                                            
-                            <th rowspan="2"><?php echo $this->lang->line('letter_grade'); ?></th>                                            
-                            <th rowspan="2"><?php echo $this->lang->line('remark'); ?></th>                                            
+                            <th colspan="12" style="text-align: center;"><?php echo $this->lang->line('Project'); ?></th>                                            
+                                                                       
                         </tr>
                         <tr>                           
                             <th><?php echo $this->lang->line('mark'); ?></th>                                            
                             <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                            
-                            <th><?php echo $this->lang->line('mark'); ?></th>                                            
-                            <th><?php echo $this->lang->line('obtain'); ?></th>                                           
+                            <th><?php echo $this->lang->line('score'); ?></th>                                            
+                            <th><?php echo $this->lang->line('remark'); ?></th>                                                                                                                               
                                                                       
                         </tr>
                     </thead>
@@ -133,8 +132,9 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php  $mark = get_exam_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <?php  $project_mark = get_exam_project_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
                             <?php  $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <!-- $lesson_detail_id,$topic_details_id,$activity_id -->
                                 <tr>
                                     <td><?php echo $obj->roll_no; ?></td>
                                     <td><?php echo ucfirst($obj->student_name); ?></td>
@@ -147,72 +147,30 @@
                                     </td>  
                                     <td>
                                         <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />                                       
-                                        <input type="number" id="written_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->written_mark > 0){ echo $mark->written_mark; }else{ echo '';} ?>"  name="written_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
+                                        <input type="number" id="project_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_mark > 0){ echo $project_mark->project_mark; }else{ echo '';} ?>"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="written_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->written_obtain > 0 ){ echo $mark->written_obtain; }else{ echo ''; } ?>"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <input type="number"  id="project_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($project_mark) && $project_mark->project_obtain > 0 ){ echo $project_mark->project_obtain; }else{ echo ''; } ?>"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                        <?php }else{ ?>
+                                            <input readonly="readonly" type="number" value="0"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                        <?php } ?>
+                                    </td>
+                                    
+                                    <td>
+                                    <?php if(!empty($attendance)){ ?>
+                                        <input type="number"  id="project_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_score > 0){ echo $project_mark->project_score; }else{ echo '';} ?>"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
-                                    
                                     <td>
-                                        <input type="number"  id="tutorial_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->tutorial_mark > 0){ echo $mark->tutorial_mark; }else{ echo '';} ?>"  name="tutorial_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="tutorial_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->tutorial_obtain > 0 ){ echo $mark->tutorial_obtain; }else{ echo ''; } ?>"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                    <?php if(!empty($attendance)){ ?>
+                                        <textarea id="Remarks_<?php echo $obj->student_id; ?>" name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($project_mark) && $project_mark->Remarks != '' ){ echo $project_mark->Remarks; }else{ echo ''; } ?></textarea>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="tutorial_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  />
+                                        <input readonly="readonly" type="text" value=""  name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
                                         <?php } ?>
-                                    </td>
-                                    
-                                    <td>
-                                        <input type="number"  id="practical_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->practical_mark > 0){ echo $mark->practical_mark; }else{ echo '';} ?>"  name="practical_mark[<?php echo $obj->student_id; ?>]" class="form-control col-md-7 form-mark col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="practical_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"   value="<?php if(!empty($mark) && $mark->practical_obtain > 0 ){ echo $mark->practical_obtain; }else{ echo ''; } ?>"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="practical_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php } ?>
-                                    </td>
-                                    
-                                    <td>
-                                        <input type="number"  id="viva_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_mark > 0){ echo $mark->viva_mark; }else{ echo '';} ?>"  name="viva_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="viva_obtain_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->viva_obtain > 0 ){ echo $mark->viva_obtain; }else{ echo ''; } ?>"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="viva_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
-                                    </td>                                    
-                                    <td>
-                                        <input type="number"  id="exam_total_mark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->exam_total_mark > 0){ echo $mark->exam_total_mark; }else{ echo '';} ?>"  name="exam_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off" />
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="obtain_total_mark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->obtain_total_mark > 0 ){ echo $mark->obtain_total_mark; }else{ echo ''; } ?>"  name="obtain_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="obtain_total_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" required="required"  autocomplete="off"/>
-                                        <?php } ?>
-                                    </td>                                    
-                                    <td>
-                                        <select  class="form-control col-md-7 col-xs-12" name="grade_id[<?php echo $obj->student_id; ?>]"  required="required">                                
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
-                                             <?php foreach ($grades as $grade) { ?>
-                                            <option value="<?php echo $grade->id; ?>" <?php if(isset($mark) && $mark->grade_id == $grade->id){ echo 'selected="selected"';} ?>><?php echo $grade->name; ?> [<?php echo $grade->point; ?>]</option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="text"  id="remark_<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->remark != '' ){ echo $mark->remark; }else{ echo ''; } ?>"  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
+
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -232,8 +190,10 @@
                             <input type="hidden" value="<?php echo $exam_id; ?>"  name="exam_id" />
                             <input type="hidden" value="<?php echo $class_id; ?>"  name="class_id" />
                             <input type="hidden" value="<?php echo $section_id; ?>"  name="section_id" />
-                            <input type="hidden" value="<?php echo $subject_id; ?>"  name="subject_id" />                        
-                            <a href="<?php echo site_url('exam/mark/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
+                            <input type="hidden" value="<?php echo $subject_id; ?>"  name="subject_id" /> 
+                            <input type="hidden" value="<?php echo $project_id; ?>"  name="project_id" />
+
+                            <a href="<?php echo site_url('exam/projectmark/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
                            <button id="send" type="submit" class="btn btn-success"><?php echo $this->lang->line('submit'); ?></button>
                         <?php } ?>
                     </div>
@@ -347,29 +307,52 @@
                }
             }
         });         
+            
     }
-  
-  $(document).ready(function(){
-  
-       $('.fn_mark_total').keyup(function(){         
+    <?php if(isset($project_mark)){?>
+        get_project_by_subject('<?php echo $project_mark->subject_id; ?>', '<?php echo $project_mark->project_id; ?>');
+    <?php } ?>
+    function get_project_by_subject(subject_id,project_id){       
+        
+        var school_id = $('#school_id').val();      
+             
+        if(!school_id){
+           toastr.error('<?php echo $this->lang->line("select_school"); ?>');
+           return false;
+        } 
+        
+        $.ajax({       
+            type   : "POST",
+            url    : "<?php echo site_url('ajax/get_project_by_subject'); ?>",
+            data   : {school_id:school_id, subject_id : subject_id , project_id : project_id},                   
+            async  : false,
+            success: function(response){                                                   
+               if(response)
+               {
+                  $('#project_id').html(response);
+               }
+            }
+        }); 
+             
+    }
+    $(document).ready(function(){
+        
+        $('.fn_mark_total').keyup(function(){         
             var student_id = $(this).attr('itemid');
-          var written_mark       = $('#written_mark_'+student_id).val() ?  parseFloat($('#written_mark_'+student_id).val()) : 0;
-          var written_obtain     = $('#written_obtain_'+student_id).val() ? parseFloat($('#written_obtain_'+student_id).val()) : 0;
-          var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
-          var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
-          var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
-          var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
-          var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
-          var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
-          
-          $('#exam_total_mark_'+student_id).val(written_mark/tutorial_mark)*10;
-          $('#obtain_total_mark_'+student_id).val(written_obtain+tutorial_obtain+practical_obtain+viva_obtain);
-                              
-       }); 
-      
-  }); 
+            var project_mark = $('#project_mark_'+student_id).val() ? parseFloat($('#project_mark_'+student_id).val()) : 0;
+            var project_obtain = $('#project_obtain_'+student_id).val() ? parseFloat($('#project_obtain_'+student_id).val()) : 0;
+            
+            var project_score = (project_obtain/project_mark)*10;
+            $('#project_score_'+student_id).val(Math.round(project_score));
+            
+        }); 
+     
+    });
+    
+    
   
- $("#mark").validate();  
+
+ $("#project_mark").validate();  
  $("#addmark").validate();  
 </script>
 <style>

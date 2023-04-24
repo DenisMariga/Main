@@ -179,7 +179,7 @@
                                     
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_score > 0){ echo $aoi_mark->activity_score; }else{ echo '';} ?>"  name="activity_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                        <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_score > 0){ echo $aoi_mark->activity_score; }else{ echo '';} ?>"  name="activity_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
@@ -193,7 +193,7 @@
                                     </td>
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="activity_out_of_ten_<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_out_of_ten > 0){ echo $aoi_mark->activity_out_of_ten; }else{ echo '';} ?>"name="activity_out_of_ten[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"  autocomplete="off"/>
+                                        <input type="number"  id="activity_out_of_ten_<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_out_of_ten > 0){ echo $aoi_mark->activity_out_of_ten; }else{ echo '';} ?>"name="activity_out_of_ten[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
                                         <?php } ?>
@@ -202,18 +202,20 @@
                                 
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
-                                            <input type="text"  id="activity_skill_<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_skill != '' ){ echo $aoi_mark->activity_skill; }else{ echo ''; } ?>"  name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
+                                        <textarea id="activity_skill_<?php echo $obj->student_id; ?>" name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($aoi_mark) && $aoi_mark->activity_skill != '' ){ echo $aoi_mark->activity_skill; }else{ echo ''; } ?></textarea>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
+                                        <input readonly="readonly" type="text" value=""  name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
                                         <?php } ?>
+
                                     </td>
                           
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
-                                            <input type="text"  id="activity_strengths_<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_strengths != '' ){ echo $aoi_mark->activity_strengths; }else{ echo ''; } ?>"  name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
+                                        <textarea id="activity_strengths_<?php echo $obj->student_id; ?>" name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($aoi_mark) && $aoi_mark->activity_strengths != '' ){ echo $aoi_mark->activity_strengths; }else{ echo ''; } ?></textarea>
+                                    <?php }else{ ?>
+                                        <input readonly="readonly" type="text" value="" name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
+                                    <?php } ?>
+
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -234,9 +236,9 @@
                             <input type="hidden" value="<?php echo $class_id; ?>"  name="class_id" />
                             <input type="hidden" value="<?php echo $section_id; ?>"  name="section_id" />
                             <input type="hidden" value="<?php echo $subject_id; ?>"  name="subject_id" /> 
-                            <!-- <input type="hidden" value="<?php echo $lesson_detail_id; ?>"  name="lesson_detail_id" />
+                            <input type="hidden" value="<?php echo $lesson_detail_id; ?>"  name="lesson_detail_id" />
                             <input type="hidden" value="<?php echo $topic_details_id; ?>"  name="topic_details_id" />
-                            <input type="hidden" value="<?php echo $activity_id; ?>"  name="activity_id" /> -->
+                            <input type="hidden" value="<?php echo $activity_id; ?>"  name="activity_id" />
 
                             <a href="<?php echo site_url('exam/markaoi/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
                            <button id="send" type="submit" class="btn btn-success"><?php echo $this->lang->line('submit'); ?></button>
@@ -315,10 +317,10 @@
  <script type="text/javascript">     
   
     <?php if(isset($class_id) && isset($section_id)){ ?>
-        get_section_subject_by_class('<?php echo $class_id; ?>', '<?php echo $section_id; ?>', '<?php echo $subject_id; ?>,'<?php echo $lesson_detail_id; ?>','<?php echo $topic_details_id; ?>','<?php echo $activity_id; ?>'');
+        get_section_subject_by_class('<?php echo $class_id; ?>', '<?php echo $section_id; ?>', '<?php echo $subject_id; ?>');
     <?php } ?>
     
-    function get_section_subject_by_class(class_id, section_id, subject_id,lesson_detail_id,topic_details_id,activity_id){       
+    function get_section_subject_by_class(class_id, section_id, subject_id){       
         
         var school_id = $('#school_id').val();      
              
@@ -390,7 +392,7 @@
         // });        
     }
     <?php if(isset($aoi_mark)){?>
-        get_lesson_by_subject('<?php echo $aoi_mark->subject_id; ?>', '<?php echo $aoi_mark->lesson_detail_id; ?>', 'edit_');
+        get_lesson_by_subject('<?php echo $aoi_mark->subject_id; ?>', '<?php echo $aoi_mark->lesson_detail_id; ?>');
     <?php } ?>
     function get_lesson_by_subject(subject_id,lesson_detail_id){       
         
@@ -416,7 +418,7 @@
              
     }
     <?php if(isset($aoi_mark)){?>
-        get_topic_by_lesson('<?php echo $aoi_mark->lesson_detail_id; ?>', '<?php echo $aoi_mark->topic_details_id; ?>', 'edit_');
+        get_topic_by_lesson('<?php echo $aoi_mark->lesson_detail_id; ?>', '<?php echo $aoi_mark->topic_details_id; ?>');
     <?php } ?>
     function get_topic_by_lesson(lesson_detail_id,topic_details_id){       
         
@@ -442,7 +444,7 @@
              
     }
     <?php if(isset($aoi_mark)){?>
-        get_activity_by_topic('<?php echo $aoi_mark->topic_details_id; ?>', '<?php echo $aoi_mark->activity_id; ?>', 'edit_');
+        get_activity_by_topic('<?php echo $aoi_mark->topic_details_id; ?>', '<?php echo $aoi_mark->activity_id; ?>');
     <?php } ?>
     function get_activity_by_topic(topic_details_id,activity_id){       
         
@@ -467,26 +469,52 @@
         }); 
              
     }
-  
-    $(document).ready(function(){
-  
-//   $('.fn_mark_total').keyup(function(){         
-//        var student_id = $(this).attr('itemid');
-//      var activity_mark       = $('#activity_mark_'+student_id).val() ?  parseFloat($('#activity_mark_'+student_id).val()) : 0;
-//      var activity_obtain     = $('#activity_obtain_'+student_id).val() ? parseFloat($('#activity_obtain_'+student_id).val()) : 0;
-//      var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
-//      var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
-//      var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
-//      var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
-//      var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
-//      var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
+    // $(document).ready(function(){
+        
+    //     $('.fn_mark_total').keyup(function(){         
+    //         var student_id = $(this).attr('itemid');
+    //         var activity_mark = $('#activity_mark_'+student_id).val() ? parseFloat($('#activity_mark_'+student_id).val()) : 0;
+    //         var activity_obtain = $('#activity_obtain_'+student_id).val() ? parseFloat($('#activity_obtain_'+student_id).val()) : 0;
+            
+    //         var activity_score = (activity_obtain/activity_mark)*3;
+    //         $('#activity_score_'+student_id).val(activity_score.toFixed(2));
+            
+    //         var activity_out_of_ten = (activity_obtain/activity_mark)*10;
+    //         $('#activity_out_of_ten_'+student_id).val(activity_out_of_ten.toFixed(2));
+    //     }); 
      
-//      $('#exam_total_mark_'+student_id).val(activity_obtain/activity_mark)*10;
-//      $('#obtain_total_mark_'+student_id).val(activity_obtain+tutorial_obtain+practical_obtain+viva_obtain);
-                         
-//   }); 
- 
-}); 
+    // });
+    $(document).ready(function(){
+        
+        $('.fn_mark_total').keyup(function(){         
+            var student_id = $(this).attr('itemid');
+            var activity_mark = $('#activity_mark_'+student_id).val() ? parseFloat($('#activity_mark_'+student_id).val()) : 0;
+            var activity_obtain = $('#activity_obtain_'+student_id).val() ? parseFloat($('#activity_obtain_'+student_id).val()) : 0;
+            
+            var activity_score = (activity_obtain/activity_mark)*3;
+            $('#activity_score_'+student_id).val(Math.round(activity_score));
+            
+            var activity_out_of_ten = (activity_obtain/activity_mark)*10;
+            $('#activity_out_of_ten_'+student_id).val(Math.round(activity_out_of_ten));
+            
+            var activity_descriptor;
+            if (activity_score >= 2.5 && activity_score <= 3.0) {
+                activity_descriptor = "Outstanding";
+            } else if (activity_score >= 1.5 && activity_score <= 2.49) {
+                activity_descriptor = "Moderate";
+            } else if (activity_score >= 0.89 && activity_score <= 1.49) {
+                activity_descriptor = "Basic";
+            } else {
+                activity_descriptor = "N/A";
+            }
+            $('#activity_descriptor_'+student_id).val(activity_descriptor);
+        }); 
+     
+    });
+    
+    
+  
+
  $("#aoi_mark").validate();  
  $("#addmark").validate();  
 </script>

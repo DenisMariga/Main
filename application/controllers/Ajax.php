@@ -1211,6 +1211,31 @@ class Ajax extends My_Controller {
         echo $str;
     }
 
+
+    public function get_project_by_subject() {
+        
+        $school_id = $this->input->post('school_id');
+        $subject_id  = $this->input->post('subject_id');
+        $project_id  = $this->input->post('project_id');
+         if($this->session->userdata('role_id') == TEACHER){
+            $projects = $this->ajax->get_list('projects', array('status' => 1, 'subject_id' => $subject_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        }else{
+            $projects = $this->ajax->get_list('projects', array('status' => 1, 'subject_id' => $subject_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        }
+     
+       $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       $select = 'selected="selected"';
+       if (!empty($projects)) {
+           foreach ($projects as $obj) {   
+               
+               $selected = $projects == $obj->id ? $select : '';
+               $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
+               
+           }
+       }
+
+       echo $str;
+   }
     /*****************Function get_topic_by_lesson**********************************
      * @type            : Function
      * @function name   : get_get_topic_by_lesson

@@ -6,6 +6,9 @@
 <?php if(has_permission(VIEW, 'exam', 'markaoi')){ ?>
    | <a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a>
 <?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'projectmark')){ ?>
+   | <a href="<?php echo site_url('exam/projectmark/index'); ?>"><?php echo $this->lang->line('manage_project'); ?></a>
+<?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
    | <a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a>                 
 <?php } ?>

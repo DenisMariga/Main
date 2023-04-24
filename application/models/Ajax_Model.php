@@ -90,6 +90,17 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
+    public function get_project_by_subject($subject_id, $academic_year_id){
+                
+        $this->db->select('P.*');
+        $this->db->from('projects AS P');
+        $this->db->join('lp_lessons AS L', 'L.id = LD.lesson_id', 'left');  
+        $this->db->where('L.subject_id', $subject_id);
+        $this->db->where('L.academic_year_id', $academic_year_id);
+        $this->db->order_by('LD.id', 'ASC');
+        return $this->db->get()->result();
+        
+    }
     public function get_topic_by_lesson($lesson_detail_id, $academic_year_id)
     {
         # code...

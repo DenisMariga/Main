@@ -108,8 +108,6 @@
                                         <th><?php echo $this->lang->line('academic_year'); ?></th>
                                         <th> <?php echo $this->lang->line('class'); ?></th>
                                         <th><?php echo $this->lang->line('subject'); ?> </th>
-                                        <th><?php echo $this->lang->line('lesson'); ?> </th>
-                                        <th><?php echo $this->lang->line('topic'); ?> </th>
                                         <th><?php echo $this->lang->line('Project'); ?> </th>
                                         <th><?php echo $this->lang->line('Project_quiz'); ?> </th>
                                         <th><?php echo $this->lang->line('action'); ?> </th>                                            
@@ -137,8 +135,6 @@
                                             <td><?php echo $obj->session_year; ?></td>
                                             <td><?php echo $obj->class_name; ?></td>
                                             <td><?php echo $obj->subject; ?></td>
-                                            <td><?php echo $obj->Ltitle; ?></td>
-                                            <td><?php echo $obj->title; ?></td>
 
                                           
 
@@ -212,25 +208,6 @@
                                     </div>
                                 </div>
                                  
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lesson_detail_id"><?php echo $this->lang->line('lesson'); ?> <span class="required">*</span></label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="lesson_detail_id"  id="add_lesson_detail_id" required="required" onchange="get_topic_by_lesson(this.value, '', 'add_');">
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
-                                        </select>
-                                        <div class="help-block"><?php echo form_error('lesson_detail_id'); ?></div>
-                                    </div>
-                                </div>
-
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="topic_details_id"><?php echo $this->lang->line('topic'); ?> <span class="required">*</span></label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="topic_details_id"  id="add_topic_details_id" required="required">
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
-                                        </select>
-                                        <div class="help-block"><?php echo form_error('topic_details_id'); ?></div>
-                                    </div>
-                                </div>
                                 
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('Project'); ?> <span class="required">*</span></label>
@@ -298,36 +275,6 @@
                                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                                                                         
                                             </select>
                                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lesson_detail_id"><?php echo $this->lang->line('lesson'); ?> <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_"  name="lesson_detail_id"  id="edit_lesson_detail_id" required="required">
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option> 
-                                            <?php if(isset($lessons) && !empty($lessons)){ ?>
-                                                <?php foreach($lessons as $obj){ ?>
-                                                    <option value="<?php echo $obj->id; ?>" <?php if($project->lesson_detail_id == $obj->id){ echo 'selected="selected"';} ?>><?php echo $obj->title; ?></option>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </select>
-                                        <div class="help-block"><?php echo form_error('lesson_detail_id'); ?></div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="topic_details_id"><?php echo $this->lang->line('topic'); ?> <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_"  name="topic_details_id"  id="edit_topic_details_id" required="required">
-                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option> 
-                                            <?php if(isset($topics) && !empty($topics)){ ?>
-                                                <?php foreach($topics as $obj){ ?>
-                                                    <option value="<?php echo $obj->id; ?>" <?php if($project->topic_details_id == $obj->id){ echo 'selected="selected"';} ?>><?php echo $obj->title; ?></option>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </select>
-                                        <div class="help-block"><?php echo form_error('topic_details_id'); ?></div>
                                         </div>
                                     </div>
                                  

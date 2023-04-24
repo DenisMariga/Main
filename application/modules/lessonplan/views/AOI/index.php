@@ -252,7 +252,13 @@
                                          
                                     </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="add Compentency"><?php echo $this->lang->line('add_competency'); ?> <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea required="required" class="form-control" name="competency" id="add_competency" placeholder="<?php echo $this->lang->line('add_competency'); ?>"><?php echo isset($post['competency']) ?  $post['competency'] : '';  ?></textarea>
+                                        <div class="help-block"><?php echo form_error('question'); ?></div>
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="add Question"><?php echo $this->lang->line('add_question'); ?> <span class="required">*</span></label>
@@ -364,6 +370,14 @@
                                         
                                     </div>
                                 </div>
+
+                                <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aoi competency"><?php echo $this->lang->line('add_competency'); ?> </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea  class="form-control col-md-7 col-xs-12"  name="competency"  id="add_competency"  placeholder="<?php echo $this->lang->line('add_competency'); ?>"> <?php echo isset($aoi) ?  $aoi->competency : ''; ?></textarea>
+                                            <div class="help-block"><?php echo form_error('competency'); ?></div>
+                                        </div>
+                                    </div>
 
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aoi question"><?php echo $this->lang->line('add_question'); ?> </label>

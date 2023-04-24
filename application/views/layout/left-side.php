@@ -490,6 +490,7 @@
                                              
                     
                     <?php if(has_permission(VIEW, 'exam', 'markaoi') || 
+                               has_permission(VIEW, 'exam', 'projectmark') ||
                                has_permission(VIEW, 'exam', 'mark') ||
                                has_permission(VIEW, 'exam', 'examresult') || 
                                has_permission(VIEW, 'exam', 'finalresult') || 
@@ -504,6 +505,9 @@
                             <ul class="nav child_menu">
                                 <?php if(has_permission(VIEW, 'exam', 'markaoi')){ ?>
                                     <li><a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a></li>
+                                <?php } ?>
+                                <?php if(has_permission(VIEW, 'exam', 'projectmark')){ ?>
+                                    <li><a href="<?php echo site_url('exam/projectmark/index'); ?>"><?php echo $this->lang->line('manage_project'); ?></a></li>
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'mark')){ ?>
                                     <li><a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a></li>

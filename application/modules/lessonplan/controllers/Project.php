@@ -25,19 +25,12 @@ class Project extends MY_Controller {
     }
 
 
-    // public function greeting(){
-    //     // echo "hello there";
-    //     $this->data['list'] = TRUE;
-    //     $this->layout->title($this->lang->line('manage_project'). ' | ' . SMS);
-    //     $this->layout->view('project/index', $this->data);
-    // }
-
     
-// }  
+
     /*****************Function index**********************************
     * @type            : Function
     * @function name   : index
-    * @description     : Load "topic List" user interface                 
+    * @description     : Load "Project List" user interface                 
     *                       
     * @param           : $class_id integer value
     * @return          : null 
@@ -112,7 +105,7 @@ class Project extends MY_Controller {
 
             // check if subject is exist in projects table
               $school = $this->project->get_school_by_id($data['school_id']);
-            $exist = $this->project->get_single('projects', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['project'], 'Question'=>$data['question'], 'academic_year_id'=> $school->academic_year_id));
+            $exist = $this->project->get_single('projects', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'name'=>$data['project'], 'Question'=>$data['question'], 'academic_year_id'=> $school->academic_year_id));
               if($exist){
                   $this->project->update('projects', $data, array('id' => $exist->id));
                   $insert_id = $exist->id;
@@ -228,8 +221,6 @@ class Project extends MY_Controller {
          $this->form_validation->set_rules('school_id', $this->lang->line('school_name'), 'trim|required');
          $this->form_validation->set_rules('class_id', $this->lang->line('class'), 'trim|required');
          $this->form_validation->set_rules('subject_id', $this->lang->line('subject'), 'trim|required');
-         $this->form_validation->set_rules('lesson_detail_id', $this->lang->line('lesson'), 'trim|required');
-         $this->form_validation->set_rules('topic_details_id', $this->lang->line('topic'), 'trim|required');
          $this->form_validation->set_rules('project_name', $this->lang->line('Project'), 'trim|required');
          $this->form_validation->set_rules('project', $this->lang->line('Poject_quiz'), 'trim');
      }    
@@ -312,8 +303,6 @@ class Project extends MY_Controller {
          $items[] = 'school_id';
          $items[] = 'class_id';
          $items[] = 'subject_id';
-         $items[] = 'lesson_detail_id';
-         $items[] = 'topic_details_id';
          $items[] = 'Question';
          $items[] = 'name';
          

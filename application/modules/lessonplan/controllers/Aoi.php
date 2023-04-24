@@ -112,7 +112,7 @@ class Aoi extends MY_Controller {
 
             // check if subject is exist in aois table
               $school = $this->aoi->get_school_by_id($data['school_id']);
-            $exist = $this->aoi->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['activity_integration'], 'Question'=>$data['question'],'information'=>$data['information'], 'academic_year_id'=> $school->academic_year_id));
+            $exist = $this->aoi->get_single('aois', array('class_id' => $data['class_id'], 'subject_id'=>$data['subject_id'], 'lesson_detail_id'=>$data['lesson_detail_id'], 'topic_details_id'=>$data['topic_details_id'],'name'=>$data['activity_integration'], 'Question'=>$data['question'],'competency'=>$data['competency'],'information'=>$data['information'], 'academic_year_id'=> $school->academic_year_id));
               if($exist){
                   $this->aoi->update('aois', $data, array('id' => $exist->id));
                   $insert_id = $exist->id;
@@ -318,6 +318,7 @@ class Aoi extends MY_Controller {
          $items[] = 'lesson_detail_id';
          $items[] = 'topic_details_id';
          $items[] = 'Question';
+         $items[] = 'competency';
          $items[] = 'name';
          $items[] = 'information';
          
