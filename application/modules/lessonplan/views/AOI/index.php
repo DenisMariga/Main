@@ -313,7 +313,7 @@
                                     <div class="item form-group">  
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject_id"><?php echo $this->lang->line('subject'); ?> <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select  class="form-control col-md-12 col-xs-12 gsms-nice-select_"  name="subject_id"  id="edit_subject_id" required="required" onchange="get_topic_by_subject(this.value, '', 'edit_');">
+                                            <select  class="form-control col-md-12 col-xs-12 gsms-nice-select_"  name="subject_id"  id="edit_subject_id" required="required" onchange="get_lesson_by_subject(this.value, '', 'edit_');">
                                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                                                                         
                                             </select>
                                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
@@ -323,7 +323,7 @@
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lesson_detail_id"><?php echo $this->lang->line('lesson'); ?> <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_"  name="lesson_detail_id"  id="edit_lesson_detail_id" required="required">
+                                        <select  class="form-control col-md-7 col-xs-12 gsms-nice-select_"  name="lesson_detail_id"  id="edit_lesson_detail_id" required="required"onchange="get_topic_by_lesson(this.value, '', 'edit_');">
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option> 
                                             <?php if(isset($lessons) && !empty($lessons)){ ?>
                                                 <?php foreach($lessons as $obj){ ?>

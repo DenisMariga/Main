@@ -1073,7 +1073,6 @@ $lang['bulk_360'] = "Bulk 360";
 $lang['sms_to'] = "SMS To";
 $lang['manage_lesson_plan'] = "Manage Lesson Plan";
 $lang['AOI'] = "Activity of Integration";
-$lang['AOI'] = "Project";
 $lang['manage_AOI'] = "Manage Acitivity of Integration";
 $lang['Aoi_quiz'] = "Activity Question";
 $lang['Project'] = "Project Title";

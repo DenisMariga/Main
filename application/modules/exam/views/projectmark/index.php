@@ -159,9 +159,9 @@
                                     
                                     <td>
                                     <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="project_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_score > 0){ echo $project_mark->project_score; }else{ echo '';} ?>"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
+                                        <input type="number"  id="project_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_score > 0){ echo $project_mark->project_score; }else{ echo '';} ?>"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off" readonly/>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                            <input readonly="readonly" type="number" value="0"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
                                     <td>

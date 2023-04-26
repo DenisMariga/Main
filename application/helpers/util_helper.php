@@ -299,7 +299,7 @@ if (!function_exists('get_exam_mark')) {
 }
 if (!function_exists('get_exam_aoi_mark')) {
 
-    function get_exam_aoi_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
+    function get_exam_aoi_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$lesson_detail_id,$topic_details_id,$activity_id ) {
         $ci = & get_instance();
         $ci->db->select('A.*');
         $ci->db->from('aoi_marks AS A');
@@ -312,6 +312,9 @@ if (!function_exists('get_exam_aoi_mark')) {
         }
         $ci->db->where('A.student_id', $student_id);
         $ci->db->where('A.subject_id', $subject_id);
+        $ci->db->where('A.lesson_detail_id', $lesson_detail_id);
+        $ci->db->where('A.topic_details_id', $topic_details_id);
+        $ci->db->where('A.activity_id', $activity_id);
         return $ci->db->get()->row();
     }
 

@@ -165,10 +165,10 @@ class MarkAoi extends MY_Controller {
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
                 'academic_year_id' => $school->academic_year_id,
-                'subject_id' => $subject_id
-                // 'lesson_detail_id'=> $lesson_detail_id,
-                // 'topic_details_id' => $topic_details_id,
-                // 'activity_id' => $activity_id  
+                'subject_id' => $subject_id,
+                'lesson_detail_id' => $lesson_detail_id,
+                'topic_details_id' => $topic_details_id,
+                'activity_id' => $activity_id
             );
             
             if($section_id){
