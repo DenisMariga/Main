@@ -1632,3 +1632,4 @@ $config['my_exam']['markaoi']['5'] = '1|1|1|0';
 $config['my_lessonplan']['project']['5'] = '1|1|1|1';
 $config['my_exam']['projectmark']['1'] = '1|1|1|0';
 $config['my_exam']['projectmark']['5'] = '1|1|1|0';
+$config['my_exam']['activityaverage']['1'] = '0|0|1|0';

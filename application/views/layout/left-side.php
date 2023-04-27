@@ -494,6 +494,7 @@
                                has_permission(VIEW, 'exam', 'mark') ||
                                has_permission(VIEW, 'exam', 'examresult') || 
                                has_permission(VIEW, 'exam', 'finalresult') || 
+                               has_permission(VIEW, 'exam', 'activityaverage') || 
                                has_permission(VIEW, 'exam', 'meritlist') || 
                                has_permission(VIEW, 'exam', 'marksheet') || 
                                has_permission(VIEW, 'exam', 'resultcard') || 
@@ -517,6 +518,9 @@
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'finalresult')){ ?>
                                     <li><a href="<?php echo site_url('exam/finalresult/index'); ?>"><?php echo $this->lang->line('exam_final_result'); ?></a></li>
+                                <?php } ?>
+                                <?php if(has_permission(VIEW, 'exam', 'activityaverage')){ ?>
+                                    <li><a href="<?php echo site_url('exam/activityaverage/index'); ?>"><?php echo $this->lang->line('activity_average'); ?></a></li>
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'meritlist')){ ?>
                                     <li><a href="<?php echo site_url('exam/meritlist/index'); ?>"><?php echo $this->lang->line('merit_list'); ?></a></li>

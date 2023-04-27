@@ -157,5 +157,22 @@ class markaoi_Model extends MY_Model {
         return $this->db->get()->result();
          
     }
+    public function get_average_activity_score_by_student($school_id, $exam_id, $class_id, $student_id, $topic_details_id,$activity_id, $academic_year_id,$aoi_marks_id ){
+        
+        $this->db->select('M.average_activity_score S.name AS subject');
+        $this->db->from('activity_averages AS AV'); 
+        $this->db->join('subjects AS S', 'S.id = AV.subject_id', 'left');
+        // $this->db->join('lp_lesson_details AS l', 'l.id = M.lesson_detail_id', 'left');
+        $this->db->join('lp_topic_details AS t', 't.id = AV.topic_details_id', 'left');
+        $this->db->join('aois AS a', 'a.id = AV.activity_id', 'left');
+        $this->db->join('aoi_marks AS am', 'am.id = AV.aoi_marks_id', 'left');
+        $this->db->where('AV.school_id', $school_id);
+        $this->db->where('AV.exam_id', $exam_id);
+        $this->db->where('AV.class_id', $class_id);
+        $this->db->where('M.student_id', $student_id);
+        $this->db->where('AV.academic_year_id', $academic_year_id); 
+        return $this->db->get()->result();
+         
+    }
 
 }

@@ -15,6 +15,9 @@
 <?php if(has_permission(VIEW, 'exam', 'finalresult')){ ?>
    | <a href="<?php echo site_url('exam/finalresult/index'); ?>"><?php echo $this->lang->line('exam_final_result'); ?></a>                 
 <?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'activityaverage')){ ?>
+   | <a href="<?php echo site_url('exam/activityaverage/index'); ?>"><?php echo $this->lang->line('activity_average'); ?></a>                 
+<?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'meritlist')){ ?>
    | <a href="<?php echo site_url('exam/meritlist/index'); ?>"><?php echo $this->lang->line('merit_list'); ?></a>                 
 <?php } ?>   
