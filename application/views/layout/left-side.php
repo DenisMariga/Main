@@ -463,8 +463,9 @@
                         </li> 
                     <?php } ?>     
                         
-                    <?php if(has_permission(VIEW, 'exam', 'grade') || 
-                            has_permission(VIEW, 'exam', 'exam')){ ?>    
+                    <?php if(has_permission(VIEW, 'exam', 'grade') ||
+                           has_permission(VIEW, 'exam', 'exam' ) || 
+                          has_permission(VIEW, 'exam', 'grouping')){ ?>    
                         <li><a><i class="fa fa-graduation-cap"></i> <?php echo $this->lang->line('manage_exam'); ?> <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <?php if(has_permission(VIEW, 'exam', 'grade')){ ?>
@@ -484,8 +485,11 @@
                                 <?php if(has_permission(VIEW, 'exam', 'attendance')){ ?>
                                     <li><a  href="<?php echo site_url('exam/attendance/index'); ?>"><?php echo $this->lang->line('attendance'); ?></a></li>
                                 <?php } ?>    
-                                        </ul>
-                                    </li> 
+                                <?php if(has_permission(VIEW, 'exam', 'grouping')){ ?>
+                                    <li><a  href="<?php echo site_url('exam/grouping/index'); ?>"><?php echo $this->lang->line('grouping'); ?></a></li>
+                                <?php } ?>    
+                            </ul>
+                        </li> 
                     <?php } ?>
                                              
                     

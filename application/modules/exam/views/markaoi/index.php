@@ -153,7 +153,6 @@
                             ?>
                             <?php foreach ($students as $obj) { ?>
                             <?php  $aoi_mark = get_exam_aoi_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$lesson_detail_id,$topic_details_id,$activity_id); ?>
-                            <?php  $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
                             <!-- $lesson_detail_id,$topic_details_id,$activity_id -->
                                 <tr>
                                     <td><?php echo $obj->roll_no; ?></td>
@@ -170,51 +169,39 @@
                                         <input type="number" id="activity_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_mark > 0){ echo $aoi_mark->activity_mark; }else{ echo '';} ?>"  name="activity_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
                                     </td>
                                     <td>
-                                        <?php if(!empty($attendance)){ ?>
+                                        
                                             <input type="number"  id="activity_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_obtain > 0 ){ echo $aoi_mark->activity_obtain; }else{ echo ''; } ?>"  name="activity_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="activity_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
-                                        <?php } ?>
+                                      
                                     </td>
                                     
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
+                                 
                                         <input type="number"  id="activity_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_score > 0){ echo $aoi_mark->activity_score; }else{ echo '';} ?>"  name="activity_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off" readonly/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="written_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
-                                        <?php } ?>
+                                       
                                     </td>
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
+                                   
                                             <input type="text"  id="activity_descriptor_<?php echo $obj->student_id; ?>" value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_descriptor != '' ){ echo $aoi_mark->activity_descriptor; }else{ echo ''; } ?>"  name="activity_descriptor[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off" readonly/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="activity_descriptor[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
+                                      
                                     </td>
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
+                                    
                                         <input type="number"  id="activity_out_of_ten_<?php echo $obj->student_id; ?>"  value="<?php if(!empty($aoi_mark) && $aoi_mark->activity_out_of_ten > 0){ echo $aoi_mark->activity_out_of_ten; }else{ echo '';} ?>"name="activity_out_of_ten[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"  autocomplete="off" readonly/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="text" value=""  name="remark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off"/>
-                                        <?php } ?>
+                                        
                                     </td>
                             
                                 
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
+                                   
                                         <textarea id="activity_skill_<?php echo $obj->student_id; ?>" name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($aoi_mark) && $aoi_mark->activity_skill != '' ){ echo $aoi_mark->activity_skill; }else{ echo ''; } ?></textarea>
-                                        <?php }else{ ?>
-                                        <input readonly="readonly" type="text" value=""  name="activity_skill[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
-                                        <?php } ?>
+                                       
 
                                     </td>
                           
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
+                               
                                         <textarea id="activity_strengths_<?php echo $obj->student_id; ?>" name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($aoi_mark) && $aoi_mark->activity_strengths != '' ){ echo $aoi_mark->activity_strengths; }else{ echo ''; } ?></textarea>
-                                    <?php }else{ ?>
-                                        <input readonly="readonly" type="text" value="" name="activity_strengths[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
-                                    <?php } ?>
+                                   
 
                                     </td>
                                 </tr>
@@ -312,7 +299,7 @@
    }  
    
   </script>
-<!-- Super admin js end -->
+ 
 
  <script type="text/javascript">     
   
@@ -354,46 +341,12 @@
                }
             }
         });         
-        // $.ajax({       
-        //     type   : "POST",
-        //     url    : "<?php echo site_url('ajax/get_lesson_by_class'); ?>",
-        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id},               
-        //     async  : false,
-        //     success: function(response){                                                   
-        //        if(response)
-        //        {
-        //           $('#lesson_detail_id').html(response);
-        //        }
-        //     }
-        // }); 
-        // $.ajax({       
-        //     type   : "POST",
-        //     url    : "<?php echo site_url('ajax/get_topic_by_class'); ?>",
-        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id, topic_details_id: topic_details_id},               
-        //     async  : false,
-        //     success: function(response){                                                   
-        //        if(response)
-        //        {
-        //           $('#topic_details_id').html(response);
-        //        }
-        //     }
-        // });  
-        // $.ajax({       
-        //     type   : "POST",
-        //     url    : "<?php echo site_url('ajax/get_activity_by_class'); ?>",
-        //     data   : {school_id:school_id, class_id : class_id , subject_id: subject_id, lesson_detail_id: lesson_detail_id, topic_details_id: topic_details_id,activity_id: activity_id},               
-        //     async  : false,
-        //     success: function(response){                                                   
-        //        if(response)
-        //        {
-        //           $('#activity_id').html(response);
-        //        }
-        //     }
-        // });        
+              
     }
     <?php if(isset($aoi_mark)){?>
         get_lesson_by_subject('<?php echo $aoi_mark->subject_id; ?>', '<?php echo $aoi_mark->lesson_detail_id; ?>');
     <?php } ?>
+    
     function get_lesson_by_subject(subject_id,lesson_detail_id){       
         
         var school_id = $('#school_id').val();      

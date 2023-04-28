@@ -133,11 +133,20 @@
                             ?>
                             <?php foreach ($students as $obj) { ?>
                             <?php  $project_mark = get_exam_project_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
-                            <?php  $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <?php  $grouping = get_student_group($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
                             <!-- $lesson_detail_id,$topic_details_id,$activity_id -->
                                 <tr>
+                                <?php if(!empty($grouping)){ ?>
                                     <td><?php echo $obj->roll_no; ?></td>
+                                    <?php }else{ ?>
+                                            
+                                        <?php } ?>
+                                        <?php if(!empty($grouping)){ ?>
                                     <td><?php echo ucfirst($obj->student_name); ?></td>
+                                    <?php }else{ ?>
+                                            
+                                            <?php } ?>
+                                            <?php if(!empty($grouping)){ ?>
                                     <td>
                                         <?php if ($obj->photo != '') { ?>
                                             <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $obj->photo; ?>" alt="" width="40" /> 
@@ -145,32 +154,43 @@
                                             <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="40" /> 
                                         <?php } ?>
                                     </td>  
+                                    <?php }else{ ?>
+                                            
+                                            <?php } ?>
                                     <td>
+                                    <?php if(!empty($grouping)){ ?>
                                         <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />                                       
                                         <input type="number" id="project_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_mark > 0){ echo $project_mark->project_mark; }else{ echo '';} ?>"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
-                                    </td>
-                                    <td>
-                                        <?php if(!empty($attendance)){ ?>
-                                            <input type="number"  id="project_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($project_mark) && $project_mark->project_obtain > 0 ){ echo $project_mark->project_obtain; }else{ echo ''; } ?>"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                         <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                            <input type="hidden" type="number" value="0"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
                                     
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
-                                        <input type="number"  id="project_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_score > 0){ echo $project_mark->project_score; }else{ echo '';} ?>"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off" readonly/>
-                                        <?php }else{ ?>
-                                            <input readonly="readonly" type="number" value="0"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                    <?php if(!empty($grouping)){ ?>
+                                        <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" /> 
+                                        
+                                            <input type="number"  id="project_obtain_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($project_mark) && $project_mark->project_obtain > 0 ){ echo $project_mark->project_obtain; }else{ echo ''; } ?>"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <?php }else{ ?>
+                                            <input type="hidden" type="number" value="0"  name="project_obtain[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
+                                    
                                     <td>
-                                    <?php if(!empty($attendance)){ ?>
-                                        <textarea id="Remarks_<?php echo $obj->student_id; ?>" name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($project_mark) && $project_mark->Remarks != '' ){ echo $project_mark->Remarks; }else{ echo ''; } ?></textarea>
+                                    <?php if(!empty($grouping)){ ?>
+                                   
+                                        <input type="number"  id="project_score_<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_score > 0){ echo $project_mark->project_score; }else{ echo '';} ?>"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12"   autocomplete="off" readonly/>
                                         <?php }else{ ?>
-                                        <input readonly="readonly" type="text" value=""  name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"/>
+                                            <input type="hidden" type="number" value="0"  name="project_score[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                        <?php } ?> 
+                                    </td>
+                                    <td>
+                                    <?php if(!empty($grouping)){ ?>
+                                        <textarea id="Remarks_<?php echo $obj->student_id; ?>" name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" autocomplete="off"><?php if(!empty($project_mark) && $project_mark->Remarks != '' ){ echo $project_mark->Remarks; }else{ echo ''; } ?></textarea>
+                                       
+                                        <?php }else{ ?>
+                                            <input type="hidden" type="number" value="0"  name="Remarks[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
-
                                     </td>
                                 </tr>
                             <?php } ?>

@@ -89,10 +89,8 @@ class ActivityAverage extends MY_Controller {
             $condition['academic_year_id'] = $A_Average->academic_year_id;
             $this->data['exams'] = $this->A_Average->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }
-        
-        
-        
-        $this->layout->title($this->lang->line('manage_merit_list') . ' | ' . SMS);
+
+        $this->layout->title($this->lang->line('manage_averages_list') . ' | ' . SMS);
         $this->layout->view('activity_average/index', $this->data);
         
     }

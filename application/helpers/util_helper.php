@@ -277,7 +277,27 @@ if (!function_exists('get_exam_attendance')) {
     }
 
 }
+if (!function_exists('get_student_group')) {
 
+    function get_student_group($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id) {
+        $ci = & get_instance();
+        $ci->db->select('EA.is_attend');
+        $ci->db->from('project_groups AS EA');
+        $ci->db->where('EA.school_id', $school_id);
+        $ci->db->where('EA.academic_year_id', $academic_year_id);
+        $ci->db->where('EA.exam_id', $exam_id);
+        $ci->db->where('EA.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('EA.section_id', $section_id);
+        }
+        $ci->db->where('EA.student_id', $student_id);
+        $ci->db->where('EA.project_id', $project_id);
+        $ci->db->where('EA.subject_id', $subject_id);
+        return @$ci->db->get()->row()->is_attend;
+        
+    }
+
+}
 if (!function_exists('get_exam_mark')) {
 
     function get_exam_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {

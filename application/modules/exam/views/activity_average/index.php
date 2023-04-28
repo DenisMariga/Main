@@ -145,66 +145,84 @@
                 </table>                
             </div>   -->
             <div class="x_content">
-                    <table id="datatable-responsive" class="table table-striped_ table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th><?php echo $this->lang->line('roll_no'); ?></th>
-                                <th><?php echo $this->lang->line('name'); ?></th>
-                                <th><?php echo $this->lang->line('photo'); ?></th>
-                                <th><?php echo $this->lang->line('Activity_Score'); ?></th>
-                                <th><?php echo $this->lang->line('Averages'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $groups = array();
-                            foreach ($activityaverage as $obj) {
-                                $name = $obj->student;
-                                $roll = $obj->roll_no;
-                                $score = $obj->activity_score;
-                                
-                                if (isset($groups[$name][$roll])) {
-                                    $groups[$name][$roll][] = $score;
-                                } else {
-                                    $groups[$name][$roll] = array($score);
-                                }
-                            }
-                            
-                            foreach ($groups as $name => $rolls) {
-                                foreach ($rolls as $roll => $scores) {
-                                    $avg = number_format(array_sum($scores) / count($scores), 1);
-                                    ?>
-                                    <tr>
-                                        <?php if ($roll != '') { ?>
-                                            <td><?php echo $roll; ?></td>
-                                        <?php } else { ?>
-                                            <td><?php echo $this->lang->line('not_assigned'); ?></td>
-                                        <?php } ?>
-                                        <td><?php echo $name; ?></td>
-                                        <td>
-                                            <?php if ($obj->photo != '') { ?>
-                                                <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $obj->photo; ?>" alt="" width="45" />
-                                            <?php } else { ?>
-                                                <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" />
-                                            <?php } ?>
-                                            <input type="hidden" value="<?php echo $obj->id; ?>" name="students[]" />
-                                        </td>
-                                        <td><?php echo implode(', ', $scores); ?></td>
-                                        <td><?php echo $avg; ?></td>
-                                    </tr>
-                                <?php }
-                            
-                            
-                            }
-                            if (empty($groups)) {
-                                ?>
-                                <tr>
-                                    <td colspan="10" class="text-center"><?php echo $this->lang->line('no_data_found'); ?></td>
-                                </tr>
+    <table id="datatable-responsive" class="table table-striped_ table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th><?php echo $this->lang->line('roll_no'); ?></th>
+                <th><?php echo $this->lang->line('name'); ?></th>
+                <th><?php echo $this->lang->line('photo'); ?></th>
+                <th><?php echo $this->lang->line('Activity_Score'); ?></th>
+                <th><?php echo $this->lang->line('Averages'); ?></th>
+                <th>Descriptor/Achievement Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $groups = array();
+            foreach ($activityaverage as $obj) {
+                $name = $obj->student;
+                $roll = $obj->roll_no;
+                $score = $obj->activity_score;
+
+                if (isset($groups[$name][$roll])) {
+                    $groups[$name][$roll][] = $score;
+                } else {
+                    $groups[$name][$roll] = array($score);
+                }
+            }
+
+            foreach ($groups as $name => $rolls) {
+                foreach ($rolls as $roll => $scores) {
+                    $avg = number_format(array_sum($scores) / count($scores), 1);
+                    $level = '';
+
+                    if ($avg >= 2.5 && $avg <= 3.0) {
+                        $level = 'Outstanding';
+                    } elseif ($avg >= 1.5 && $avg <= 2.49) {
+                        $level = 'Moderate';
+                    } elseif ($avg >= 0.9 && $avg <= 1.49) {
+                        $level = 'Basic';
+                    }
+
+                    ?>
+                    <tr>
+                        <?php if ($roll != '') { ?>
+                            <td><?php echo $roll; ?></td>
+                        <?php } else { ?>
+                            <td><?php echo $this->lang->line('not_assigned'); ?></td>
+                        <?php } ?>
+                        <td><?php echo $name; ?></td>
+                        <td>
+                            <?php if ($obj->photo != '') { ?>
+                                <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $obj->photo; ?>" alt="" width="45" />
+                            <?php } else { ?>
+                                <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" />
                             <?php } ?>
-                        </tbody>
-                    </table>
-        </div>
+                            <input type="hidden" value="<?php echo $obj->id; ?>" name="students[]" />
+                        </td>
+                        <td>
+                            <?php 
+                            foreach ($scores as $key => $score) {
+                                echo 'Topic ' . ($key + 1) . ' => <strong>' . $score . '</strong>, ';
+                            }
+                            ?>
+                        </td>
+
+                        <td><?php echo $avg; ?></td>
+                        <td><?php echo $level; ?></td>
+                    </tr>
+                <?php }
+            }
+            if (empty($groups)) {
+                ?>
+                <tr>
+                    <td colspan="10" class="text-center"><?php echo $this->lang->line('no_data_found'); ?></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
 
             
             <div class="row no-print">

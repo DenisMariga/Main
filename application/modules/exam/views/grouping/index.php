@@ -2,7 +2,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="head-title"><i class="fa fa-graduation-cap"></i><small> <?php echo $this->lang->line('manage_exam_attendance'); ?></small></h3>
+                <h3 class="head-title"><i class="fa fa-graduation-cap"></i><small> <?php echo $this->lang->line('manage_project_assigning'); ?></small></h3>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>                    
                 </ul>
@@ -12,7 +12,7 @@
                  <?php $this->load->view('quick-link'); ?> 
             </div>
             <div class="x_content"> 
-                <?php echo form_open_multipart(site_url('exam/attendance/index'), array('name' => 'student', 'id' => 'student', 'class' => 'form-horizontal form-label-left'), ''); ?>
+                <?php echo form_open_multipart(site_url('exam/grouping/index'), array('name' => 'student', 'id' => 'student', 'class' => 'form-horizontal form-label-left'), ''); ?>
                 <div class="row">
                     
                     <div class="col-md-10 col-sm-10 col-xs-12">
@@ -31,7 +31,7 @@
                                 <div class="help-block"><?php echo form_error('exam_id'); ?></div>
                             </div>
                         </div>
-                        
+                         
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="item form-group"> 
                                 <?php $teacher_student_data = get_teacher_access_data('student'); ?>
@@ -62,10 +62,19 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div class="item form-group"> 
                                 <div><?php echo $this->lang->line('subject'); ?> <span class="required">*</span></div>
-                                <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required">                                
+                                <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required" onchange="get_project_by_subject(this.value,'','');">                               
                                     <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                                 </select>
                                 <div class="help-block"><?php echo form_error('subject_id'); ?></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div class="item form-group"> 
+                                <div><?php echo $this->lang->line('Project'); ?> <span class="required">*</span></div>
+                                <select  class="form-control col-md-7 col-xs-12" name="project_id" id="project_id" required="required">                                
+                                    <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
+                                </select>
+                                <div class="help-block"><?php echo form_error('project_id'); ?></div>
                             </div>
                         </div>
                     </div>
@@ -84,7 +93,7 @@
                 <div class="row">
                     <div class="col-sm-4  col-sm-offset-4 layout-box">
                         <p>
-                            <h4><?php echo $this->lang->line('exam_attendance'); ?></h4>                            
+                            <h4><?php echo $this->lang->line('project_grouping'); ?></h4>                            
                         </p>
                     </div>
                 </div>            
@@ -100,9 +109,9 @@
                             <th><?php echo $this->lang->line('name'); ?></th>
                             <th><?php echo $this->lang->line('photo'); ?></th>
                             <th>
-                                <?php if(has_permission(VIEW, 'exam', 'attendance') && !has_permission(EDIT, 'exam', 'attendance')){ ?>
+                                <?php if(has_permission(VIEW, 'exam', 'grouping') && !has_permission(EDIT, 'exam', 'grouping')){ ?>
                                     <input type="checkbox" value="1" name="present" id="fn_present" disabled="disabled" class=""/> <?php echo $this->lang->line('attend_all'); ?>
-                                <?php }else if(has_permission(EDIT, 'exam', 'attendance')){ ?> 
+                                <?php }else if(has_permission(EDIT, 'exam', 'grouping')){ ?> 
                                     <input type="checkbox" value="1" name="present" id="fn_present" class="fn_all_attendnce"/> <?php echo $this->lang->line('attend_all'); ?>
                                 <?php } ?> 
                                     
@@ -115,7 +124,7 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php $attendance = get_exam_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id); ?>
+                            <?php $grouping = get_student_group($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
                                 <tr>
                                     <td><?php echo $count++;  ?></td>
                                     <td><?php echo $obj->roll_no; ?></td>
@@ -128,10 +137,10 @@
                                         <?php } ?>
                                     </td>  
                                     <td>
-                                        <?php if(has_permission(VIEW, 'exam', 'attendance') && !has_permission(EDIT, 'exam', 'attendance')){ ?>
-                                            <input type="checkbox" value="1" itemid="<?php echo $obj->student_id; ?>" name="student_<?php echo $obj->id; ?>"  disabled="disabled" class="" <?php if($attendance){ echo 'checked="checked"'; } ?> />
-                                        <?php }else if(has_permission(EDIT, 'exam', 'attendance')){ ?> 
-                                            <input type="checkbox" value="1" itemid="<?php echo $obj->student_id; ?>" name="student_<?php echo $obj->id; ?>" class="present fn_single_attendnce" <?php if($attendance){ echo 'checked="checked"'; } ?> />
+                                        <?php if(has_permission(VIEW, 'exam', 'grouping') && !has_permission(EDIT, 'exam', 'grouping')){ ?>
+                                            <input type="checkbox" value="1" itemid="<?php echo $obj->student_id; ?>" name="student_<?php echo $obj->id; ?>"  disabled="disabled" class="" <?php if($grouping){ echo 'checked="checked"'; } ?> />
+                                        <?php }else if(has_permission(EDIT, 'exam', 'grouping')){ ?> 
+                                            <input type="checkbox" value="1" itemid="<?php echo $obj->student_id; ?>" name="student_<?php echo $obj->id; ?>" class="present fn_single_attendnce" <?php if($grouping){ echo 'checked="checked"'; } ?> />
                                         <?php } ?> 
                                     </td>
                                 </tr>
@@ -144,7 +153,7 @@
                     </tbody>
                 </table>                
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="instructions"><strong><?php echo $this->lang->line('instruction'); ?>: </strong> <?php echo $this->lang->line('exam_attendance_instruction'); ?></div>
+                    <div class="instructions"><strong><?php echo $this->lang->line('instruction'); ?>: </strong> <?php echo $this->lang->line('exam_project_instruction'); ?></div>
                 </div>
             </div> 
             
@@ -255,6 +264,32 @@
         
         
     }
+    <?php if(isset($grouping)){?>
+        get_project_by_subject('<?php echo $subject_id; ?>', '<?php echo $project_id; ?>');
+    <?php } ?>
+    function get_project_by_subject(subject_id,project_id){       
+        
+        var school_id = $('#school_id').val();      
+             
+        if(!school_id){
+           toastr.error('<?php echo $this->lang->line("select_school"); ?>');
+           return false;
+        } 
+        
+        $.ajax({       
+            type   : "POST",
+            url    : "<?php echo site_url('ajax/get_project_by_subject'); ?>",
+            data   : {school_id:school_id,subject_id : subject_id ,project_id : project_id},                   
+            async  : false,
+            success: function(response){                                                   
+               if(response)
+               {
+                  $('#project_id').html(response);
+               }
+            }
+        }); 
+             
+    }
   
   $(document).ready(function(){
   
@@ -278,6 +313,7 @@
           var class_id   = $('#class_id').val();
           var section_id = $('#section_id').val();        
           var subject_id = $('#subject_id').val(); 
+          var project_id = $('#project_id').val(); 
           var exam_id   = $('#exam_id').val();
           var obj        = $(this);
           
@@ -288,8 +324,8 @@
           
           $.ajax({       
             type   : "POST",
-            url    : "<?php echo site_url('exam/attendance/update_single'); ?>",
-            data   : {school_id:school_id, status : status , exam_id:exam_id, student_id: student_id, class_id:class_id, section_id:section_id, subject_id:subject_id},               
+            url    : "<?php echo site_url('exam/grouping/update_single'); ?>",
+            data   : {school_id:school_id, status : status , exam_id:exam_id, student_id: student_id, class_id:class_id, section_id:section_id, subject_id:subject_id, project_id:project_id},               
             async  : false,
             success: function(response){ 
                 if(response == 'ay'){
@@ -316,12 +352,13 @@
           var class_id   = $('#class_id').val();
           var section_id = $('#section_id').val();
           var subject_id = $('#subject_id').val();
+          var project_id = $('#project_id').val();
           var obj        = $(this);
           
           $.ajax({       
             type   : "POST",
-            url    : "<?php echo site_url('exam/attendance/update_all'); ?>",
-            data   : {school_id:school_id, status : status , exam_id:exam_id, class_id:class_id, section_id:section_id, subject_id:subject_id },               
+            url    : "<?php echo site_url('exam/grouping/update_all'); ?>",
+            data   : {school_id:school_id, status : status , exam_id:exam_id, class_id:class_id, section_id:section_id, subject_id:subject_id,project_id:project_id },               
             async  : false,
             success: function(response){
                 
