@@ -90,14 +90,22 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
+    public function get_activity_by_topic($topic_details_id, $academic_year_id){
+                
+        $this->db->select('A.*');
+        $this->db->from('aois AS A');
+        $this->db->where('A.topic_details_id', $topic_details_id);
+        $this->db->where('A.academic_year_id', $academic_year_id);
+        $this->db->order_by('A.id', 'ASC');
+        return $this->db->get()->result();
+    }
     public function get_project_by_subject($subject_id, $academic_year_id){
                 
         $this->db->select('P.*');
         $this->db->from('projects AS P');
-        $this->db->join('lp_lessons AS L', 'L.id = LD.lesson_id', 'left');  
-        $this->db->where('L.subject_id', $subject_id);
-        $this->db->where('L.academic_year_id', $academic_year_id);
-        $this->db->order_by('LD.id', 'ASC');
+        $this->db->where('P.subject_id', $subject_id);
+        $this->db->where('P.academic_year_id', $academic_year_id);
+        $this->db->order_by('P.id', 'ASC');
         return $this->db->get()->result();
         
     }

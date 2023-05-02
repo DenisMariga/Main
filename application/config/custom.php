@@ -1634,3 +1634,7 @@ $config['my_exam']['projectmark']['1'] = '1|1|1|0';
 $config['my_exam']['projectmark']['5'] = '1|1|1|0';
 $config['my_exam']['activityaverage']['1'] = '0|0|1|0';
 $config['my_exam']['grouping']['1'] = '1|1|1|0';
+$config['my_exam']['formativecard']['1'] = '0|0|1|0';
+$config['my_exam']['grouping']['5'] = '1|1|1|0';
+$config['my_exam']['formativecard']['5'] = '0|0|1|0';
+$config['my_exam']['activityaverage']['5'] = '0|0|1|0';

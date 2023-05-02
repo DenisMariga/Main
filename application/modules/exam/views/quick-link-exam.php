@@ -27,8 +27,14 @@
  <?php if(has_permission(VIEW, 'exam', 'resultcard')){ ?>
    | <a href="<?php echo site_url('exam/resultcard/index'); ?>"><?php echo $this->lang->line('result_card'); ?></a>
 <?php } ?>   
+ <?php if(has_permission(VIEW, 'exam', 'formativecard')){ ?>
+   | <a href="<?php echo site_url('exam/formativecard/index'); ?>"><?php echo $this->lang->line('formative_card'); ?></a>
+<?php } ?>   
 <?php if(has_permission(VIEW, 'exam', 'resultcard')){ ?>
    | <a href="<?php echo site_url('exam/resultcard/all'); ?>"><?php echo $this->lang->line('all_result_card'); ?></a>
+<?php } ?>     
+<?php if(has_permission(VIEW, 'exam', 'formativecard')){ ?>
+   | <a href="<?php echo site_url('exam/formativecard/all'); ?>"><?php echo $this->lang->line('all_formative_card'); ?></a>
 <?php } ?>     
 <?php if(has_permission(VIEW, 'exam', 'mail')){ ?>
    | <a href="<?php echo site_url('exam/mail/index'); ?>"><?php echo $this->lang->line('mark_send_by_email'); ?></a>                    

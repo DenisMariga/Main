@@ -82,6 +82,7 @@
                     <div class="col-sm-6 col-xs-6  col-sm-offset-3 col-xs-offset-3  layout-box">
                         <p>
                             <?php if(isset($school)){ ?>
+                                <div><img   src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" width="70" /></div>
                             <h4><?php echo $school->school_name; ?></h4>
                             <p> <?php echo $school->address; ?></p>
                             <?php } ?>
@@ -96,7 +97,7 @@
                             <?php echo $this->lang->line('name'); ?> : <?php echo $std->name; ?><br/>
                             <?php echo $this->lang->line('class'); ?> : <?php echo $std->class_name; ?>,
                             <?php echo $this->lang->line('section'); ?> : <?php echo $std->section; ?>,
-                            <?php echo $this->lang->line('roll_no'); ?> : <?php echo $std->roll_no; ?>
+                            <?php echo $this->lang->line('adm_no'); ?> : <?php echo $std->admission_no ; ?>
                         </p>
                     </div>
                 </div>            

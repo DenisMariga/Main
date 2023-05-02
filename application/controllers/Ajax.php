@@ -264,7 +264,7 @@ class Ajax extends My_Controller {
      * @type            : Function
      * @function name   : get_assignment_by_subject
      * @description     : this function used to populate assignment list by subject 
-      for user interface
+      *for user interface
      * @param           : null 
      * @return          : $str string  value with assignment list
      * ********************************************************** */
@@ -709,7 +709,7 @@ class Ajax extends My_Controller {
         $select = 'selected="selected"';
         if(!empty($aois)) {
             foreach ($aois as $obj) {
-                $selected = $aois == $obj->id ? $select : '';
+                $selected = $activity_id == $obj->id ? $select : '';
                 $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
             }
         }
@@ -729,21 +729,22 @@ class Ajax extends My_Controller {
 
         $school_id = $this->input->post('school_id');
         $topic_details_id = $this->input->post('topic_details_id');
-        // $subject_id = $this->input->post('subject_id');
         $activity_id = $this->input->post('activity_id');
-       
-        if($this->session->userdata('role_id') == TEACHER){
-            $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
-        }else{
-            $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
-        }
+        $school = $this->ajax->get_school_by_id($school_id); 
+        $aois = $this->ajax->get_activity_by_topic($topic_details_id, @$school->academic_year_id); 
+        
+        // if($this->session->userdata('role_id') == TEACHER){
+        //     $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
+        // }else{
+        //     $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+        // }
        
         $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
        
         $select = 'selected="selected"';
         if(!empty($aois)) {
             foreach ($aois as $obj) {
-                $selected = $aois == $obj->id ? $select : '';
+                $selected = $activity_id == $obj->id ? $select : '';
                 $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
             }
         }
@@ -1217,18 +1218,15 @@ class Ajax extends My_Controller {
         $school_id = $this->input->post('school_id');
         $subject_id  = $this->input->post('subject_id');
         $project_id  = $this->input->post('project_id');
-         if($this->session->userdata('role_id') == TEACHER){
-            $projects = $this->ajax->get_list('projects', array('status' => 1, 'subject_id' => $subject_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
-        }else{
-            $projects = $this->ajax->get_list('projects', array('status' => 1, 'subject_id' => $subject_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
-        }
+        $school = $this->ajax->get_school_by_id($school_id); 
+        $projects = $this->ajax->get_project_by_subject($subject_id, @$school->academic_year_id);
      
        $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
        $select = 'selected="selected"';
        if (!empty($projects)) {
            foreach ($projects as $obj) {   
                
-               $selected = $projects == $obj->id ? $select : '';
+               $selected = $project_id == $obj->id ? $select : '';
                $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->name . '</option>';
                
            }

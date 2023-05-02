@@ -110,9 +110,9 @@
                             <th><?php echo $this->lang->line('photo'); ?></th>
                             <th>
                                 <?php if(has_permission(VIEW, 'exam', 'grouping') && !has_permission(EDIT, 'exam', 'grouping')){ ?>
-                                    <input type="checkbox" value="1" name="present" id="fn_present" disabled="disabled" class=""/> <?php echo $this->lang->line('attend_all'); ?>
+                                    <input type="checkbox" value="1" name="present" id="fn_present" disabled="disabled" class=""/> <?php echo $this->lang->line('group_all'); ?>
                                 <?php }else if(has_permission(EDIT, 'exam', 'grouping')){ ?> 
-                                    <input type="checkbox" value="1" name="present" id="fn_present" class="fn_all_attendnce"/> <?php echo $this->lang->line('attend_all'); ?>
+                                    <input type="checkbox" value="1" name="present" id="fn_present" class="fn_all_attendnce"/> <?php echo $this->lang->line('group_all'); ?>
                                 <?php } ?> 
                                     
                             </th>                                            
@@ -325,7 +325,7 @@
           $.ajax({       
             type   : "POST",
             url    : "<?php echo site_url('exam/grouping/update_single'); ?>",
-            data   : {school_id:school_id, status : status , exam_id:exam_id, student_id: student_id, class_id:class_id, section_id:section_id, subject_id:subject_id, project_id:project_id},               
+            data   : {school_id:school_id, status : status , exam_id:exam_id, student_id: student_id, class_id:class_id, section_id:section_id, subject_id:subject_id,project_id:project_id},               
             async  : false,
             success: function(response){ 
                 if(response == 'ay'){
@@ -358,7 +358,7 @@
           $.ajax({       
             type   : "POST",
             url    : "<?php echo site_url('exam/grouping/update_all'); ?>",
-            data   : {school_id:school_id, status : status , exam_id:exam_id, class_id:class_id, section_id:section_id, subject_id:subject_id,project_id:project_id },               
+            data   : {school_id:school_id, status : status , exam_id:exam_id, class_id:class_id, section_id:section_id, subject_id:subject_id, project_id:project_id},               
             async  : false,
             success: function(response){
                 

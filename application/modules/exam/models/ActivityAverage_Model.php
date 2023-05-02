@@ -17,9 +17,7 @@ class ActivityAverage_Model extends MY_Model {
         $this->db->join('enrollments AS E', 'E.student_id = FR.student_id', 'left');
         $this->db->join('students AS ST', 'ST.id = E.student_id', 'left');
         $this->db->join('classes AS C', 'C.id = E.class_id', 'left');
-        // $this->db->join('subjects AS SU', 'SU.id = SU.subject_id', 'left');
         $this->db->join('sections AS S', 'S.id = E.section_id', 'left');
-        // $this->db->join('sections AS S', 'S.id = E.section_id', 'left');
         $this->db->join('academic_years AS AY', 'AY.id = E.academic_year_id', 'left');
         $this->db->where('FR.subject_id', $subject_id);
 
@@ -37,14 +35,9 @@ class ActivityAverage_Model extends MY_Model {
         if($section_id != ''){
            $this->db->where('E.section_id', $section_id);
         } 
-        // if($subject_id != ''){
-        //    $this->db->where('E.subject', $subject);
-        // } 
+
         $this->db->where('ST.status_type', 'regular');
-        //$this->db->order_by('E.roll_no', 'ASC');
-        // $this->db->order_by('FR.avg_grade_point', 'DESC');
-        //$this->db->order_by('FR.total_obtain_mark', 'DESC');
-              
+  
         return $this->db->get()->result();   
        
     }    

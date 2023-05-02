@@ -281,18 +281,18 @@ if (!function_exists('get_student_group')) {
 
     function get_student_group($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id) {
         $ci = & get_instance();
-        $ci->db->select('EA.is_attend');
-        $ci->db->from('project_groups AS EA');
-        $ci->db->where('EA.school_id', $school_id);
-        $ci->db->where('EA.academic_year_id', $academic_year_id);
-        $ci->db->where('EA.exam_id', $exam_id);
-        $ci->db->where('EA.class_id', $class_id);
+        $ci->db->select('PG.is_attend');
+        $ci->db->from('project_groups AS PG');
+        $ci->db->where('PG.school_id', $school_id);
+        $ci->db->where('PG.academic_year_id', $academic_year_id);
+        $ci->db->where('PG.exam_id', $exam_id);
+        $ci->db->where('PG.class_id', $class_id);
         if($section_id){
-            $ci->db->where('EA.section_id', $section_id);
+            $ci->db->where('PG.section_id', $section_id);
         }
-        $ci->db->where('EA.student_id', $student_id);
-        $ci->db->where('EA.project_id', $project_id);
-        $ci->db->where('EA.subject_id', $subject_id);
+        $ci->db->where('PG.student_id', $student_id);
+        $ci->db->where('PG.project_id', $project_id);
+        $ci->db->where('PG.subject_id', $subject_id);
         return @$ci->db->get()->row()->is_attend;
         
     }
@@ -398,6 +398,25 @@ if (!function_exists('get_exam_result')) {
         
         $ci->db->where('ER.student_id', $student_id);
         $ci->db->where('ER.academic_year_id', $academic_year_id);
+        return $ci->db->get()->row();
+    }
+}
+if (!function_exists('get_formative_results')) {
+
+    function get_formative_results($school_id, $exim_id, $student_id, $academic_year_id, $class_id, $section_id = null) {
+        $ci = & get_instance();
+        $ci->db->select('FR.*');
+        $ci->db->from('aoi_marks AS FR');
+        $ci->db->where('FR.school_id', $school_id);
+        $ci->db->where('FR.class_id', $class_id);
+        // $ci->db->where('FR.exam_id', $exim_id);
+
+        if ($section_id) {
+            $ci->db->where('FR.section_id', $section_id);
+        }
+        
+        $ci->db->where('FR.student_id', $student_id);
+        $ci->db->where('FR.academic_year_id', $academic_year_id);
         return $ci->db->get()->row();
     }
 }
@@ -560,7 +579,45 @@ if (!function_exists('get_subject_list')) {
     }
 
 }
+if (!function_exists('get_subject_Flist')) {
 
+    function get_subject_Flist($school_id, $academic_year_id, $exam_id, $class_id, $section_id = null, $student_id = null) {
+        $ci = & get_instance();
+        $ci->db->select('M.*,S.name AS subject');
+        $ci->db->from('aoi_marks AS M');        
+        $ci->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
+        // $ci->db->join('grades AS G', 'G.id = M.grade_id', 'left');
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        $ci->db->where('M.student_id', $student_id);
+        $ci->db->where('M.exam_id', $exam_id);
+        return  $ci->db->get()->result();     
+    }
+
+}
+if (!function_exists('get_subject_Flist')) {
+
+    function get_subject_Flist($school_id, $academic_year_id, $class_id, $section_id = null, $student_id = null) {
+        $ci = & get_instance();
+        $ci->db->select('M.*,S.name AS subject');
+        $ci->db->from('aoi_marks AS M');        
+        $ci->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        $ci->db->where('M.student_id', $student_id);
+        // $ci->db->where('M.exam_id', $exam_id);
+        return  $ci->db->get()->result();     
+    }
+
+}
 
 
 if (!function_exists('get_exam_wise_markt')) {

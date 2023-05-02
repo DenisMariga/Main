@@ -86,7 +86,7 @@ class ActivityAverage extends MY_Controller {
             $this->data['academic_years'] = $this->A_Average->get_list('academic_years',$condition, '', '', '', 'id', 'ASC');
             
             $this->data['classes'] = $this->A_Average->get_list('classes', $condition, '','', '', 'id', 'ASC');
-            $condition['academic_year_id'] = $A_Average->academic_year_id;
+            // $condition['academic_year_id'] = $A_Average->academic_year_id;
             $this->data['exams'] = $this->A_Average->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }
 

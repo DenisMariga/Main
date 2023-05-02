@@ -502,6 +502,7 @@
                                has_permission(VIEW, 'exam', 'meritlist') || 
                                has_permission(VIEW, 'exam', 'marksheet') || 
                                has_permission(VIEW, 'exam', 'resultcard') || 
+                               has_permission(VIEW, 'exam', 'formativecard') || 
                                has_permission(VIEW, 'exam', 'text') || 
                                has_permission(VIEW, 'exam', 'mail') || 
                                has_permission(VIEW, 'exam', 'resultemail') || 
@@ -534,6 +535,9 @@
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'resultcard')){ ?>
                                     <li><a href="<?php echo site_url('exam/resultcard/index'); ?>"><?php echo $this->lang->line('result_card'); ?></a></li>
+                                <?php } ?>                               
+                                <?php if(has_permission(VIEW, 'exam', 'formativecard')){ ?>
+                                    <li><a href="<?php echo site_url('exam/formativecard/index'); ?>"><?php echo $this->lang->line('formative_card'); ?></a></li>
                                 <?php } ?>                               
                                 <?php if(has_permission(VIEW, 'exam', 'mail')){ ?>
                                     <li><a href="<?php echo site_url('exam/mail/index'); ?>"><?php echo $this->lang->line('mark_send_by_email'); ?></a></li>
