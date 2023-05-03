@@ -401,25 +401,26 @@ if (!function_exists('get_exam_result')) {
         return $ci->db->get()->row();
     }
 }
-if (!function_exists('get_formative_results')) {
+// if (!function_exists('get_formative_results')) {
 
-    function get_formative_results($school_id, $exim_id, $student_id, $academic_year_id, $class_id, $section_id = null) {
-        $ci = & get_instance();
-        $ci->db->select('FR.*');
-        $ci->db->from('aoi_marks AS FR');
-        $ci->db->where('FR.school_id', $school_id);
-        $ci->db->where('FR.class_id', $class_id);
-        // $ci->db->where('FR.exam_id', $exim_id);
+//     function get_formative_results($school_id, $exim_id, $student_id, $academic_year_id, $class_id, $section_id = null) {
+//         $ci = & get_instance();
+//         $ci->db->select('FR.*');
+//         $ci->db->from('aoi_marks AS FR');
+//         // $ci->db->join('project_marks AS P', 'P.id = FR.project_id', 'left');  
+//         $ci->db->where('FR.school_id', $school_id);
+//         $ci->db->where('FR.class_id', $class_id);
+//         $ci->db->where('FR.exam_id', $exim_id);
 
-        if ($section_id) {
-            $ci->db->where('FR.section_id', $section_id);
-        }
+//         if ($section_id) {
+//             $ci->db->where('FR.section_id', $section_id);
+//         }
         
-        $ci->db->where('FR.student_id', $student_id);
-        $ci->db->where('FR.academic_year_id', $academic_year_id);
-        return $ci->db->get()->row();
-    }
-}
+//         $ci->db->where('FR.student_id', $student_id);
+//         $ci->db->where('FR.academic_year_id', $academic_year_id);
+//         return $ci->db->get()->row();
+//     }
+// }
 
 
 if (!function_exists('get_exam_final_result')) {
@@ -597,26 +598,23 @@ if (!function_exists('get_subject_Flist')) {
         $ci->db->where('M.exam_id', $exam_id);
         return  $ci->db->get()->result();     
     }
-
-}
-if (!function_exists('get_subject_Flist')) {
-
-    function get_subject_Flist($school_id, $academic_year_id, $class_id, $section_id = null, $student_id = null) {
-        $ci = & get_instance();
-        $ci->db->select('M.*,S.name AS subject');
-        $ci->db->from('aoi_marks AS M');        
-        $ci->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
-        $ci->db->where('M.school_id', $school_id);
-        $ci->db->where('M.academic_year_id', $academic_year_id);
-        $ci->db->where('M.class_id', $class_id);
-        if($section_id){
-            $ci->db->where('M.section_id', $section_id);
-        }
-        $ci->db->where('M.student_id', $student_id);
-        // $ci->db->where('M.exam_id', $exam_id);
-        return  $ci->db->get()->result();     
-    }
-
+    // function get_subject_Flist($school_id, $academic_year_id, $exam_id, $class_id, $section_id = null, $student_id = null) {
+    //     $ci = &get_instance();
+    //     $ci->db->select('M.subject_id, S.name AS subject, AVG(M.activity_out_of_ten) AS marks');
+    //     $ci->db->from('aoi_marks AS M');
+    //     $ci->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
+    //     $ci->db->where('M.school_id', $school_id);
+    //     $ci->db->where('M.academic_year_id', $academic_year_id);
+    //     $ci->db->where('M.class_id', $class_id);
+    //     if ($section_id) {
+    //         $ci->db->where('M.section_id', $section_id);
+    //     }
+    //     $ci->db->where('M.student_id', $student_id);
+    //     $ci->db->where('M.exam_id', $exam_id);
+    //     $ci->db->group_by('M.subject_id');
+    //     return $ci->db->get()->result();
+    // }
+    
 }
 
 

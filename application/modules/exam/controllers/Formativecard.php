@@ -18,8 +18,8 @@ class Formativecard extends MY_Controller {
 
     public function index() {
 
-        // Check permission
-        //check_permission(VIEW);
+       // Check permission
+        check_permission(VIEW);
 
         if ($_POST) {
            
@@ -46,7 +46,7 @@ class Formativecard extends MY_Controller {
             $school = $this->formativecard->get_school_by_id($school_id);
             $academic_year_id = $this->input->post('academic_year_id');
             $this->data['exams'] = $this->formativecard->get_list('exams', array('school_id'=>$school_id, 'status' => 1, 'academic_year_id' => $academic_year_id), '', '', '', 'id', 'ASC');
-           
+            $this->data['school'] = $school;
             $this->data['school_id'] = $school_id;
             $this->data['academic_year_id'] = $academic_year_id;
             $this->data['student'] = $student;
@@ -73,6 +73,52 @@ class Formativecard extends MY_Controller {
             $this->layout->title($this->lang->line('manage_formative_card') . ' | ' . SMS);
             $this->layout->view('formative_card/index', $this->data);
         }
+        public function all() {
+
+            //check_permission(VIEW);
+    
+            if ($_POST) {
+    
+                    
+                $school_id = $this->input->post('school_id');
+                $class_id = $this->input->post('class_id');
+                $section_id = $this->input->post('section_id');
+                
+                if($this->session->userdata('role_id') == STUDENT ){
+                    $class_id = $this->session->userdata('class_id');
+                    $section_id = $this->session->userdata('section_id');
+                }
+                
+                $school = $this->formativecard->get_school_by_id($school_id);
+                $academic_year_id = $this->input->post('academic_year_id');
+                
+                $students = $this->formativecard->get_student_list($school_id, $class_id, $section_id, $academic_year_id);
+                $this->data['exams']    = $this->formativecard->get_list('exams', array('school_id'=>$school_id, 'status' => 1, 'academic_year_id' => $academic_year_id), '', '', '', 'id', 'ASC');
+               
+                $this->data['school'] = $school;
+                $this->data['school_id'] = $school_id;
+                $this->data['academic_year_id'] = $academic_year_id;
+                $this->data['students'] = $students;
+                $this->data['class_id'] = $class_id;
+                $this->data['section_id'] = $section_id;
+               
+            }
+            
+            
+            $condition = array();
+            $condition['status'] = 1;        
+            if($this->session->userdata('role_id') != SUPER_ADMIN){ 
+                
+                $condition['school_id'] = $this->session->userdata('school_id');            
+                $this->data['classes'] = $this->formativecard->get_list('classes', $condition, '','', '', 'id', 'ASC');
+                $this->data['academic_years'] = $this->formativecard->get_list('academic_years', $condition, '', '', '', 'id', 'ASC');
+            }
+    
+            $this->layout->title($this->lang->line('manage_formative_card') . ' | ' . SMS);
+            $this->layout->view('formative_card/all', $this->data);
+            
+        }
+    
         
     }   
    
