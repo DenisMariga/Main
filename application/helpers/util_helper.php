@@ -1995,6 +1995,19 @@ if (!function_exists('get_lesson_detail_by_lesson_id')) {
     }
 }
 
+if (!function_exists('get_paper_detail_by_paper_id')) {
+    function get_paper_detail_by_paper_id($paper_id) {
+        
+        $ci = & get_instance();
+        $ci->db->select('LD.*');
+        $ci->db->from('lp_paper_details AS LD');
+        $ci->db->where('LD.paper_id', $paper_id); 
+        $ci->db->order_by('LD.id', 'ASC'); 
+        return $ci->db->get()->result();     
+        
+    }
+}
+
 
 
 if (!function_exists('get_topic_detail_by_topic_id')) {

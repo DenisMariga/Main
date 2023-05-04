@@ -474,6 +474,9 @@
                                 <?php if(has_permission(VIEW, 'exam', 'exam')){ ?>
                                     <li><a href="<?php echo site_url('exam/index'); ?>"><?php echo $this->lang->line('exam_term'); ?></a></li>                         
                                 <?php } ?>
+                                <?php if(has_permission(VIEW, 'exam', 'paper')){ ?> 
+                                    <li><a href="<?php echo site_url('exam/paper/index'); ?>"><?php echo $this->lang->line('paper'); ?></a></li>
+                                <?php } ?> 
                                  <?php if(has_permission(VIEW, 'exam', 'schedule')){ ?> 
                                     <li><a href="<?php echo site_url('exam/schedule/index'); ?>"><?php echo $this->lang->line('schedule'); ?></a></li>
                                 <?php } ?>    

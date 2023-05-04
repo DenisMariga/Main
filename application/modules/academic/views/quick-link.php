@@ -19,6 +19,7 @@
 | <a href="<?php echo site_url('academic/material/index'); ?>"><?php echo $this->lang->line('material'); ?></a>
 <?php } ?>
 
+
 <?php if(has_permission(VIEW, 'academic', 'liveclass')){ ?>
 | <a href="<?php echo site_url('academic/liveclass/index'); ?>"><?php echo $this->lang->line('live_class'); ?></a>
 <?php } ?>

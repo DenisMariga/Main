@@ -355,7 +355,7 @@
     function add_more(fn_lesson_container){
          var data = '<tr>'                
                     +'<td>'                   
-                    +'<input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" class="answer" placeholder="<?php echo $this->lang->line('lesson'); ?>" />' 
+                    +'<input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="Ltitle[]" class="answer" placeholder="<?php echo $this->lang->line('lesson'); ?>" />' 
                     +'<a  class="btn btn-danger btn-md " onclick="remove(this);" style="margin-bottom: -0px;" > - </a>'
                     +'</td>'
                     +'</tr>';

@@ -1638,3 +1638,4 @@ $config['my_exam']['formativecard']['1'] = '0|0|1|0';
 $config['my_exam']['grouping']['5'] = '1|1|1|0';
 $config['my_exam']['formativecard']['5'] = '0|0|1|0';
 $config['my_exam']['activityaverage']['5'] = '0|0|1|0';
+$config['my_exam']['paper']['1'] = '1|1|1|1';
