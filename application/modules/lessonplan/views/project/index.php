@@ -271,7 +271,7 @@
                                     <div class="item form-group">  
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject_id"><?php echo $this->lang->line('subject'); ?> <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select  class="form-control col-md-12 col-xs-12 gsms-nice-select_"  name="subject_id"  id="edit_subject_id" required="required" onchange="get_topic_by_subject(this.value, '', 'edit_');">
+                                            <select  class="form-control col-md-12 col-xs-12 gsms-nice-select_"  name="subject_id"  id="edit_subject_id" required="required">
                                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                                                                         
                                             </select>
                                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
@@ -367,45 +367,6 @@
 
 <!-- End Modal to dispaly Single record -->
 
-<!-- Begin Script to add more Button -->
-
-<script type="text/javascript">
-
-     function add_more(fn_project_container){
-         var data = '<tr>'                
-                    +'<td>'                   
-                    +'<input  class="form-control col-md-12 col-xs-12" style="width:90%;" type="text" name="title[]" class="answer" placeholder="<?php echo $this->lang->line('Project'); ?>" />' 
-                    +'<a  class="btn btn-danger btn-md " onclick="remove(this);" style="margin-bottom: -0px;" > - </a>'
-                    +'</td>'
-                    +'</tr>';
-            $('.'+fn_project_container).append(data);
-     }
-     
-     function remove(obj, project_detail_id){ 
-        
-        if(project_detail_id)
-        {
-            if(confirm('<?php echo $this->lang->line('confirm_alert'); ?>')){
-                $.ajax({       
-                    type   : "POST",
-                    url    : "<?php echo site_url('lessonplan/project/remove'); ?>",
-                    data   : { project_detail_id : project_detail_id},               
-                    async  : false,
-                    success: function(response){                                                   
-                       if(response)
-                       {
-                          $(obj).parent().parent('tr').remove();   
-                       }
-                    }
-                });   
-            }            
-        }else{
-            
-            $(obj).parent().parent('tr').remove(); 
-        }
-     }
-        
-</script>
 
 <!-- End Script to add more Button -->
 
@@ -490,8 +451,8 @@
          get_subject_by_class('<?php echo $post['class_id']; ?>', '<?php echo $post['subject_id']; ?>', 'add_');        
      <?php } ?> 
  
-    <?php if(isset($lesson) && !empty($lesson)){ ?>
-         get_subject_by_class('<?php echo $lesson->class_id; ?>', '<?php echo $lesson->subject_id; ?>', 'edit_');
+    <?php if(isset($project) && !empty($project)){ ?>
+         get_subject_by_class('<?php echo $project->class_id; ?>', '<?php echo $project->subject_id; ?>', 'edit_');
      <?php } ?>    
  
     <?php if(isset($class_id) && $class_id != '' && isset($subject_id)){ ?>
