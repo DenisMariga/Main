@@ -107,43 +107,7 @@
                     </div>
                 </div>            
             </div>
-            
-            <!-- <div class="x_content">
-                <table id="datatable-responsive" class="table table-striped_ table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th><?php echo $this->lang->line('roll_no'); ?></th>
-                            <th><?php echo $this->lang->line('name'); ?></th>
-                            <th><?php echo $this->lang->line('photo'); ?></th>                            
-                            <th><?php echo $this->lang->line('Activity_Score'); ?></th>                                            
-                            <th><?php echo $this->lang->line('Averages'); ?></th>                                            
-                        </tr>
-                    </thead>
-                     <tbody>   
-                     <?php if(isset($activityaverage) && !empty($activityaverage)){ ?>
-                    <?php foreach($activityaverage as $obj){ ?>
-                        <tr>
-                            <td><?php echo $obj->roll_no; ?></td>
-                            <td><?php echo $obj->student; ?></td>
-                            <td>
-                                <?php if ($obj->photo != '') { ?>
-                                    <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $obj->photo; ?>" alt="" width="45" /> 
-                                <?php } else { ?>
-                                    <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" /> 
-                                <?php } ?>
-                                <input type="hidden" value="<?php echo $obj->id; ?>"  name="students[]" />       
-                            </td>  
-                            <td><?php echo $obj->activity_score; ?></td>
-                        </tr>
-                    <?php } ?>                                        
-                <?php } else { ?>
-                    <tr><td colspan="10" class="text-center"><?php echo $this->lang->line('no_data_found'); ?></td></tr>
-                <?php } ?>
-
-                           
-                        </tbody>
-                </table>                
-            </div>   -->
+          
             <div class="x_content">
     <table id="datatable-responsive" class="table table-striped_ table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
         <thead>

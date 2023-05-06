@@ -105,25 +105,13 @@
                 </div>            
             </div>
              <?php } ?>
-             <style>
-                .x_content {
-                    margin-bottom: 20px; /* set a bottom margin for the first div */
-                }
-
-                .rowt {
-                    margin-top: 20px; /* set a top margin for the second div */
-                }
-              
-
-            </style>
-
-
-
-                    <div class="x_content">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" style="border-width: 2px;">
+            
+        <div class="x_content">
+            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" style="border-width: 2px;">
 
                                 <thead>
                                     <tr>
+                                        <th><?php echo $this->lang->line('sl_no'); ?></th>
                                         <th><?php echo $this->lang->line('subject'); ?></th>                                           
                                         <th><?php echo $this->lang->line('activity/twenty'); ?></th>                                                                                       
                                         <th><?php echo $this->lang->line('identifier'); ?></th>                                            
@@ -133,97 +121,224 @@
                                     </tr>
                                 
                                 </thead>
-                           
-                            <tbody>
-                                <?php if (!empty($subjects)): ?>
-                                    <?php 
-                                        $total_identifiers = 0;
-                                        $total_subjects = count($subjects);
-                                    ?>
-                                    <?php foreach ($subjects as $subject): ?>
-                                        <tr>
-                                            <td><?php echo $subject->subject; ?></td>
-                                            <?php
-                                            $total_score = 0;
-                                            $score_count = 0;
-                                            $activity_out_of_twenty = 0;
-                                            $identifier = 0;
-                                            $descriptor = '';
-                                            if ($subject->project_score == null || $subject->project_score == 0) {
-                                                $total_score = round($subject->activity_out_of_ten_avg * 2);
-                                                $activity_out_of_twenty = round($total_score / 20 * 3);
-                                            } else {
-                                                $total_score = round($subject->activity_out_of_ten_avg + $subject->project_score);
-                                                $activity_out_of_twenty = round($total_score / 20 * 3);
-                                            }
+                    <!-- <tbody id="fn_mark"> 
+                    
+                        <?php if (isset($exams) && !empty($exams)) { ?>
+                        <?php foreach($exams as $ex){ ?>                       
+                        <?php
+                        $exam_subjects = get_subject_Flist($school_id, $academic_year_id, $ex->id, $class_id, $section_id, $student_id);
+                        $count = 1;
+                        $activity_out_of_ten_total = 0;
+                        $total_score_sum = 0;
+                        $identifier_sum = 0;
+                        $total_score_sum_all = 0;
 
-                                            // Calculate identifier
-                                            $identifier = round($activity_out_of_twenty);
-                                            $total_identifiers += $identifier; // add identifier to the total
+                        if (isset($exam_subjects) && !empty($exam_subjects)) {
+                            $marks_by_subject = array();
+                            foreach ($exam_subjects as $obj) {
+                                $marks_by_subject[$obj->subject][] = $obj;
+                            }
+                        ?>
+                        <?php foreach ($marks_by_subject as $subject => $marks) { ?>
+                        <?php $total_score_sum = 0; ?>
+                        <?php $identifier_sum = 0; ?>
+                        <?php foreach ($marks as $mark) { ?>
+                        <?php $exam = get_exam_result($school_id, $ex->id, $student_id, $academic_year_id, $class_id, $section_id); ?>
+                        <?php if($exam->name == ''){ continue; } ?> 
+                        <?php $activity_out_of_ten_total += $mark->activity_out_of_ten; ?>
+                        <?php
+                                    // Get teacher's name and initials from the subjects table
+                        $teacher_initials = '';
 
-                                            // Calculate descriptor
-                                            switch ($identifier) {
-                                                case 3:
-                                                    $descriptor = 'Outstanding';
-                                                    break;
-                                                case 2:
-                                                    $descriptor = 'Moderate';
-                                                    break;
-                                                case 1:
-                                                    $descriptor = 'Basic';
-                                                    break;
-                                                default:
-                                                    $descriptor = '';
-                                            }
-                                            ?>
-                                            <td><?php echo $total_score; ?></td>
-                                            <td><?php echo $identifier; ?></td>
-                                            <td><?php echo $descriptor; ?></td>
-                                            <td><?php echo $subject->teacher_initials; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    <tr>
-                                        <td colspan="1" align="center" style="font-weight:bold;"><?php echo $this->lang->line('Averages'); ?>:</td>
-                                        <td style="font-weight:bold;">
-                                            <?php
-                                            $total = 0;
-                                            $count = 0;
-                                            foreach ($subjects as $subject) {
-                                                if ($subject->activity_out_of_ten_avg != null && $subject->activity_out_of_ten_avg != 0) {
-                                                    if ($subject->project_score == null || $subject->project_score == 0) {
-                                                        $total += round($subject->activity_out_of_ten_avg * 2);
-                                                    } else {
-                                                        $total += round($subject->activity_out_of_ten_avg + $subject->project_score);
-                                                    }
-                                                    $count++;
-                                                }
-                                            }
-                                            if ($count != 0) {
-                                                echo round($total / $count, 1);
-                                            } else {
-                                                echo '0';
-                                            }
-                                            ?>
-                                        </td>
-                                        <td style="font-weight:bold;">
-                                            <?php 
-                                                if ($total_subjects != 0) {
-                                                    echo round($total_identifiers / $total_subjects, 1); // calculate the average identifier
-                                                } else {
-                                                    echo '0';
-                                                }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="17" align="center"><?php echo $this->lang->line('no_data_found'); ?></td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
+                        $this->db->select("REPLACE(CONCAT(SUBSTR(teachers.name,1,1), SUBSTR(SUBSTR(teachers.name,LOCATE(' ',teachers.name)+1),1,1)), ' ', '') AS initials", FALSE);
+                        $this->db->from('subjects');
+                        $this->db->join('teachers', 'teachers.id = subjects.teacher_id');
+                        $this->db->where('subjects.id', $obj->subject_id);
+                        $query = $this->db->get();
+                        if($query->num_rows() > 0){
+                            $teacher_initials = $query->row()->initials;
+                        }
+                        $project_score = '';
+                        $this->db->select('project_score');
+                        $this->db->from('project_marks');
+                        $this->db->where('subject_id', $mark->subject_id);
+                        $this->db->where('student_id', $student_id);
+                        $query = $this->db->get();
+                        if($query->num_rows() > 0){
+                            $project_score = $query->row()->project_score;
+                        }
+                        $total_score = 0;
+                        if ($project_score !=0 && $project_score !== '') {
+                            $total_score = $mark->activity_out_of_ten + $project_score;
+                        } else {
+                            $total_score = $mark->activity_out_of_ten * 2;
+                        }
+                        $total_score_sum += $total_score;       
+                        $identifier = round($total_score / 20 * 3);
+                        $identifier_sum += $identifier;
+                        ?>
+                        <?php } ?>
+                        <tr>
+                        <td><?php echo $count++;  ?></td>
+                        <td><?php echo ucfirst($subject); ?></td>
+                        <td><?php 
+                            $total_score = 0;
+                            if ($project_score !=0 && $project_score !== '') {
+                                $total_score = $obj->activity_out_of_ten + $project_score;
+                            } else {
+                                $total_score = $obj->activity_out_of_ten * 2;
+                            }
+                            echo $total_score;       
+                            $total_score_sum += $total_score;
+                         ?>
+                        </td> 
+                        <td><?php echo round($identifier_sum/count($marks)); ?></td>
+                        <td>
+                        <?php 
+                        $descriptor = '';
+                        switch(round($identifier_sum/count($marks))) {
+                            case 1:
+                                $descriptor = 'Basic';
+                                break;
+                            case 2:
+                                $descriptor = 'Moderate';
+                                break;
+                            case 3:
+                                $descriptor = 'Outstanding';
+                                break;
+                        }
+                        echo $descriptor;
+                        ?>
+                        </td>
+                        <td>
+                        <?php echo $teacher_initials; ?>
+                        </td>
 
-                        </table>
-                    </div>
+                        </tr>
+                        <?php } ?>
+                        <tr>
+                        <td colspan="2" align="left"><?php echo $this->lang->line('Averages'); ?>:</td>
+                                            
+                        <td><?php echo round($total_score_sum/count($exam_subjects)); ?></td>
+
+                        <td><?php echo round(array_sum(array_column($exam_subjects, 'activity_out_of_ten'))/count($exam_subjects) / 20 * 3, 2); ?></td>
+                        <td colspan="4"></td>
+                        </tr>                                      
+                        <?php }else{ ?> <?php } ?>   
+                        <?php } ?>
+                        <?php }else{ ?>
+                        <tr>
+                            <td colspan="17" align="center"><?php echo $this->lang->line('no_data_found'); ?></td>
+                        </tr>    
+                        <?php } ?>            
+                    </tbody> -->
+
+                    <tbody id="fn_mark"> 
+                    <?php if (isset($exams) && !empty($exams)) { ?>
+                    <?php foreach($exams as $ex){ ?>                       
+                    <?php
+                    $exam_subjects = get_subject_Flist($school_id, $academic_year_id, $ex->id, $class_id, $section_id, $student_id);
+                                                            $count = 1;
+                                                            $activity_out_of_ten_total = 0;
+                                                            $total_score_sum = 0;
+                                                            $identifier_sum = 0;
+                    if (isset($exam_subjects) && !empty($exam_subjects)) {
+                    ?>
+                    <?php foreach ($exam_subjects as $obj) { ?>
+                    <?php $exam = get_exam_result($school_id, $ex->id, $student_id, $academic_year_id, $class_id, $section_id); ?>
+                    <?php if($exam->name == ''){ continue; } ?> 
+                    <?php $activity_out_of_ten_total += $obj->activity_out_of_ten; ?>
+                    <?php
+                    $project_score = '';
+                    $this->db->select('project_score');
+                    $this->db->from('project_marks');
+                    $this->db->where('subject_id', $obj->subject_id);
+                    $this->db->where('student_id', $student_id);
+                    $query = $this->db->get();
+                    if($query->num_rows() > 0){
+                        $project_score = $query->row()->project_score;
+                    }
+                    // Get teacher's name and initials from the subjects table
+                    $teacher_initials = '';
+                    //  $this->db->select('SUBSTRING(teachers.name, 1, 2) AS initials');
+                    //  $this->db->select("SUBSTRING(teachers.name,1,1) AS initials", FALSE);
+                    $this->db->select("REPLACE(CONCAT(SUBSTR(teachers.name,1,1), SUBSTR(SUBSTR(teachers.name,LOCATE(' ',teachers.name)+1),1,1)), ' ', '') AS initials", FALSE);
+
+                    $this->db->from('subjects');
+                    $this->db->join('teachers', 'teachers.id = subjects.teacher_id');
+                    $this->db->where('subjects.id', $obj->subject_id);
+                    $query = $this->db->get();
+                    if($query->num_rows() > 0){
+                        $teacher_initials = $query->row()->initials;
+                    }
+
+                    ?>
+                    <tr>
+                    <td><?php echo $count++;  ?></td>
+                    <td><?php echo ucfirst($subject); ?></td>
+                    <td><?php 
+                        $total_score = 0;
+                        if ($project_score !=0 && $project_score !== '') {
+                            $total_score = $obj->activity_out_of_ten + $project_score;
+                        } else {
+                            $total_score = $obj->activity_out_of_ten * 2;
+                        }
+                        echo $total_score;       
+                        $total_score_sum += $total_score;
+                    ?>
+                    </td> 
+                    <td>
+                    <?php 
+                        $identifier = round($total_score / 20 * 3);
+                        echo $identifier;
+                        $identifier_sum += $identifier;
+                    ?>
+                    </td>
+                    <td>
+                    <?php 
+                    $descriptor = '';
+                    switch($identifier) {
+                        case 1:
+                            $descriptor = 'Basic';
+                            break;
+                        case 2:
+                            $descriptor = 'Moderate';
+                            break;
+                        case 3:
+                            $descriptor = 'Outstanding';
+                            break;
+                    }
+                    echo $descriptor;
+                    ?>
+                    </td>
+                    <td>
+                    <!-- tr -->
+                    <?php echo $teacher_initials; ?>
+                    </td>
+
+                    </tr>
+                    <?php } ?>
+                    <tr>
+                    <td colspan="2" align="left"><?php echo $this->lang->line('Averages'); ?>:</td>
+                                        
+                    <td><?php echo round($total_score_sum/count($exam_subjects), 2); ?></td>
+                    <td><?php echo round($identifier_sum/count($exam_subjects), 2); ?></td>
+                    <td colspan="4"></td>
+                    </tr>
+
+
+                    <?php }else{ ?>
+                                    
+                                    <?php } ?>   
+                                <?php } ?>
+                    <?php }else{ ?>
+                        <tr>
+                            <td colspan="17" align="center"><?php echo $this->lang->line('no_data_found'); ?></td>
+                        </tr>    
+                    <?php } ?>            
+                    </tbody>
+            </table> 
+         </div>
                  
             <div class="rowt"><div class="col-lg-12">&nbsp;</div></div>
             <div class="rowt">
@@ -238,48 +353,48 @@
                 </div>
             </div>
             <table style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 14px;">
-  <tr>
-    <th style="border: 2px solid black; padding: 8px; text-align: left;">Identifier</th>
-    <th style="border: 2px solid black; padding: 8px; text-align: left;">Score Range</th>
-    <th style="border: 2px solid black; padding: 8px; text-align: left;">Description</th>
-  </tr>
-  <tr>
-    <td style="border: 2px solid black; padding: 8px;">3</td>
-    <td style="border: 2px solid black; padding: 8px;">2.5 - 3.0</td>
-    <td style="border: 2px solid black; padding: 8px;">
-        <table style="border-collapse: collapse; width: 100%;">
-            <tr>
-                <td style="font-weight: bold;">Outstanding:</td>
-                <td>Most or all Learning outcomes achieved for overall achievement</td>
-            </tr>
+                <tr>
+                    <th style="border: 2px solid black; padding: 8px; text-align: left;">Identifier</th>
+                    <th style="border: 2px solid black; padding: 8px; text-align: left;">Score Range</th>
+                    <th style="border: 2px solid black; padding: 8px; text-align: left;">Description</th>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black; padding: 8px;">3</td>
+                    <td style="border: 2px solid black; padding: 8px;">2.5 - 3.0</td>
+                    <td style="border: 2px solid black; padding: 8px;">
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <tr>
+                                <td style="font-weight: bold;">Outstanding:</td>
+                                <td>Most or all Learning outcomes achieved for overall achievement</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black; padding: 8px;">2</td>
+                    <td style="border: 2px solid black; padding: 8px;">1.5 - 2.49</td>
+                    <td style="border: 2px solid black; padding: 8px;">
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <tr>
+                                <td style="font-weight: bold;">Moderate:</td>
+                                <td>Many Learning Outcomes achieved, enough for overall achievements</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black; padding: 8px;">1</td>
+                    <td style="border: 2px solid black; padding: 8px;">0.9 - 1.49</td>
+                    <td style="border: 2px solid black; padding: 8px;">
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <tr>
+                                <td style="font-weight: bold;">Basic:</td>
+                                <td>Few Learning Outcomes achieved, but not sufficient for overall achievement</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
         </table>
-    </td>
-  </tr>
-  <tr>
-    <td style="border: 2px solid black; padding: 8px;">2</td>
-    <td style="border: 2px solid black; padding: 8px;">1.5 - 2.49</td>
-    <td style="border: 2px solid black; padding: 8px;">
-        <table style="border-collapse: collapse; width: 100%;">
-            <tr>
-                <td style="font-weight: bold;">Moderate:</td>
-                <td>Many Learning Outcomes achieved, enough for overall achievements</td>
-            </tr>
-        </table>
-    </td>
-  </tr>
-  <tr>
-    <td style="border: 2px solid black; padding: 8px;">1</td>
-    <td style="border: 2px solid black; padding: 8px;">0.9 - 1.49</td>
-    <td style="border: 2px solid black; padding: 8px;">
-        <table style="border-collapse: collapse; width: 100%;">
-            <tr>
-                <td style="font-weight: bold;">Basic:</td>
-                <td>Few Learning Outcomes achieved, but not sufficient for overall achievement</td>
-            </tr>
-        </table>
-    </td>
-  </tr>
-</table>
             <div class="row no-print">
                 <div class="col-xs-12 text-right">
                     <button class="btn btn-default " onclick="window.print();"><i class="fa fa-print"></i> <?php echo $this->lang->line('print'); ?></button>

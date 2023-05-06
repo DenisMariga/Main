@@ -9,30 +9,31 @@ class Formativecard_Model extends MY_Model {
         parent::__construct();
     }
     
-    public function get_out_of_ten($school_id, $academic_year_id, $class_id, $section_id, $student_id) {
-        $this->db->select('FR.*');
-        $this->db->from('aoi_marks AS FR');
-        // $this->db->join('subjects AS S', 'S.id = FR.subject_id');
-        $this->db->where('FR.school_id', $school_id);
-        $this->db->where('FR.academic_year_id', $academic_year_id);
-        $this->db->where('FR.class_id', $class_id);
-        $this->db->where('FR.section_id', $section_id);
-        $this->db->where('FR.student_id', $student_id);
-        // $this->db->group_by('S.id');
+    // public function get_subject_list($school_id, $class_id, $section_id, $student_id, $academic_year_id) {
+    //     $this->db->select('S.name AS subject, AVG(M.activity_out_of_ten) AS activity_out_of_ten_avg, P.project_score');
+    //     $this->db->from('subjects AS S');
+    //     $this->db->join('(SELECT subject_id, AVG(activity_out_of_ten) AS activity_out_of_ten FROM aoi_marks WHERE school_id = '.$school_id.' AND class_id = '.$class_id.' AND section_id = '.$section_id.' AND student_id = '.$student_id.' AND academic_year_id = '.$academic_year_id.' GROUP BY subject_id) AS M', 'S.id = M.subject_id', 'left');
+    //     $this->db->join('(SELECT subject_id, AVG(project_score) AS project_score FROM projects WHERE school_id = '.$school_id.' AND class_id = '.$class_id.' AND section_id = '.$section_id.' AND student_id = '.$student_id.' AND academic_year_id = '.$academic_year_id.' GROUP BY subject_id) AS P', 'S.id = P.subject_id', 'left');
+    //     $this->db->group_by('S.id');
+    //     return $this->db->get()->result();
+    // }
+    public function get_subject_list($school_id, $class_id, $section_id, $student_id, $academic_year_id) {
+        $this->db->select('S.name AS subject, AVG(CASE WHEN M.activity_out_of_ten > 0 THEN M.activity_out_of_ten ELSE NULL END) AS activity_out_of_ten_avg, P.project_score, REPLACE(CONCAT(SUBSTR(T.name,1,1), SUBSTR(SUBSTR(T.name,LOCATE(\' \',T.name)+1),1,1)), \' \', \'\') AS teacher_initials');
+        $this->db->from('subjects AS S');
+        $this->db->join('(SELECT subject_id, activity_out_of_ten FROM aoi_marks WHERE school_id = '.$school_id.' AND class_id = '.$class_id.' AND section_id = '.$section_id.' AND student_id = '.$student_id.' AND academic_year_id = '.$academic_year_id.') AS M', 'S.id = M.subject_id', 'left');
+        $this->db->join('(SELECT subject_id, AVG(project_score) AS project_score FROM project_marks WHERE school_id = '.$school_id.' AND class_id = '.$class_id.' AND section_id = '.$section_id.' AND student_id = '.$student_id.' AND academic_year_id = '.$academic_year_id.' GROUP BY subject_id) AS P', 'S.id = P.subject_id', 'left');
+        $this->db->join('teachers AS T', 'S.teacher_id = T.id', 'left');
+        $this->db->where('S.school_id', $school_id);
+        $this->db->where('S.class_id', $class_id);
+        // $this->db->where('S.section_id', $section_id);
+        // $this->db->where('S.academic_year_id', $academic_year_id);
+        // $this->db->where('S.status', 1);
+        $this->db->group_by('S.id');
         return $this->db->get()->result();
     }
-     public function get_project_score($school_id, $academic_year_id, $class_id, $section_id, $student_id) {
-        $this->db->select('FR.*');
-        $this->db->from('project_marks AS FR');
-        // $this->db->join('subjects AS S', 'S.id = FR.subject_id');
-        $this->db->where('FR.school_id', $school_id);
-        $this->db->where('FR.academic_year_id', $academic_year_id);
-        $this->db->where('FR.class_id', $class_id);
-        $this->db->where('FR.section_id', $section_id);
-        $this->db->where('FR.student_id', $student_id);
-        // $this->db->group_by('S.id');
-        return $this->db->get()->result();
-    }
+    
+    
+    
     
      public function get_student_list($school_id = null, $class_id = null, $section_id = null, $academic_year_id = null){
         
@@ -65,17 +66,5 @@ class Formativecard_Model extends MY_Model {
             
             return $this->db->get()->result();
     }
-    public function get_student_subject_scores($school_id, $class_id, $section_id, $student_id, $academic_year_id) {
-        // Fetch all subjects a student has done and their scores for the entire academic year
-        $this->db->select('S.name AS subject, M.activity_score, P.project_score');
-        $this->db->from('aoi_marks AS M');
-        $this->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
-        $this->db->join('project_marks AS P', 'P.student_id = M.student_id AND P.subject_id = M.subject_id AND P.academic_year_id = M.academic_year_id', 'left');
-        $this->db->where('M.school_id', $school_id);
-        $this->db->where('M.class_id', $class_id);
-        $this->db->where('M.section_id', $section_id);
-        $this->db->where('M.student_id', $student_id);
-        $this->db->where('M.academic_year_id', $academic_year_id);
-        return $this->db->get()->result();
-    }
+
 }

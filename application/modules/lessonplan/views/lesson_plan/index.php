@@ -123,7 +123,7 @@
                                             <?php if($this->session->userdata('role_id') == SUPER_ADMIN){ ?>
                                                 <td><?php echo $obj->school_name; ?></td>
                                             <?php } ?>
-                                            <td><?php echo $obj->title; echo ' ('. $this->lang->line($obj->complete_status).')'; ?></td>                                            
+                                            <td><?php echo $obj->Ltitle; echo ' ('. $this->lang->line($obj->complete_status).')'; ?></td>                                            
                                             <td><?php echo $obj->start_date ? date('d-m-Y', strtotime($obj->start_date)) : ''; ?></td>
                                             <td><?php echo $obj->end_date ? date('d-m-Y', strtotime($obj->end_date)) : ''; ?></td>
                                             <td colspan="3" style="padding: 0;"> 
