@@ -317,6 +317,25 @@ if (!function_exists('get_exam_mark')) {
     }
 
 }
+if (!function_exists('get_lower_curriculum _mark')) {
+
+    function get_lower_curriculum_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
+        $ci = & get_instance();
+        $ci->db->select('M.*');
+        $ci->db->from('lower_marks AS M');
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.exam_id', $exam_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        $ci->db->where('M.student_id', $student_id);
+        $ci->db->where('M.subject_id', $subject_id);
+        return $ci->db->get()->row();
+    }
+
+}
 if (!function_exists('get_exam_aoi_mark')) {
 
     function get_exam_aoi_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$lesson_detail_id,$topic_details_id,$activity_id ) {
@@ -379,6 +398,30 @@ if (!function_exists('get_exam_total_mark')) {
         return $ci->db->get()->row();
     }
 }
+if (!function_exists('get_lower_curriculum_total_mark')) {
+    function get_lower_curriculum_total_mark($school_id, $exam_id, $student_id, $academic_year_id, $class_id, $section_id = null) {
+        $ci = & get_instance();
+        $ci->db->select('COUNT(id) AS total_subject, SUM(exam_mark) AS exam_mark, SUM(obtain) AS obtain_mark');
+        $ci->db->from('lower_marks');
+        $ci->db->where('school_id', $school_id);
+        $ci->db->where('class_id', $class_id);
+        $ci->db->where('exam_id', $exam_id);
+        if ($section_id) {
+            $ci->db->where('section_id', $section_id);
+        }
+        $ci->db->where('student_id', $student_id);
+        $ci->db->where('academic_year_id', $academic_year_id);
+        $result = $ci->db->get()->row();
+        if ($result) {
+            $obtain_mark = $result->obtain_mark;
+            $exam_mark = $result->exam_mark;
+            $total_mark = round($obtain_mark / $exam_mark * 80, 2);
+            return $total_mark;
+        }
+        return null;
+    }
+}
+
 
 
 if (!function_exists('get_exam_result')) {

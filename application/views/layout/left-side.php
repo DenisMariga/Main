@@ -499,6 +499,7 @@
                     <?php if(has_permission(VIEW, 'exam', 'markaoi') || 
                                has_permission(VIEW, 'exam', 'projectmark') ||
                                has_permission(VIEW, 'exam', 'mark') ||
+                               has_permission(VIEW, 'exam', 'lowercurriculummark') ||
                                has_permission(VIEW, 'exam', 'examresult') || 
                                has_permission(VIEW, 'exam', 'finalresult') || 
                                has_permission(VIEW, 'exam', 'activityaverage') || 
@@ -520,6 +521,9 @@
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'mark')){ ?>
                                     <li><a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a></li>
+                                <?php } ?>
+                                <?php if(has_permission(VIEW, 'exam', 'lowercurriculummark')){ ?>
+                                    <li><a href="<?php echo site_url('exam/lowercurriculummark/index'); ?>"><?php echo $this->lang->line('manage_lower_mark'); ?></a></li>
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
                                     <li><a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a></li>

@@ -2,10 +2,10 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* * *****************Marksheet.php**********************************
+/* * *****************lower_exam_total_mark.php**********************************
  * @product name    : Uganda School ERP
  * @type            : Class
- * @class name      : Marksheet
+ * @class name      : lower_exam_total_mark
  * @description     : Manage exam mark sheet.  
  * @author          :  Denis Mariga Kamara	
  * @url             :        
@@ -13,13 +13,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
-class Marksheet extends MY_Controller {
+class lower_exam_total_mark extends MY_Controller {
 
     public $data = array();
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Marksheet_Model', 'mark', true);
+        $this->load->model('lower_exam_total_mark_Model', 'mark', true);
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
@@ -71,7 +71,7 @@ class Marksheet extends MY_Controller {
             
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
-                redirect('exam/marksheet/index');
+                redirect('exam/lower_exam_total_mark/index');
             }
             
             $this->data['subjects'] = $this->mark->get_subject_list($school_id, $exam_id, $class_id, $section_id, $student_id, $school->academic_year_id);

@@ -3,6 +3,9 @@
 <?php if(has_permission(VIEW, 'exam', 'mark')){ ?>
    | <a href="<?php echo site_url('exam/mark/index'); ?>"><?php echo $this->lang->line('manage_mark'); ?></a>
 <?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'lowercurriculummark')){ ?>
+   | <a href="<?php echo site_url('exam/lowercurriculummark/index'); ?>"><?php echo $this->lang->line('manage_lower_mark'); ?></a>
+<?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'markaoi')){ ?>
    | <a href="<?php echo site_url('exam/markaoi/index'); ?>"><?php echo $this->lang->line('manage_aoi'); ?></a>
 <?php } ?>
