@@ -277,6 +277,28 @@ if (!function_exists('get_exam_attendance')) {
     }
 
 }
+
+if (!function_exists('get_paper_attendance')) {
+
+    function get_paper_attendance($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id) {
+        $ci = & get_instance();
+        $ci->db->select('PA.is_attend');
+        $ci->db->from('paper_attendances AS PA');
+        $ci->db->where('PA.school_id', $school_id);
+        $ci->db->where('PA.academic_year_id', $academic_year_id);
+        $ci->db->where('PA.exam_id', $exam_id);
+        $ci->db->where('PA.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('PA.section_id', $section_id);
+        }
+        $ci->db->where('PA.student_id', $student_id);
+        $ci->db->where('PA.subject_id', $subject_id);
+        $ci->db->where('PA.paper_id', $paper_id);
+        return @$ci->db->get()->row()->is_attend;
+        
+    }
+
+}
 if (!function_exists('get_student_group')) {
 
     function get_student_group($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id) {
@@ -334,6 +356,26 @@ if (!function_exists('get_exam_mark')) {
         }
         $ci->db->where('M.student_id', $student_id);
         $ci->db->where('M.subject_id', $subject_id);
+        return $ci->db->get()->row();
+    }
+
+}
+if (!function_exists('get_grade_four_mark')) {
+
+    function get_grade_four_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id) {
+        $ci = & get_instance();
+        $ci->db->select('M.*');
+        $ci->db->from('grade_four_marks AS M');
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.exam_id', $exam_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        $ci->db->where('M.student_id', $student_id);
+        $ci->db->where('M.subject_id', $subject_id);
+        $ci->db->where('M.paper_id', $paper_id);
         return $ci->db->get()->row();
     }
 

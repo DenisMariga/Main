@@ -1641,3 +1641,4 @@ $config['my_exam']['activityaverage']['5'] = '0|0|1|0';
 $config['my_exam']['paper']['1'] = '1|1|1|1';
 $config['my_exam']['lowercurriculummark']['1'] = '1|1|1|0';
 $config['my_exam']['paperattendance']['1'] = '1|1|1|0';
+$config['my_exam']['gradefourcurriculum']['1'] = '1|1|1|0';

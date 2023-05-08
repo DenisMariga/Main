@@ -39,7 +39,6 @@ class markaoi_Model extends MY_Model {
         $this->db->join('exam_attendances AS EA', 'EA.student_id = S.id', 'left');
         $this->db->join('classes AS C', 'C.id = EA.class_id', 'left');
         $this->db->join('exams AS EX', 'EX.id = EA.exam_id', 'left');
-        
         $this->db->where('EA.academic_year_id', $academic_year_id);       
         $this->db->where('EA.school_id', $school_id);
         $this->db->where('EA.class_id', $class_id);

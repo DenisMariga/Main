@@ -93,7 +93,7 @@
                 <div class="row">
                     <div class="col-sm-4  col-sm-offset-4 layout-box">
                         <p>
-                            <h4><?php echo $this->lang->line('papers'); ?></h4>                            
+                            <h4><?php echo $this->lang->line('manage_paper_attendance'); ?></h4>                            
                         </p>
                     </div>
                 </div>            
@@ -153,7 +153,7 @@
                     </tbody>
                 </table>                
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="instructions"><strong><?php echo $this->lang->line('instruction'); ?>: </strong> <?php echo $this->lang->line('exam_project_instruction'); ?></div>
+                    <div class="instructions"><strong><?php echo $this->lang->line('instruction'); ?>: </strong> <?php echo $this->lang->line('exam_paper_instruction'); ?></div>
                 </div>
             </div> 
             

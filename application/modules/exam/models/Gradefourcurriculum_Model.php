@@ -1,14 +1,15 @@
-Gradefourcurriculum_Model<?php
+<?php
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class markaoi_Model extends MY_Model {
+class Gradefourcurriculum_Model extends MY_Model {
     
     function __construct() {
         parent::__construct();
     }
     
+     
     public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null,$academic_year_id = null){
         
         $this->db->select('S.*, E.roll_no, E.class_id, E.section_id, C.name AS class_name, S.id AS student_id, S.name AS student_name, S.photo,  S.phone');
@@ -32,19 +33,20 @@ class markaoi_Model extends MY_Model {
         return $this->db->get()->result();        
     }
 
+
     public function get_student_list_by_class($school_id = null, $exam_id = null, $class_id = null, $receiver_id = null, $academic_year_id = null){
         
         $this->db->select('DISTINCT(S.id),C.name AS class_name, S.id AS student_id, EX.title AS exam_name, S.name AS student_name, S.phone, S.guardian_id');
         $this->db->from('students AS S');        
-        $this->db->join('exam_attendances AS EA', 'EA.student_id = S.id', 'left');
-        $this->db->join('classes AS C', 'C.id = EA.class_id', 'left');
-        $this->db->join('exams AS EX', 'EX.id = EA.exam_id', 'left');
+        $this->db->join('paper_attendances AS PA', 'PA.student_id = S.id', 'left');
+        $this->db->join('classes AS C', 'C.id = PA.class_id', 'left');
+        $this->db->join('exams AS EX', 'EX.id = PA.exam_id', 'left');
         
-        $this->db->where('EA.academic_year_id', $academic_year_id);       
-        $this->db->where('EA.school_id', $school_id);
-        $this->db->where('EA.class_id', $class_id);
-        $this->db->where('EA.exam_id', $exam_id);
-        $this->db->where('EA.is_attend', 1);
+        $this->db->where('PA.academic_year_id', $academic_year_id);       
+        $this->db->where('PA.school_id', $school_id);
+        $this->db->where('PA.class_id', $class_id);
+        $this->db->where('PA.exam_id', $exam_id);
+        $this->db->where('PA.is_attend', 1);
         $this->db->where('S.status_type', 'regular');
         if($receiver_id > 0){  
             $this->db->where('S.user_id', $receiver_id);                      
@@ -141,38 +143,17 @@ class markaoi_Model extends MY_Model {
         return $this->db->get()->row(); 
     }
     
-    public function get_aoi_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $lesson_detail_id,$topic_details_id,$activity_id, $academic_year_id){
+    public function get_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $academic_year_id){
         
-        $this->db->select('M.activity_score, M.activity_out_of_ten,M.activity_descriptor, S.name AS subject');
-        $this->db->from('aoi_marks AS M'); 
+        $this->db->select('M.exam_mark, M.obtain_total_mark, S.name AS subject');
+        $this->db->from('grade_four_marks AS M'); 
         $this->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
-        $this->db->join('lp_lesson_details AS l', 'l.id = M.lesson_detail_id', 'left');
-        $this->db->join('lp_topic_details AS t', 't.id = M.topic_details_id', 'left');
-        $this->db->join('aois AS a', 'a.id = M.activity_id', 'left');
         $this->db->where('M.school_id', $school_id);
         $this->db->where('M.exam_id', $exam_id);
         $this->db->where('M.class_id', $class_id);
         $this->db->where('M.student_id', $student_id);
         $this->db->where('M.academic_year_id', $academic_year_id); 
-        return $this->db->get()->result();
-         
+        return $this->db->get()->result(); 
     }
-    public function get_average_activity_score_by_student($school_id, $exam_id, $class_id, $student_id, $topic_details_id,$activity_id, $academic_year_id,$aoi_marks_id ){
-        
-        $this->db->select('M.average_activity_score S.name AS subject');
-        $this->db->from('activity_averages AS AV'); 
-        $this->db->join('subjects AS S', 'S.id = AV.subject_id', 'left');
-        // $this->db->join('lp_lesson_details AS l', 'l.id = M.lesson_detail_id', 'left');
-        $this->db->join('lp_topic_details AS t', 't.id = AV.topic_details_id', 'left');
-        $this->db->join('aois AS a', 'a.id = AV.activity_id', 'left');
-        $this->db->join('aoi_marks AS am', 'am.id = AV.aoi_marks_id', 'left');
-        $this->db->where('AV.school_id', $school_id);
-        $this->db->where('AV.exam_id', $exam_id);
-        $this->db->where('AV.class_id', $class_id);
-        $this->db->where('M.student_id', $student_id);
-        $this->db->where('AV.academic_year_id', $academic_year_id); 
-        return $this->db->get()->result();
-         
-    }
-
+    
 }

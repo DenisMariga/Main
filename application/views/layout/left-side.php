@@ -489,12 +489,13 @@
                                 <?php if(has_permission(VIEW, 'exam', 'attendance')){ ?>
                                     <li><a  href="<?php echo site_url('exam/attendance/index'); ?>"><?php echo $this->lang->line('attendance'); ?></a></li>
                                 <?php } ?>    
+                                <?php if(has_permission(VIEW, 'exam', 'paperattendance')){ ?>
+                                    <li><a  href="<?php echo site_url('exam/paperattendance/index'); ?>"><?php echo $this->lang->line('manage_paper_attendance'); ?></a></li>
+                                <?php } ?>  
                                 <?php if(has_permission(VIEW, 'exam', 'grouping')){ ?>
                                     <li><a  href="<?php echo site_url('exam/grouping/index'); ?>"><?php echo $this->lang->line('grouping'); ?></a></li>
                                 <?php } ?>    
-                                <?php if(has_permission(VIEW, 'exam', 'paperattendance')){ ?>
-                                    <li><a  href="<?php echo site_url('exam/paperattendance/index'); ?>"><?php echo $this->lang->line('manage_paper_attendance'); ?></a></li>
-                                <?php } ?>    
+                                 
                             </ul>
                         </li> 
                     <?php } ?>
@@ -504,6 +505,7 @@
                                has_permission(VIEW, 'exam', 'projectmark') ||
                                has_permission(VIEW, 'exam', 'mark') ||
                                has_permission(VIEW, 'exam', 'lowercurriculummark') ||
+                               has_permission(VIEW, 'exam', 'gradefourcurriculum') ||
                                has_permission(VIEW, 'exam', 'examresult') || 
                                has_permission(VIEW, 'exam', 'finalresult') || 
                                has_permission(VIEW, 'exam', 'activityaverage') || 
@@ -528,6 +530,9 @@
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'lowercurriculummark')){ ?>
                                     <li><a href="<?php echo site_url('exam/lowercurriculummark/index'); ?>"><?php echo $this->lang->line('manage_lower_mark'); ?></a></li>
+                                <?php } ?>
+                                <?php if(has_permission(VIEW, 'exam', 'gradefourcurriculum')){ ?>
+                                    <li><a href="<?php echo site_url('exam/gradefourcurriculum/index'); ?>"><?php echo $this->lang->line('manage_grade_four_curriculum'); ?></a></li>
                                 <?php } ?>
                                 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
                                     <li><a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a></li>
