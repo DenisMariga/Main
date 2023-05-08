@@ -20,3 +20,6 @@
 <?php if(has_permission(VIEW, 'exam', 'grouping')){ ?>
    | <a href="<?php echo site_url('exam/grouping/index'); ?>"><?php echo $this->lang->line('project_grouping'); ?></a>                    
 <?php } ?> 
+<?php if(has_permission(VIEW, 'exam', 'paperattendance')){ ?>
+   | <a href="<?php echo site_url('exam/paperattendance/index'); ?>"><?php echo $this->lang->line('manage_paper_attendance'); ?></a>                    
+<?php } ?> 

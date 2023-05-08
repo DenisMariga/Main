@@ -1234,6 +1234,27 @@ class Ajax extends My_Controller {
 
        echo $str;
    }
+    public function get_paper_by_subject() {
+        
+        $school_id = $this->input->post('school_id');
+        $subject_id  = $this->input->post('subject_id');
+        $paper_id  = $this->input->post('paper_id');
+        $school = $this->ajax->get_school_by_id($school_id); 
+        $papers = $this->ajax->get_paper_by_subject($subject_id, @$school->academic_year_id);
+     
+       $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+       $select = 'selected="selected"';
+       if (!empty($papers)) {
+           foreach ($papers as $obj) {   
+               
+               $selected = $paper_id == $obj->id ? $select : '';
+               $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->Ptitle . '</option>';
+               
+           }
+       }
+
+       echo $str;
+   }
     /*****************Function get_topic_by_lesson**********************************
      * @type            : Function
      * @function name   : get_get_topic_by_lesson

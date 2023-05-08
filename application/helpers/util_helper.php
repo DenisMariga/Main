@@ -298,6 +298,27 @@ if (!function_exists('get_student_group')) {
     }
 
 }
+if (!function_exists('get_student_paper')) {
+
+    function get_student_paper($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id) {
+        $ci = & get_instance();
+        $ci->db->select('PG.is_attend');
+        $ci->db->from('paper_attendances AS PG');
+        $ci->db->where('PG.school_id', $school_id);
+        $ci->db->where('PG.academic_year_id', $academic_year_id);
+        $ci->db->where('PG.exam_id', $exam_id);
+        $ci->db->where('PG.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('PG.section_id', $section_id);
+        }
+        $ci->db->where('PG.student_id', $student_id);
+        $ci->db->where('PG.paper_id', $paper_id);
+        $ci->db->where('PG.subject_id', $subject_id);
+        return @$ci->db->get()->row()->is_attend;
+        
+    }
+
+}
 if (!function_exists('get_exam_mark')) {
 
     function get_exam_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
