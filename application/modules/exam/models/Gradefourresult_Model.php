@@ -23,7 +23,7 @@ class Gradefourresult_Model extends MY_Model {
         $this->db->group_by('S.id, S.name');
         $this->db->having('average_point >', 0);
         $this->db->order_by('average_point ASC');
-        $this->db->limit(8);
+        // $this->db->limit(15);
         $query = $this->db->get();
         return $query->result();
     }

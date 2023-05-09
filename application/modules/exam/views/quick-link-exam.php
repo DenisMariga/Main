@@ -18,6 +18,12 @@
 <?php if(has_permission(VIEW, 'exam', 'gradefourcurriculum')){ ?>
    | <a href="<?php echo site_url('exam/gradefourcurriculum/index'); ?>"><?php echo $this->lang->line('manage_grade_four_curriculum'); ?></a>
 <?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'gradefourresult')){ ?>
+   | <a href="<?php echo site_url('exam/gradefourresult/index'); ?>"><?php echo $this->lang->line('manage_grade_four_result'); ?></a>
+<?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'alevelmark')){ ?>
+   | <a href="<?php echo site_url('exam/alevelmark/index'); ?>"><?php echo $this->lang->line('manage_mark_a_level'); ?></a>
+<?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
    | <a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a>                 
 <?php } ?>

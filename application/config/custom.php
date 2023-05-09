@@ -1648,3 +1648,5 @@ $config['my_exam']['paperattendance']['5'] = '1|1|1|0';
 $config['my_exam']['lowercurriculummark']['5'] = '1|1|1|0';
 $config['my_exam']['gradefourcurriculum']['5'] = '1|1|1|0';
 $config['my_exam']['lowercurriculumresult']['5'] = '1|1|1|0';
+$config['my_exam']['gradefourresult']['1'] = '1|1|1|0';
+$config['my_exam']['alevelmark']['1'] = '1|1|1|0';
