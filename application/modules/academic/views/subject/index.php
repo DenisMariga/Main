@@ -141,6 +141,19 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group"><?php echo $this->lang->line('group'); ?> </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select  class="form-control col-md-7 col-xs-12" name="group" id="group" >
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
+                                            <?php $groups = get_subject_group(); ?>
+                                            <?php foreach($groups as $key=>$value){ ?>
+                                                <option value="<?php echo $key; ?>" <?php echo isset($post['group']) && $post['group'] == $key ?  'selected="selected"' : ''; ?>><?php echo $value; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block"><?php echo form_error('group'); ?></div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="code"><?php echo $this->lang->line('subject_code'); ?></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input  class="form-control col-md-7 col-xs-12"  name="code"  id="code" value="<?php echo isset($post['code']) ?  $post['code'] : ''; ?>" placeholder="<?php echo $this->lang->line('subject_code'); ?>"  type="text" autocomplete="off">
@@ -226,6 +239,19 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input  class="form-control col-md-7 col-xs-12"  name="name"  id="name" value="<?php echo isset($subject->name) ?  $subject->name : ''; ?>" placeholder="<?php echo $this->lang->line('name'); ?>" required="required" type="text" autocomplete="off">
                                         <div class="help-block"><?php echo form_error('name'); ?></div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group"><?php echo $this->lang->line('group'); ?> </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select  class="form-control col-md-7 col-xs-12" name="group" id="group" >
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
+                                            <?php $groups = get_subject_group(); ?>
+                                            <?php foreach($groups as $key=>$value){ ?>
+                                                <option value="<?php echo $key; ?>" <?php if($subject->group == $key){ echo 'selected="selected"';} ?>><?php echo $value; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block"><?php echo form_error('group'); ?></div>
                                     </div>
                                 </div>
                                 

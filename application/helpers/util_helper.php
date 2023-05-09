@@ -362,7 +362,7 @@ if (!function_exists('get_exam_mark')) {
 }
 if (!function_exists('get_grade_four_mark')) {
 
-    function get_grade_four_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id) {
+    function get_grade_four_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id) {
         $ci = & get_instance();
         $ci->db->select('M.*');
         $ci->db->from('grade_four_marks AS M');
@@ -375,7 +375,7 @@ if (!function_exists('get_grade_four_mark')) {
         }
         $ci->db->where('M.student_id', $student_id);
         $ci->db->where('M.subject_id', $subject_id);
-        $ci->db->where('M.paper_id', $paper_id);
+        $ci->db->where('M.paper_detail_id', $paper_detail_id);
         return $ci->db->get()->row();
     }
 
@@ -1083,6 +1083,17 @@ if (!function_exists('get_subject_type')) {
         return array(
             'mandatory' => $ci->lang->line('mandatory'),
             'optional' => $ci->lang->line('optional')
+        );
+    }
+
+}
+if (!function_exists('get_subject_group')) {
+
+    function get_subject_group() {
+        $ci = & get_instance();
+        return array(
+            'Humanity' => $ci->lang->line('humanity'),
+            'Science' => $ci->lang->line('science')
         );
     }
 

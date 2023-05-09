@@ -75,10 +75,10 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('papers'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12" name="paper_id" id="paper_id" required="required">                                                 
-                                <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
-                            </select>
-                            <div class="help-block"><?php echo form_error('paper_id'); ?></div>
+                            <select  class="form-control col-md-7 col-xs-12 gsms-nice-select"  name="paper_detail_id"  id="paper_detail_id" required="required">                           
+                                            <option value="">--<?php echo $this->lang->line('select'); ?>--</option>                                             
+                                        </select>
+                            <div class="help-block"><?php echo form_error('paper_detail_id'); ?></div>
                         </div>
                     </div>
                     </div>
@@ -124,8 +124,8 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php  $mark = get_grade_four_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id); ?>
-                            <?php  $attendance = get_paper_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id); ?>
+                            <?php  $mark = get_grade_four_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id); ?>
+                            <?php  $attendance = get_paper_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id); ?>
                                 <tr>
                                 <?php if(!empty($attendance)){ ?>
                                     <td><?php echo $obj->roll_no; ?></td>
@@ -186,7 +186,7 @@
                             <input type="hidden" value="<?php echo $class_id; ?>"  name="class_id" />
                             <input type="hidden" value="<?php echo $section_id; ?>"  name="section_id" />
                             <input type="hidden" value="<?php echo $subject_id; ?>"  name="subject_id" />                        
-                            <input type="hidden" value="<?php echo $paper_id; ?>"  name="paper_id" />                        
+                            <input type="hidden" value="<?php echo $paper_detail_id; ?>"  name="paper_detail_id" />                        
                             <a href="<?php echo site_url('exam/gradefourcurriculum/index'); ?>" class="btn btn-primary"><?php echo $this->lang->line('cancel'); ?></a>
                            <button id="send" type="submit" class="btn btn-success"><?php echo $this->lang->line('submit'); ?></button>
                         <?php } ?>
@@ -303,9 +303,10 @@
         });         
     }
     <?php if(isset($mark)){?>
-        get_paper_by_subject('<?php echo $subject_id; ?>', '<?php echo $paper_id; ?>');
+        get_paper_by_subject('<?php echo $mark->subject_id; ?>', '<?php echo $mark->paper_detail_id; ?>');
     <?php } ?>
-    function get_paper_by_subject(subject_id,paper_id){       
+    
+    function get_paper_by_subject(subject_id,paper_detail_id){       
         
         var school_id = $('#school_id').val();      
              
@@ -317,12 +318,12 @@
         $.ajax({       
             type   : "POST",
             url    : "<?php echo site_url('ajax/get_paper_by_subject'); ?>",
-            data   : {school_id:school_id,subject_id : subject_id ,paper_id : paper_id},                   
+            data   : {school_id:school_id, subject_id : subject_id , paper_detail_id : paper_detail_id},                   
             async  : false,
             success: function(response){                                                   
                if(response)
                {
-                  $('#paper_id').html(response);
+                  $('#paper_detail_id').html(response);
                }
             }
         }); 

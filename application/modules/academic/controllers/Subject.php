@@ -276,6 +276,7 @@ class Subject extends MY_Controller {
         $this->form_validation->set_rules('teacher_id', $this->lang->line('teacher'), 'trim|required');   
         $this->form_validation->set_rules('class_id', $this->lang->line('class'), 'trim|required');   
         $this->form_validation->set_rules('type', $this->lang->line('type'), 'trim');   
+        $this->form_validation->set_rules('group', $this->lang->line('group'), 'trim');   
         $this->form_validation->set_rules('code', $this->lang->line('subject_code'), 'trim');   
         $this->form_validation->set_rules('author', $this->lang->line('author'), 'trim');   
         $this->form_validation->set_rules('note', $this->lang->line('note'), 'trim');   
@@ -331,6 +332,7 @@ class Subject extends MY_Controller {
         $items[] = 'class_id';
         $items[] = 'teacher_id';
         $items[] = 'type';
+        $items[] = 'group';
         $items[] = 'code';
         $items[] = 'author';
         $items[] = 'name';

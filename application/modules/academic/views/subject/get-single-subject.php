@@ -9,6 +9,10 @@
             <td><?php echo $subject->name; ?></td>
         </tr>
         <tr>
+            <th><?php echo $this->lang->line('group'); ?></th>
+            <td><?php echo $this->lang->line($subject->group); ?></td>
+        </tr>
+        <tr>
             <th><?php echo $this->lang->line('subject_code'); ?></th>
             <td><?php echo $subject->code; ?></td>
         </tr>

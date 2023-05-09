@@ -8,7 +8,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @class name      : Admission
  * @description     : Manage admission admission imformation of the school.  
  * @author          :  Denis Mariga Kamara	
- * @url             :        
+ * @url           group
+ * 
+ *   :        
  * @support         : denismariga50@gmail.com	
  * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */

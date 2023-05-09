@@ -13,13 +13,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @copyright       : Denis Mariga Kamara 	
  * ********************************************************** */
 
-class Marksheet extends MY_Controller {
+class Gradefourresult extends MY_Controller {
 
     public $data = array();
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Marksheet_Model', 'mark', true);
+        $this->load->model('Gradefourresult_Model', 'mark', true);
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
@@ -40,7 +40,7 @@ class Marksheet extends MY_Controller {
     * ********************************************************** */
     public function index() {
 
-        check_permission(VIEW);
+        //check_permission(VIEW);
 
         if ($_POST) {
 
@@ -71,7 +71,7 @@ class Marksheet extends MY_Controller {
             
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
-                redirect('exam/marksheet/index');
+                redirect('exam/gradefourresult/index');
             }
             
             $this->data['subjects'] = $this->mark->get_subject_list($school_id, $exam_id, $class_id, $section_id, $student_id, $school->academic_year_id);
@@ -88,7 +88,7 @@ class Marksheet extends MY_Controller {
             $this->data['academic_year_id'] = $school->academic_year_id;
             
             $class = $this->mark->get_single('classes', array('id'=>$class_id));
-            create_log('Has been filter exam mark sheet for class: '. $class->name);
+            create_log('Has been filter exam mark grade for class: '. $class->name);
             
         }
         
@@ -107,8 +107,8 @@ class Marksheet extends MY_Controller {
             $this->data['exams'] = $this->mark->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }        
 
-        $this->layout->title( $this->lang->line('manage_mark_sheet') . ' | ' . SMS);
-        $this->layout->view('mark_sheet/index', $this->data);
+        $this->layout->title( $this->lang->line('manage_mark_four') . ' | ' . SMS);
+        $this->layout->view('gradefourresult/index', $this->data);
     }
 
 }

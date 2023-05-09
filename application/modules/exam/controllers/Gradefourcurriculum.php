@@ -49,7 +49,7 @@ class Gradefourcurriculum extends MY_Controller {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
             $subject_id = $this->input->post('subject_id');
-            $paper_id = $this->input->post('paper_id');
+            $paper_detail_id = $this->input->post('paper_detail_id');
 
             $school = $this->mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
@@ -63,7 +63,7 @@ class Gradefourcurriculum extends MY_Controller {
                 'school_id' => $school_id,
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
-                'paper_id' => $paper_id,
+                'paper_detail_id' => $paper_detail_id,
                 'academic_year_id' => $school->academic_year_id,
                 'subject_id' => $subject_id
             );
@@ -100,7 +100,7 @@ class Gradefourcurriculum extends MY_Controller {
             $this->data['class_id'] = $class_id;
             $this->data['section_id'] = $section_id;
             $this->data['subject_id'] = $subject_id;
-            $this->data['paper_id'] = $paper_id;
+            $this->data['paper_detail_id'] = $paper_detail_id;
             $this->data['academic_year_id'] = $school->academic_year_id;
                         
             $class = $this->mark->get_single('classes', array('id'=>$class_id));
@@ -144,7 +144,7 @@ class Gradefourcurriculum extends MY_Controller {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
             $subject_id = $this->input->post('subject_id');
-            $paper_id = $this->input->post('paper_id');
+            $paper_detail_id = $this->input->post('paper_detail_id');
 
             $school = $this->mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
@@ -158,7 +158,7 @@ class Gradefourcurriculum extends MY_Controller {
                 'class_id' => $class_id,
                 'academic_year_id' => $school->academic_year_id,
                 'subject_id' => $subject_id,
-                'paper_id' => $paper_id
+                'paper_detail_id' => $paper_detail_id
             );
             
             if($section_id){

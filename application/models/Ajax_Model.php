@@ -90,6 +90,17 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
+    public function get_paper_by_subject($subject_id, $academic_year_id){
+                
+        $this->db->select('LD.*');
+        $this->db->from('lp_paper_details AS LD');
+        $this->db->join('lp_papers AS L', 'L.id = LD.paper_id', 'left');  
+        $this->db->where('L.subject_id', $subject_id);
+        $this->db->where('L.academic_year_id', $academic_year_id);
+        $this->db->order_by('LD.id', 'ASC');
+        return $this->db->get()->result();
+        
+    }
     public function get_activity_by_topic($topic_details_id, $academic_year_id){
                 
         $this->db->select('A.*');
@@ -109,17 +120,7 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
-    public function get_paper_by_subject($subject_id, $academic_year_id){
-                
-        $this->db->select('LP.*');
-        $this->db->from('lp_paper_details AS LP');
-        $this->db->from('lp_papers AS P', 'P.id = TP.paper_id','left');
-        $this->db->where('P.subject_id', $subject_id);
-        $this->db->where('P.academic_year_id', $academic_year_id);
-        $this->db->order_by('P.id', 'ASC');
-        return $this->db->get()->result();
-        
-    }
+   
     public function get_topic_by_lesson($lesson_detail_id, $academic_year_id)
     {
         # code...
