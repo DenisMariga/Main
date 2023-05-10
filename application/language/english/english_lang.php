@@ -27,6 +27,7 @@ $lang['find'] = "Find";
 $lang['ranks'] = "Rank";
 $lang['quick_link'] = "Quick Link";
 $lang['dashboard'] = "Dashboard";
+$lang['manage_mark_a_result'] = "Manage A-Level Results";
 $lang['list'] = "List";
 $lang['setting'] = "Setting";
 $lang['marks'] = "Marks Obtained";

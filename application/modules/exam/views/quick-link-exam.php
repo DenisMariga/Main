@@ -24,6 +24,9 @@
 <?php if(has_permission(VIEW, 'exam', 'alevelmark')){ ?>
    | <a href="<?php echo site_url('exam/alevelmark/index'); ?>"><?php echo $this->lang->line('manage_mark_a_level'); ?></a>
 <?php } ?>
+<?php if(has_permission(VIEW, 'exam', 'alevelresult')){ ?>
+   | <a href="<?php echo site_url('exam/alevelresult/index'); ?>"><?php echo $this->lang->line('manage_mark_a_result'); ?></a>
+<?php } ?>
 <?php if(has_permission(VIEW, 'exam', 'examresult')){ ?>
    | <a href="<?php echo site_url('exam/examresult/index'); ?>"><?php echo $this->lang->line('exam_term_result'); ?></a>                 
 <?php } ?>
