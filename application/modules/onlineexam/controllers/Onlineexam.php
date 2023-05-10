@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /* ******************Onlineexam Onlineexam.php***************************
  * @exam title      : Global - MUlti School Management System Express
  * @type            : Class
- * @class name      : Onlineexam Onlineexams
+ * @class name      : Onlineexam Onlineexamshjj
  * @description     : Manage school academic exam exam.  
  * @author          :  Denis Mariga Kamara	
  * @url             :        
