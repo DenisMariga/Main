@@ -328,27 +328,7 @@
             }
         }); 
              
-    }
-  
-  $(document).ready(function(){
-  
-       $('.fn_mark_total').keyup(function(){         
-            var student_id = $(this).attr('itemid');
-          var written_mark       = $('#written_mark_'+student_id).val() ?  parseFloat($('#written_mark_'+student_id).val()) : 0;
-          var exam_mark     = $('#exam_mark_'+student_id).val() ? parseFloat($('#exam_mark_'+student_id).val()) : 0;
-          var tutorial_mark      = $('#tutorial_mark_'+student_id).val() ? parseFloat($('#tutorial_mark_'+student_id).val()) : 0;
-          var tutorial_obtain    = $('#tutorial_obtain_'+student_id).val() ? parseFloat($('#tutorial_obtain_'+student_id).val()) : 0;
-          var practical_mark     = $('#practical_mark_'+student_id).val() ? parseFloat($('#practical_mark_'+student_id).val()) : 0;
-          var practical_obtain   = $('#practical_obtain_'+student_id).val() ? parseFloat($('#practical_obtain_'+student_id).val()) : 0;
-          var viva_mark          = $('#viva_mark_'+student_id).val() ? parseFloat($('#viva_mark_'+student_id).val()) : 0;
-          var viva_obtain        = $('#viva_obtain_'+student_id).val() ? parseFloat($('#viva_obtain_'+student_id).val()) : 0;
-          
-          $('#exam_total_mark_'+student_id).val(written_mark+tutorial_mark+practical_mark+viva_mark);
-          $('#obtain_total_mark_'+student_id).val(exam_mark+tutorial_obtain+practical_obtain+viva_obtain);
-                              
-       }); 
-      
-  }); 
+    } 
   
  $("#mark").validate();  
  $("#addmark").validate();  

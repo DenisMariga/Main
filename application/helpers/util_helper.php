@@ -292,8 +292,8 @@ if (!function_exists('get_paper_attendance')) {
             $ci->db->where('PA.section_id', $section_id);
         }
         $ci->db->where('PA.student_id', $student_id);
-        $ci->db->where('PA.subject_id', $subject_id);
         $ci->db->where('PA.paper_id', $paper_id);
+        $ci->db->where('PA.subject_id', $subject_id);
         return @$ci->db->get()->row()->is_attend;
         
     }
@@ -324,18 +324,18 @@ if (!function_exists('get_student_paper')) {
 
     function get_student_paper($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_id) {
         $ci = & get_instance();
-        $ci->db->select('PG.is_attend');
-        $ci->db->from('paper_attendances AS PG');
-        $ci->db->where('PG.school_id', $school_id);
-        $ci->db->where('PG.academic_year_id', $academic_year_id);
-        $ci->db->where('PG.exam_id', $exam_id);
-        $ci->db->where('PG.class_id', $class_id);
+        $ci->db->select('PA.is_attend');
+        $ci->db->from('paper_attendances AS PA');
+        $ci->db->where('PA.school_id', $school_id);
+        $ci->db->where('PA.academic_year_id', $academic_year_id);
+        $ci->db->where('PA.exam_id', $exam_id);
+        $ci->db->where('PA.class_id', $class_id);
         if($section_id){
-            $ci->db->where('PG.section_id', $section_id);
+            $ci->db->where('PA.section_id', $section_id);
         }
-        $ci->db->where('PG.student_id', $student_id);
-        $ci->db->where('PG.paper_id', $paper_id);
-        $ci->db->where('PG.subject_id', $subject_id);
+        $ci->db->where('PA.student_id', $student_id);
+        $ci->db->where('PA.paper_id', $paper_id);
+        $ci->db->where('PA.subject_id', $subject_id);
         return @$ci->db->get()->row()->is_attend;
         
     }
@@ -1093,7 +1093,10 @@ if (!function_exists('get_subject_group')) {
         $ci = & get_instance();
         return array(
             'Humanity' => $ci->lang->line('humanity'),
-            'Science' => $ci->lang->line('science')
+            'Science' => $ci->lang->line('science'),
+            'Science' => $ci->lang->line('science'),
+            'Principles' => $ci->lang->line('principle'),
+            'Subsidiary' => $ci->lang->line('subsidiary')
         );
     }
 
@@ -2111,6 +2114,18 @@ if (!function_exists('get_lesson_detail_by_lesson_id')) {
         
     }
 }
+// if (!function_exists('get_paper_detail_by_paper_id')) {
+//     function get_paper_detail_by_paper_id($paper_id) {
+        
+//         $ci = & get_instance();
+//         $ci->db->select('LP.*');
+//         $ci->db->from('lp_paper_details AS LP');
+//         $ci->db->where('LP.paper_id', $paper_id); 
+//         $ci->db->order_by('LP.id', 'ASC'); 
+//         return $ci->db->get()->result();     
+        
+//     }
+// }
 
 if (!function_exists('get_paper_detail_by_paper_id')) {
     function get_paper_detail_by_paper_id($paper_id) {

@@ -9,7 +9,7 @@ class Paperattendance_Model extends MY_Model {
         parent::__construct();
     }
     
-    public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null, $paper_detail_id = null, $academic_year_id = null){
+    public function get_student_list($school_id = null, $exam_id = null, $class_id = null, $section_id = null, $subject_id = null, $paper_id = null, $academic_year_id = null){
         
         $this->db->select('S.*, E.roll_no, E.class_id, E.section_id, C.name AS class_name, S.id AS student_id, S.name AS student_name, S.photo,  S.phone');  
         $this->db->from('enrollments AS E');
