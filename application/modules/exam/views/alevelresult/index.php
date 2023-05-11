@@ -140,18 +140,55 @@
 <?php
 $subject = "";
 $count = 0;
+$paper_counts = array(); // initialize an empty array to keep track of paper_title counts
+
 if (isset($subjects) && !empty($subjects)) {
     foreach ($subjects as $obj) {
         if ($subject != $obj->subject) {
             // new subject, print subject name and start paper/marks list
             $count++;
+
+            // check if this is the first time this paper_title appears
+            if (!isset($paper_counts[$obj->paper_title])) {
+                $paper_counts[$obj->paper_title] = 1;
+            } else {
+                $paper_counts[$obj->paper_title]++;
+            }
 ?>
             <tr class="subject-row">
                 <td class="subject-count"><?php echo $count; ?></td>
                 <td class="subject-name"><?php echo ucfirst($obj->subject); ?></td>
                 <td class="teacher-initials"><?php echo ucfirst($obj->teacher_initials); ?></td>
-                <td class="grade">E</td>
-                <td class="paper-title"><?php echo $obj->paper_title; ?></td>
+                <td class="grade">
+                    <?php
+                        $grade = "";
+                        $student_grade = $obj->name;
+
+                        // apply grading rules based on the number of times this paper_title appears
+                        if ($paper_counts[$obj->paper_title] == 1) {
+                            if ($student_grade == 'D1') {
+                                $grade = "A";
+                            } else if ($student_grade == 'D2') {
+                                $grade = "B";
+                            } else if ($student_grade == 'C3') {
+                                $grade = "C";
+                            } else if ($student_grade == 'C4') {
+                                $grade = "D";
+                            } else if ($student_grade == 'C5') {
+                                $grade = "E";
+                            } else if ($student_grade == 'C6') {
+                                $grade = "O";
+                            } else if ($student_grade == 'P7' || $student_grade == 'P8' || $student_grade == 'F9') {
+                                $grade = "F";
+                            }
+                        }
+
+                        echo $grade;
+                    ?>
+                </td>
+
+                <?php $paper_title = $obj->paper_title; ?>
+                <td class="paper-title"><?php echo $paper_title; ?></td>
                 <td class="paper-score"><?php echo $obj->paper_score; ?></td>
                 <td class="student-name"><?php echo $obj->name; ?></td>
                 <td class="comment">Good</td>
@@ -183,6 +220,10 @@ if (isset($subjects) && !empty($subjects)) {
 }
 ?>
 </tbody>
+
+
+
+
 
 <style>
     .subject-row {
