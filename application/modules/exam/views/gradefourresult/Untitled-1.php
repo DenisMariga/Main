@@ -136,289 +136,106 @@
                             <th rowspan="2"><?php echo $this->lang->line('comments'); ?></th>                                                                                                   
                         </tr>
                     </thead>
-                    <tbody id="fn_mark">
-    <?php
-    $subject = "";
-    $count = 0;
-    $paper_counts = array(); // initialize an empty array to keep track of paper_title counts
-    $rank_counts = array();
+                   <tbody id="fn_mark">
+                   <?php
+$subject = "";
+$count = 0;
+$paper_counts = array(); // initialize an empty array to keep track of paper_title counts
 
-    if (isset($subjects) && !empty($subjects)) {
-        foreach ($subjects as $obj) {
-            if ($subject != $obj->subject) {
-                // new subject, print subject name and start paper/marks list
-                $count++;
-                $paper_counts[$obj->subject] = 1; // initialize paper count to 1 for new subject
-                $rank_counts[$obj->subject] = 1; // initialize paper count to 1 for new subject
-    ?>
-                <tr class="subject-row">
-                    <td class="subject-count"><?php echo $count; ?></td>
-                    <td class="subject-name"><?php echo ucfirst($obj->subject); ?></td>
-                    <td class="teacher-initials"><?php echo ucfirst($obj->teacher_initials); ?></td>
-                    <td><?php printRanks($rank_counts, $subjects, $obj->subject); ?></td>
-
- <!-- compute the grade based on paper_title and name -->
-                    <td class="paper-title"><?php echo $obj->paper_title; ?></td>
-                    <td class="paper-score"><?php echo $obj->paper_score; ?></td>
-                    <td class="subject-rank"><?php echo $obj->name; ?></td>
-                    <td class="comment">Good</td>
-                </tr>
-    <?php
-                $subject = $obj->subject;
-            } else {
-                // same subject, print paper/marks list
-                $paper_counts[$obj->subject]++; // increment paper count for the same subject
-                $rank_counts[$obj->subject]++; // increment paper count for the same subject
-    ?>
-                <tr class="paper-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="paper-title"><?php echo $obj->paper_title; ?></td>
-                    <td class="paper-score"><?php echo $obj->paper_score; ?></td>
-                    <td class="subject-rank"><?php echo $obj->name; ?></td>
-                    <td></td>
-                </tr>
-    <?php
-            }
+if (isset($subjects) && !empty($subjects)) {
+    foreach ($subjects as $obj) {
+        if ($subject != $obj->subject) {
+            // new subject, print subject name and start paper/marks list
+            $count++;
+?>
+            <tr class="subject-row">
+                <td class="subject-count"><?php echo $count; ?></td>
+                <td class="subject-name"><?php echo ucfirst($obj->subject); ?></td>
+                <td class="teacher-initials"><?php echo ucfirst($obj->teacher_initials); ?></td>
+                <td class="grade"><?php echo get_grade($obj->paper_title, $obj->name); ?></td> <!-- compute the grade based on paper_title and name -->
+                <?php $paper_title = $obj->paper_title; ?>
+                <td class="paper-title"><?php echo $paper_title; ?></td>
+                <td class="paper-score"><?php echo $obj->paper_score; ?></td>
+                <td class="student-name"><?php echo $obj->name; ?></td>
+                <td class="comment">Good</td>
+            </tr>
+<?php
+            $subject = $obj->subject;
+        } else {
+            // same subject, print paper/marks list
+?>
+            <tr class="paper-row">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="paper-title"><?php echo $obj->paper_title; ?></td>
+                <td class="paper-score"><?php echo $obj->paper_score; ?></td>
+                <td class="student-name"><?php echo $obj->name; ?>
+            </td>
+                <td></td>
+            </tr>
+<?php
         }
+    }
+} else {
+?>
+    <tr>
+        <td colspan="8" align="center"><?php echo $this->lang->line('no_data_found'); ?></td>
+    </tr>
+<?php
+}
+
+// function to compute the grade based on paper_title and student name
+function get_grade($paper_title, $name) {
+    $grade = ""; // initialize grade variable
+
+    // count the number of papers with the same paper_title
+    global $paper_counts;
+    if (!isset($paper_counts[$paper_title])) {
+        $paper_counts[$paper_title] = 1;
     } else {
-    ?>
-        <tr>
-            <td colspan="8" align="center"><?php echo $this->lang->line('no_data_found'); ?></td>
-        </tr>
-    <?php
+        $paper_counts[$paper_title]++;
     }
-    // function printRanks($rank_counts, $subjects, $subject) {
-    //     echo "<ul>";
-    
-    //     // initialize variables to keep track of C5 and D2 ranks for this subject
-    //     $d1_rank = false;
-    //     $d2_rank = false;
-    //     $c3_rank = false;
-    //     $c4_rank = false;
-    //     $c5_rank = false;
-    //     $c6_rank = false;
-    //     $p7_rank = false;
-    //     $p8_rank = false;
-    //     $f9_rank = false;
-        
-    //     $num_ranks = 0; // keep track of number of ranks attained for this subject
-    
-    //     foreach ($subjects as $obj) {
-    //         if ($obj->subject == $subject) {
-    //             $num_ranks++; // increment the number of ranks attained for this subject
-    
-    //             // check if the rank is C5 or D2
-    //             if ($obj->name == "D1") {
-    //                 $d1_rank = true;
-    //             } elseif ($obj->name == "D2") {
-    //                 $d2_rank = true;
-    //             }
-    //             // check if the rank is C5 or D2
-    //             if ($obj->name == "C3") {
-    //                 $c3_rank = true;
-    //             } elseif ($obj->name == "C4") {
-    //                 $c4_rank = true;
-    //             } elseif ($obj->name == "C5") {
-    //                 $c5_rank = true;
-    //             } elseif ($obj->name == "C6") {
-    //                 $c6_rank = true;
-    //             } elseif ($obj->name == "P7") {
-    //                 $p7_rank = true;
-    //             } elseif ($obj->name == "P8") {
-    //                 $p8_rank = true;
-    //             } elseif ($obj->name == "F9") {
-    //                 $f9_rank = true;
-    //             }
-    //         }
-    //     }
-    
-    //     // check if only one rank was attained for this subject
-    //     if ($num_ranks == 1) {
-    //         if ($d1_rank) {
-    //             echo "<p>A</p>";
-    //         } elseif ($d2_rank) {
-    //             echo "<p>B</p>";
-    //         } elseif ($c3_rank) {
-    //             echo "<p>C</p>";
-    //         } elseif ($c4_rank) {
-    //             echo "<p>D</p>";
-    //         } elseif ($c5_rank) {
-    //             echo "<p>E</p>";
-    //         }  elseif ($c6_rank) {
-    //             echo "<p>O</p>";
-    //         }elseif ($p7_rank_rank || $p8_rank || $f9_rank ) {
-    //             echo "<p>F</p>";
-    //         }
-    //     } else {
-    //         // check if both C5 and D2 ranks were attained for this subject
-    //         if ($d1_rank && $d2_rank  || $d1_rank && $d1_rank || $d2_rank && $d2_rank ) {
-    //             echo "<p>You attained a D1 and a D2 so you get an A</p>";
-    //         } else {
-    //             // check if both C3 and C4 ranks were attained for this subject
-    //             if ($c3_rank && $d1_rank || $c3_rank && $d2_rank) {
-    //                 echo "<p>B</p>";
-    //             } else {
-    //                 echo "<p>Multiple ranks attained. Could not determine the overall rank.</p>";
-    //             }
-    //         }
-    //     }
-    //     echo "</ul>";
-    // }
-    
-    function printRanks($rank_counts, $subjects, $subject) {
-        echo "<ul>";
-        
-        // initialize variables to keep track of C5 and D2 ranks for this subject
-        $d1_rank = false;
-        $d2_rank = false;
-        $c3_rank = false;
-        $c4_rank = false;
-        $c5_rank = false;
-        $c6_rank = false;
-        $p7_rank = false;
-        $p8_rank = false;
-        $f9_rank = false;
-        
-        $num_ranks = 0; // keep track of number of ranks attained for this subject
-        
-        foreach ($subjects as $obj) {
-            if ($obj->subject == $subject) {
-                $num_ranks++; // increment the number of ranks attained for this subject
-        
-                // check if the rank is C5 or D2
-                if ($obj->name == "D1") {
-                    $d1_rank = true;
-                } elseif ($obj->name == "D2") {
-                    $d2_rank = true;
-                } elseif ($obj->name == "C3") {
-                    $c3_rank = true;
-                } elseif ($obj->name == "C4") {
-                    $c4_rank = true;
-                } elseif ($obj->name == "C5") {
-                    $c5_rank = true;
-                } elseif ($obj->name == "C6") {
-                    $c6_rank = true;
-                } elseif ($obj->name == "P7") {
-                    $p7_rank = true;
-                } elseif ($obj->name == "P8") {
-                    $p8_rank = true;
-                } elseif ($obj->name == "F9") {
-                    $f9_rank = true;
-                }
+
+    // compute the grade based on paper_title and student name
+    switch ($paper_counts[$paper_title]) {
+        case 1:
+            switch ($name) {
+                case "D1":
+                    $grade = "A";
+                    break;
+                case "D2":
+                    $grade = "B";
+                    break;
+                case "C3":
+                    $grade = "C";
+                    break;
+                case "C4":
+                    $grade = "D";
+                    break;
+                case "C5":
+                    $grade = "E";
+                    break;
+                case "C6":
+                    $grade = "O";
+                    break;
+                case "P7":
+                case "P8":
+                case "F9":
+                    $grade = "F";
+                    break;
             }
-        }
-        
-        // check if only one rank was attained for this subject
-        if ($num_ranks == 1) {
-            if ($d1_rank) {
-                echo "<p>A</p>";
-            } elseif ($d2_rank) {
-                echo "<p>B</p>";
-            } elseif ($c3_rank) {
-                echo "<p>C</p>";
-            } elseif ($c4_rank) {
-                echo "<p>D</p>";
-            } elseif ($c5_rank) {
-                echo "<p>E</p>";
-            } elseif ($c6_rank) {
-                echo "<p>O</p>";
-            } elseif ($p7_rank || $p8_rank || $f9_rank) {
-                echo "<p>F</p>";
-            }
-        // check if two ranks were attained for this subject
-        } elseif ($num_ranks == 2) {
-            if (($d1_rank && $c3_rank) || ($d2_rank && $c3_rank)) {
-                echo "<p>B</p>";
-            }elseif (($d1_rank && $c4_rank) || ($d2_rank && $c4_rank)|| ($c3_rank && $c4_rank)) {
-                echo "<p>C</p>";
-            }elseif (($d1_rank && $c5_rank) || ($d2_rank && $c5_rank)|| ($c3_rank && $c5_rank) || ($c4_rank && $c5_rank)) {
-                echo "<p>D</p>";
-            }elseif (($d1_rank && $c6_rank) || ($d2_rank && $c6_rank)|| ($c3_rank && $c6_rank) || ($c4_rank && $c6_rank)|| ($c5_rank && $c6_rank)) {
-                echo "<p>E</p>";
-            }elseif (($d1_rank && $p7_rank ) || ($d2_rank && $p7_rank )|| ($c3_rank && $p7_rank ) ||($c4_rank && $p7_rank )|| ($c5_rank && $p7_rank )|| ($c6_rank && $p7_rank )) {
-                echo "<p>O</p>";
-            }elseif (($d1_rank && $p8_rank ) || ($d2_rank && $p8_rank )|| ($c3_rank && $p8_rank ) ||($c4_rank && $p8_rank )|| ($c5_rank && $p8_rank )|| ($c6_rank && $p8_rank )) {
-                echo "<p>O</p>";
-            }elseif (($d1_rank && $f9_rank ) || ($d2_rank && $f9_rank )|| ($c3_rank && $f9_rank ) ||($c4_rank && $f9_rank )|| ($c5_rank && $f9_rank )|| ($c6_rank && $f9_rank)) {
-                echo "<p>O</p>";
-            }elseif (($p8_rank || $p7_rank && $f9_rank )) {
-                echo "<p>F</p>";
-            }
-             elseif (($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($d1_rank && $d2_rank )) {
-                echo "<p>A</p>";
-            }
-             else {
-                echo "Error: Invalid ranks for this subject";
-            }
-        } elseif ($num_ranks == 3) {
-            if (($f9_rank) && ($f9_rank)) {
-                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
-                    echo "<p>F</p>";
-                }    
-            }elseif ($f9_rank && $p8_rank) {
-                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
-                    echo "<p>F</p>";
-                } 
-            }else if ($f9_rank) {
-                if (($p7_rank && $p8_rank) || ($p7_rank && $p7_rank) || ($p8_rank && $p8_rank)) {
-                    echo "<p>F</p>";
-                    } 
-            }else if ($f9_rank) {
-            if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
-                echo "<p>O</p>";
-                } 
-            }elseif ($p7_rank && $p8_rank) {
-                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)) {
-                    echo "<p>O</p>";
-                }    
-            } elseif ($p7_rank || $p8_rank) {
-                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
-                    echo "<p>E</p>";
-                }
-            }elseif ($c5_rank) {
-                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)  || ($c3_rank && $c4_rank)) {
-                    echo "<p>C</p>";
-                }
-            }elseif ($c6_rank) {
-                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)) {
-                    echo "<p>D</p>";
-                }
-            }elseif ($c4_rank) {
-                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d2_rank && $c3_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)) {
-                    echo "<p>B</p>";
-                }
-            }elseif (($d1_rank && $p7_rank ) || ($d2_rank && $p7_rank )|| ($c3_rank && $p7_rank ) ||($c4_rank && $p7_rank )|| ($c5_rank && $p7_rank )|| ($c6_rank && $p7_rank )) {
-                echo "<p>O</p>";
-            }elseif (($d1_rank && $p8_rank ) || ($d2_rank && $p8_rank )|| ($c3_rank && $p8_rank ) ||($c4_rank && $p8_rank )|| ($c5_rank && $p8_rank )|| ($c6_rank && $p8_rank )) {
-                echo "<p>O</p>";
-            }elseif (($d1_rank && $f9_rank ) || ($d2_rank && $f9_rank )|| ($c3_rank && $f9_rank ) ||($c4_rank && $f9_rank )|| ($c5_rank && $f9_rank )|| ($c6_rank && $f9_rank)) {
-                echo "<p>O</p>";
-            }elseif (($p8_rank || $p7_rank && $f9_rank )) {
-                echo "<p>F</p>";
-            }
-             elseif (($d1_rank && $d1_rank && $c3_rank) || ($d2_rank && $d2_rank && $c3_rank) || ($d1_rank && $d2_rank && $c3_rank )) {
-                echo "<p>A</p>";
-            }
-             else {
-                echo "Error: Invalid ranks for this subject";
-            }
-        }  
-        else {
-            echo "Error: Invalid number of ranks for this subject";
-        }
-        
-        echo "</ul>";
+            break;
+        // add additional cases for 2, 3, and 4 papers if needed
     }
-    
-    
-    ?>
-</tbody>
+
+    return $grade;
+}
+?>
 
 
-
+                    </tbody>
 
 
 

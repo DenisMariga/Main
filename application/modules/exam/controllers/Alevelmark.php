@@ -19,11 +19,11 @@ class Alevelmark extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Alevel_Model', 'mark', true);   
+        $this->load->model('Alevel_Model', 'a_mark', true);   
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
-            if(!check_saas_status($this->session->userdata('school_id'), 'is_enable_exam_mark')){                        
+            if(!check_saas_status($this->session->userdata('school_id'), 'is_enable_exam_a_mark')){                        
               redirect('dashboard/index');
             }
         }
@@ -51,21 +51,21 @@ class Alevelmark extends MY_Controller {
             $subject_id = $this->input->post('subject_id');
             $paper_detail_id = $this->input->post('paper_detail_id');
 
-            $school = $this->mark->get_school_by_id($school_id);
+            $school = $this->a_mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
                 redirect('exam/alevelmark/index');
             }
             
-            $this->data['students'] = $this->mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id, $school->academic_year_id);
+            $this->data['students'] = $this->a_mark->get_student_list($school_id, $exam_id, $class_id, $section_id, $subject_id, $school->academic_year_id);
 
             $condition = array(
                 'school_id' => $school_id,
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
-                'paper_detail_id' => $paper_detail_id,
                 'academic_year_id' => $school->academic_year_id,
-                'subject_id' => $subject_id
+                'subject_id' => $subject_id,
+                'paper_detail_id' => $paper_detail_id
             );
             
             if($section_id){
@@ -79,21 +79,21 @@ class Alevelmark extends MY_Controller {
                 foreach ($this->data['students'] as $obj) {
 
                     $condition['student_id'] = $obj->student_id;
-                    $mark = $this->mark->get_single('a_level_marks', $condition);
+                    $a_mark = $this->a_mark->get_single('a_level_marks', $condition);
 
-                    if (empty($mark)) {
+                    if (empty($a_mark)) {
                         
                         $data['section_id'] = $obj->section_id;
                         $data['student_id'] = $obj->student_id;
                         $data['status'] = 1;
                         $data['created_at'] = date('Y-m-d H:i:s');
                         $data['created_by'] = logged_in_user_id();
-                        $this->mark->insert('a_level_marks', $data);
+                        $this->a_mark->insert('a_level_marks', $data);
                     }
                 }
             }
 
-            $this->data['grades'] = $this->mark->get_list('grades', array('status' => 1, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
+            $this->data['grades'] = $this->a_mark->get_list('grades', array('status' => 1, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
             
             $this->data['school_id'] = $school_id;
             $this->data['exam_id'] = $exam_id;
@@ -103,7 +103,7 @@ class Alevelmark extends MY_Controller {
             $this->data['paper_detail_id'] = $paper_detail_id;
             $this->data['academic_year_id'] = $school->academic_year_id;
                         
-            $class = $this->mark->get_single('classes', array('id'=>$class_id));
+            $class = $this->a_mark->get_single('classes', array('id'=>$class_id));
             create_log('Has been process exam mark for class: '. $class->name);
             
         }
@@ -113,14 +113,14 @@ class Alevelmark extends MY_Controller {
         $condition['status'] = 1;  
         
         if($this->session->userdata('role_id') != SUPER_ADMIN){
-            $school = $this->mark->get_school_by_id($this->session->userdata('school_id'));
+            $school = $this->a_mark->get_school_by_id($this->session->userdata('school_id'));
             $condition['school_id'] = $this->session->userdata('school_id');
-            $this->data['classes'] = $this->mark->get_list('classes', $condition, '','', '', 'id', 'ASC');
+            $this->data['classes'] = $this->a_mark->get_list('classes', $condition, '','', '', 'id', 'ASC');
             $condition['academic_year_id'] = $school->academic_year_id;
-            $this->data['exams'] = $this->mark->get_list('exams', $condition, '', '', '', 'id', 'ASC');
+            $this->data['exams'] = $this->a_mark->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }  
 
-        $this->layout->title($this->lang->line('manage_mark') . ' | ' . SMS);
+        $this->layout->title($this->lang->line('manage_a_level_mark') . ' | ' . SMS);
         $this->layout->view('alevelmark/index', $this->data);
     }
 
@@ -146,7 +146,7 @@ class Alevelmark extends MY_Controller {
             $subject_id = $this->input->post('subject_id');
             $paper_detail_id = $this->input->post('paper_detail_id');
 
-            $school = $this->mark->get_school_by_id($school_id);
+            $school = $this->a_mark->get_school_by_id($school_id);
             if(!$school->academic_year_id){
                 error($this->lang->line('set_academic_year_for_school'));
                 redirect('exam/alevelmark/index');
@@ -172,16 +172,16 @@ class Alevelmark extends MY_Controller {
                 foreach ($_POST['students'] as $key => $value) {
 
                     $condition['student_id'] = $value;
-                    $data['exam_mark'] = $_POST['exam_mark'][$value];
+                    $data['a_exam_mark'] = $_POST['a_exam_mark'][$value];
                     $data['grade_id'] = $_POST['grade_id'][$value];                                        
                     $data['status'] = 1;
                     $data['created_at'] = date('Y-m-d H:i:s');
                     $data['created_by'] = logged_in_user_id();
-                    $this->mark->update('a_level_marks', $data, $condition);
+                    $this->a_mark->update('a_level_marks', $data, $condition);
                 }
             }
             
-            $class = $this->mark->get_single('classes', array('id'=>$class_id));
+            $class = $this->a_mark->get_single('classes', array('id'=>$class_id));
             create_log('Has been process exam mark and save for class: '. $class->name);
             
             success($this->lang->line('insert_success'));

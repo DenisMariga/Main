@@ -2,7 +2,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> <?php echo $this->lang->line('manage_mark_a_level'); ?></small></h3>
+                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> <?php echo $this->lang->line('manage_a_level_mark'); ?></small></h3>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>                    
                 </ul>
@@ -16,7 +16,7 @@
             
             
             <div class="x_content"> 
-                <?php echo form_open_multipart(site_url('exam/alevelmark/index'), array('name' => 'mark', 'id' => 'mark', 'class' => 'form-horizontal form-label-left'), ''); ?>
+                <?php echo form_open_multipart(site_url('exam/alevelmark/index'), array('name' => 'a_mark', 'id' => 'a_mark', 'class' => 'form-horizontal form-label-left'), ''); ?>
                 <div class="row">
                     
                     <div class="col-md-10 col-sm-10 col-xs-12">
@@ -66,7 +66,7 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('subject'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required" onchange="get_paper_by_subject(this.value,'','');">                                                 
+                            <select  class="form-control col-md-7 col-xs-12" name="subject_id" id="subject_id" required="required" onchange="get_paper_by_subject_mark(this.value,'','');">                                                 
                                 <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                             </select>
                             <div class="help-block"><?php echo form_error('subject_id'); ?></div>
@@ -97,7 +97,7 @@
                 <div class="row">
                     <div class="col-sm-4  col-sm-offset-4 layout-box">
                         <p>
-                            <h4><?php echo $this->lang->line('exam_mark'); ?></h4>                            
+                            <h4><?php echo $this->lang->line('a_mark'); ?></h4>                            
                         </p>
                     </div>
                 </div>            
@@ -124,7 +124,7 @@
                         if (isset($students) && !empty($students)) {
                             ?>
                             <?php foreach ($students as $obj) { ?>
-                            <?php  $mark = get_grade_four_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id); ?>
+                            <?php  $a_mark = get_a_level_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id); ?>
                             <?php  $attendance = get_paper_attendance($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id); ?>
                                 <tr>
                                 <?php if(!empty($attendance)){ ?>
@@ -148,9 +148,9 @@
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
                                             <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />  
-                                            <input type="number"  id="exam_mark_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($mark) && $mark->exam_mark > 0 ){ echo $mark->exam_mark; }else{ echo ''; } ?>"  name="exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
+                                            <input type="number"  id="exam_mark_<?php echo $obj->student_id; ?>"  itemid="<?php echo $obj->student_id; ?>"  value="<?php if(!empty($a_mark) && $a_mark->a_exam_mark > 0 ){ echo $a_mark->a_exam_mark; }else{ echo ''; } ?>"  name="a_exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total"   autocomplete="off"/>
                                         <?php }else{ ?>
-                                            <input type="hidden" type="number" value="0"  name="exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
+                                            <input type="hidden" type="number" value="0"  name="a_exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
                                     </td>
                                     
@@ -160,7 +160,7 @@
                                         <select  class="form-control col-md-7 col-xs-12" name="grade_id[<?php echo $obj->student_id; ?>]"  required="required">                                
                                             <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                                              <?php foreach ($grades as $grade) { ?>
-                                            <option value="<?php echo $grade->id; ?>" <?php if(isset($mark) && $mark->grade_id == $grade->id){ echo 'selected="selected"';} ?>><?php echo $grade->name; ?> [<?php echo $grade->point; ?>]</option>
+                                            <option value="<?php echo $grade->id; ?>" <?php if(isset($a_mark) && $a_mark->grade_id == $grade->id){ echo 'selected="selected"';} ?>><?php echo $grade->name; ?> [<?php echo $grade->point; ?>]</option>
                                             <?php } ?>
                                       
                                         </select>
@@ -302,11 +302,11 @@
             }
         });         
     }
-    <?php if(isset($mark)){?>
-        get_paper_by_subject('<?php echo $mark->subject_id; ?>', '<?php echo $mark->paper_detail_id; ?>');
+    <?php if(isset($a_mark)){?>
+        get_paper_by_subject_mark('<?php echo $a_mark->subject_id; ?>', '<?php echo $a_mark->paper_detail_id; ?>');
     <?php } ?>
     
-    function get_paper_by_subject(subject_id,paper_detail_id){       
+    function get_paper_by_subject_mark(subject_id,paper_detail_id){       
         
         var school_id = $('#school_id').val();      
              
@@ -317,8 +317,8 @@
         
         $.ajax({       
             type   : "POST",
-            url    : "<?php echo site_url('ajax/get_paper_by_subject'); ?>",
-            data   : {school_id:school_id, subject_id : subject_id , paper_detail_id : paper_detail_id},                   
+            url    : "<?php echo site_url('ajax/get_paper_by_subject_mark'); ?>",
+            data   : {school_id:school_id,subject_id : subject_id,paper_detail_id : paper_detail_id},                   
             async  : false,
             success: function(response){                                                   
                if(response)
@@ -330,7 +330,7 @@
              
     } 
   
- $("#mark").validate();  
+ $("#a_mark").validate();  
  $("#addmark").validate();  
 </script>
 <style>

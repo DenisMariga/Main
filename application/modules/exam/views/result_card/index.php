@@ -23,7 +23,7 @@
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('academic_year'); ?> <span class="required">*</span></div>
                             <select  class="form-control col-md-7 col-xs-12" name="academic_year_id" id="academic_year_id" required="required">
-                                <option value=""><?php echo $this->lang->line('select'); ?></option>
+                                <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                                 <?php foreach ($academic_years as $obj) { ?>
                                 <?php $running = $obj->is_running ? ' ['.$this->lang->line('running_year').']' : ''; ?>
                                 <option value="<?php echo $obj->id; ?>" <?php if(isset($academic_year_id) && $academic_year_id == $obj->id){ echo 'selected="selected"';} ?>><?php echo $obj->session_year; echo $running; ?></option>
@@ -136,7 +136,7 @@
                         </tr>
                     </thead>
                     <tbody id="fn_mark"> 
-                       
+                        
                         <?php if (isset($exams) && !empty($exams)) { ?>
                         <?php foreach($exams as $ex){ ?>
                         
@@ -144,7 +144,7 @@
                                 <th colspan="17"><?php echo $ex->title; ?></th>
                             </tr>
                         
-                            <?php
+                            <?php                           
                             $exam_subjects = get_subject_list($school_id, $academic_year_id, $ex->id, $class_id, $section_id, $student_id);
                             $count = 1;
                             if (isset($exam_subjects) && !empty($exam_subjects)) {

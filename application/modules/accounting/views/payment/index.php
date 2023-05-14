@@ -186,30 +186,14 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="card_type"><?php echo $this->lang->line('card_type'); ?> <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">                                        
                                         <div class="row">
-                                            <div class="col-md-2 col-sm-2 col-xs-6">
-                                                <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="1">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/dbbl-nexus.png" alt="dbbl-nexus" width="75"/>
-                                            </div>
+                                            
                                             <div class="col-md-2 col-sm-2 col-xs-6">
                                                 <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="2">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/dbbl-master.png" alt="dbbl-master" width="75" />
+                                                <img src="https://www.schoolpay.co.ug/web/img/logoFLagUG_blue%20159X68.png" alt="dbbl-master" width="75" />
                                             </div>
-                                            <div class="col-md-2 col-sm-2 col-xs-6">
-                                                <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="3">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/dbbl-visa.png" alt="dbbl-visa" width="75"/>
-                                            </div>
-                                            <div class="col-md-2 col-sm-2 col-xs-6">
-                                                <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="4">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/visa.png" alt="Visa" width="75"/>
-                                            </div>
-                                            <div class="col-md-2 col-sm-2 col-xs-6">
-                                                <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="5">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/master.png" alt="master" width="75"/>
-                                            </div>
-                                            <div class="col-md-2 col-sm-2 col-xs-6">
-                                                <input type="radio" name="card_type" required="required" class="dbbl_card_type" value="6">                                                
-                                                <img src="<?php echo IMG_URL; ?>dbbl/rocket.png" alt="rocket" width="75"/>
-                                            </div>
+                                           
+                                            
+                                            
                                         </div>										
                                         <div class="help-block"><?php echo form_error('dbbl'); ?></div>
                                     </div>
@@ -294,6 +278,13 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="note"><?php echo $this->lang->line('note'); ?></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <textarea  class="form-control col-md-7 col-xs-12"  name="note"  id="note" placeholder="<?php echo $this->lang->line('note'); ?>"></textarea>
+                                    <div class="help-block"><?php echo form_error('note'); ?></div>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="note">Pay Using School Pay</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <a target="_blank" href="https://www.schoolpay.co.ug/">Pay through School Pay</a>
                                     <div class="help-block"><?php echo form_error('note'); ?></div>
                                 </div>
                             </div>

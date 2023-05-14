@@ -145,7 +145,7 @@ class Alevel_Model extends MY_Model {
     
     public function get_marks_list_by_student($school_id, $exam_id, $class_id, $student_id, $academic_year_id){
         
-        $this->db->select('M.exam_mark, M.obtain_total_mark, S.name AS subject');
+        $this->db->select('M.a_exam_mark, S.name AS subject');
         $this->db->from('a_level_marks AS M'); 
         $this->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
         $this->db->where('M.school_id', $school_id);

@@ -3,14 +3,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* * *****************Marksheet.php**********************************
- * @product name    : Uganda School ERP
+ * @product name    : Global Multi School Management System Express
  * @type            : Class
  * @class name      : Marksheet
  * @description     : Manage exam resultcard sheet.  
- * @author          :  Denis Mariga Kamara	
- * @url             :        
- * @support         : denismariga50@gmail.com	
- * @copyright       : Denis Mariga Kamara 	
+ * @author          : Codetroopers Team 	
+ * @url             : https://themeforest.net/user/codetroopers      
+ * @support         : yousuf361@gmail.com	
+ * @copyright       : Codetroopers Team	 	
  * ********************************************************** */
 
 class Resultcard extends MY_Controller {

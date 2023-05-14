@@ -101,6 +101,17 @@ class Ajax_Model extends MY_Model {
         return $this->db->get()->result();
         
     }
+    public function get_paper_by_subject_mark($subject_id, $academic_year_id){
+                
+        $this->db->select('LD.*');
+        $this->db->from('lp_paper_details AS LD');
+        $this->db->join('lp_papers AS L', 'L.id = LD.paper_id', 'left');  
+        $this->db->where('L.subject_id', $subject_id);
+        $this->db->where('L.academic_year_id', $academic_year_id);
+        $this->db->order_by('LD.id', 'ASC');
+        return $this->db->get()->result();
+        
+    }
     public function get_activity_by_topic($topic_details_id, $academic_year_id){
                 
         $this->db->select('A.*');

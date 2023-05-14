@@ -2,7 +2,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small><?php echo $this->lang->line('manage_result_card'); ?></small></h3>
+                <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> <?php echo $this->lang->line('manage_result_card'); ?></small></h3>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>                    
                 </ul>
@@ -25,7 +25,7 @@
                         <div class="item form-group"> 
                             <div><?php echo $this->lang->line('academic_year'); ?> <span class="required">*</span></div>
                             <select  class="form-control col-md-7 col-xs-12" name="academic_year_id" id="academic_year_id" required="required">
-                                <option value=""><?php echo $this->lang->line('select'); ?></option>
+                                <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
                                 <?php foreach ($academic_years as $obj) { ?>
                                 <?php $running = $obj->is_running ? ' ['.$this->lang->line('running_year').']' : ''; ?>
                                 <option value="<?php echo $obj->id; ?>" <?php if(isset($academic_year_id) && $academic_year_id == $obj->id){ echo 'selected="selected"';} ?>><?php echo $obj->session_year; echo $running; ?></option>
@@ -82,7 +82,6 @@
                     <div class="col-sm-6 col-xs-6  col-sm-offset-3 col-xs-offset-3  layout-box">
                         <p>
                             <?php if(isset($school)){ ?>
-                                <div><img   src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" width="70" /></div>
                             <h4><?php echo $school->school_name; ?></h4>
                             <p> <?php echo $school->address; ?></p>
                             <?php } ?>
@@ -97,7 +96,7 @@
                             <?php echo $this->lang->line('name'); ?> : <?php echo $std->name; ?><br/>
                             <?php echo $this->lang->line('class'); ?> : <?php echo $std->class_name; ?>,
                             <?php echo $this->lang->line('section'); ?> : <?php echo $std->section; ?>,
-                            <?php echo $this->lang->line('adm_no'); ?> : <?php echo $std->admission_no ; ?>
+                            <?php echo $this->lang->line('roll_no'); ?> : <?php echo $std->roll_no; ?>
                         </p>
                     </div>
                 </div>            
@@ -416,7 +415,7 @@
             }
         });         
     } 
-  $("#marksheet").validate(); 
+  $("#resultcard").validate(); 
 </script>
 <style>
 .table>thead>tr>th,.table>tbody>tr>td {

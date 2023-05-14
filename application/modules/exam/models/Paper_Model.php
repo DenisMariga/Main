@@ -35,7 +35,8 @@ class Paper_Model extends MY_Model {
         $this->db->order_by('L.id', 'ASC');
         return $this->db->get()->result();
     }
-
+   
+    
     //ok
     public function get_single_paper($id) {
 

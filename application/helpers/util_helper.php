@@ -380,6 +380,27 @@ if (!function_exists('get_grade_four_mark')) {
     }
 
 }
+
+if (!function_exists('get_a_level_mark')) {
+
+    function get_a_level_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$paper_detail_id) {
+        $ci = & get_instance();
+        $ci->db->select('M.*');
+        $ci->db->from('a_level_marks AS M');
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.exam_id', $exam_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        $ci->db->where('M.student_id', $student_id);
+        $ci->db->where('M.subject_id', $subject_id);
+        $ci->db->where('M.paper_detail_id', $paper_detail_id);
+        return $ci->db->get()->row();
+    }
+
+}
 if (!function_exists('get_lower_curriculum _mark')) {
 
     function get_lower_curriculum_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {

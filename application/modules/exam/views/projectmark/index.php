@@ -126,6 +126,64 @@
                                                                       
                         </tr>
                     </thead>
+                    <style>
+  .custom-select {
+    position: relative;
+    font-size: 18px;
+    color: #333;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .custom-select::after {
+    content: "\25BC";
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #ccc;
+    color: #fff;
+    pointer-events: none;
+  }
+  
+  .custom-select select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+</style>
+<label for="mark-dropdown" style="font-size: 1.2rem; font-weight: bold; color: #333;">Select Mark to be marked out of:</label>
+<select id="mark-dropdown" style="font-size: 1.2rem; padding: 10px; border-radius: 10px; border: 2px solid #ccc; background-color: #fff; color: #333;" required>
+  <option value="" disabled selected>Select a mark</option>
+  <option value="10">10</option>
+  <option value="19">15</option>
+  <option value="20">20</option>
+  <option value="25">25</option>
+  <option value="30">30</option>
+  <option value="35">35</option>
+  <option value="40">40</option>
+  <option value="45">45</option>
+  <option value="50">50</option>
+  <option value="55">55</option>
+  <option value="60">60</option>
+  <option value="65">65</option>
+  <option value="70">70</option>
+  <option value="75">75</option>
+  <option value="80">80</option>
+  <option value="85">85</option>
+  <option value="90">90</option>
+  <option value="95">95</option>
+  <option value="100">100</option>
+</select>
                     <tbody id="fn_mark">   
                         <?php
                         $count = 1;
@@ -160,7 +218,7 @@
                                     <td>
                                     <?php if(!empty($grouping)){ ?>
                                         <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />                                       
-                                        <input type="number" id="project_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_mark > 0){ echo $project_mark->project_mark; }else{ echo '';} ?>"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
+                                        <input type="number" id="project_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($project_mark) && $project_mark->project_mark > 0){ echo $project_mark->project_mark; }else{ echo '';} ?>"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total marked_out_of" required="required"  autocomplete="off"/>
                                         <?php }else{ ?>
                                             <input type="hidden" type="number" value="0"  name="project_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12" />
                                         <?php } ?>
@@ -368,7 +426,27 @@
         }); 
      
     });
-    
+    $(document).ready(function(){
+                $('#mark-dropdown').on('change', function() {
+        // get the selected mark value
+        var mark = $(this).val();
+        
+        // set the activity_mark input for all students to the selected mark value
+        $('.marked_out_of').val(mark);
+        });
+    });
+    $(document).ready(function(){
+    $('.fn_mark_total').keyup(function(){
+        var student_id = $(this).attr('itemid');
+        var mark = $('#project_mark_'+student_id).val() ? parseFloat($('#project_mark_'+student_id).val()) : 0;
+        var obtain = $('#project_obtain_'+student_id).val() ? parseFloat($('#project_obtain_'+student_id).val()) : 0;
+        if (obtain > mark) {
+            alert('Mark obtained cannot be greater than project mark');
+            $(this).val('');
+            setTimeout(function() { $('.alert').fadeOut('fast'); }, 2000);
+        }
+    });
+});
     
   
 

@@ -733,11 +733,6 @@ class Ajax extends My_Controller {
         $school = $this->ajax->get_school_by_id($school_id); 
         $aois = $this->ajax->get_activity_by_topic($topic_details_id, @$school->academic_year_id); 
         
-        // if($this->session->userdata('role_id') == TEACHER){
-        //     $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id,  'teacher_id'=>$this->session->userdata('profile_id')), '', '', '', 'id', 'ASC');
-        // }else{
-        //     $aois = $this->ajax->get_list('aois', array('status' => 1, 'topic_details_id' => $topic_details_id, 'school_id'=>$school_id), '', '', '', 'id', 'ASC');
-        // }
        
         $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
        
@@ -1233,7 +1228,28 @@ class Ajax extends My_Controller {
 
        echo $str;
    }
+   public function get_paper_by_subject_mark() {
+        
+    $school_id = $this->input->post('school_id');
+    $subject_id  = $this->input->post('subject_id');
+    $paper_detail_id  = $this->input->post('paper_detail_id');
+    
+   $school = $this->ajax->get_school_by_id($school_id); 
+   $papers = $this->ajax->get_paper_by_subject_mark($subject_id, @$school->academic_year_id); 
+   
+   $str = '<option value="">--' . $this->lang->line('select') . '--</option>';
+   $select = 'selected="selected"';
+   if (!empty($papers)) {
+       foreach ($papers as $obj) {   
+           
+           $selected = $paper_detail_id == $obj->id ? $select : '';
+           $str .= '<option value="' . $obj->id . '" ' . $selected . '>' . $obj->Ptitle . '</option>';
+           
+       }
+   }
 
+   echo $str;
+}
     public function get_project_by_subject() {
         
         $school_id = $this->input->post('school_id');
