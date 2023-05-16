@@ -91,7 +91,7 @@
                     'save_queries' => TRUE
             );
             $db['default']['hostname'] = 'localhost';
-            $db['default']['username'] = 'gaincoke_denis';
-            $db['default']['password'] = 'Mariga8250';
-            $db['default']['database'] = 'gaincoke_schoolsystemdb';
+            $db['default']['username'] = 'root';
+            $db['default']['password'] = '';
+            $db['default']['database'] = 'schoolsystem_db';
             
