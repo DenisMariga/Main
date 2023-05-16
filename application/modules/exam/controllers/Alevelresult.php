@@ -108,7 +108,7 @@ class Alevelresult extends MY_Controller {
             $this->data['exams'] = $this->mark->get_list('exams', $condition, '', '', '', 'id', 'ASC');
         }        
 
-        $this->layout->title( $this->lang->line('manage_mark_four') . ' | ' . SMS);
+        $this->layout->title( $this->lang->line('manage_a_level_result') . ' | ' . SMS);
         $this->layout->view('alevelresult/index', $this->data);
     }
 

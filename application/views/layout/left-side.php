@@ -4,17 +4,13 @@
             <a href="<?php echo site_url('dashboard/index'); ?>">
                 <?php if($this->global_setting->brand_name){ ?>
                     <span <?php if(str_word_count($this->global_setting->brand_name) == 1 ){ echo 'style="margin-top: 30px;"'; }  ?>>
-                        <?php  echo $this->global_setting->brand_name; ?>
+                        <!-- <?php  echo $this->global_setting->brand_name; ?> -->
                     </span>
                 <?php }else{ ?>
-                     <span>Multi School</span>    
+                     <span>EDU</span>    
                 <?php } ?>                
                 
-                <?php if($this->global_setting->brand_logo){ ?>
-                     <img class="logo" src="<?php echo UPLOAD_PATH.'logo/'.$this->global_setting->brand_logo; ?>" style="max-width: 65px;" alt="">
-                <?php }else{ ?>
-                     <img class="logo" src="<?php echo IMG_URL; ?>/sms-logo-50.png" alt="">
-                <?php } ?>
+
             </a>
         </div>
         <div class="clearfix" style=""></div>        

@@ -123,8 +123,7 @@ class Resultcard extends MY_Controller {
             $this->data['section_id'] = $section_id;
            
         }
-        
-        
+         
         $condition = array();
         $condition['status'] = 1;        
         if($this->session->userdata('role_id') != SUPER_ADMIN){ 

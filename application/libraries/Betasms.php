@@ -37,6 +37,7 @@ class Betasms {
         
         //allow remote access to this script, replace the * to your domain e.g http://www.example.com if you wish to recieve requests only from your server
         header("Access-Control-Allow-Origin: *");
+        
         //rebuild form data
         $postdata = http_build_query(
             array(

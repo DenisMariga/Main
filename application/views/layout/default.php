@@ -66,7 +66,7 @@
     </head>
 
     <body class="nav-md">
-        <div id="preloader"></div>    
+           
         <div class="container body">
             <div class="main_container">
                  <?php $this->load->view('layout/left-side'); ?>   

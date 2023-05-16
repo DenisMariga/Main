@@ -69,7 +69,7 @@
     </head>
 
     <body>
-        <div id="preloader"></div>
+       
         
         <?php $this->load->view('layout/header'); ?>  
         
