@@ -147,41 +147,41 @@
                         </tr>
                     </thead>
                  
-                    <style>
-  .custom-select {
-    position: relative;
-    font-size: 18px;
-    color: #333;
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .custom-select::after {
-    content: "\25BC";
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    background-color: #ccc;
-    color: #fff;
-    pointer-events: none;
-  }
-  
-  .custom-select select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-</style>
+                     <style>
+                        .custom-select {
+                            position: relative;
+                            font-size: 18px;
+                            color: #333;
+                            width: 150px;
+                            height: 40px;
+                            line-height: 40px;
+                            background-color: #fff;
+                            border: 2px solid #ccc;
+                            border-radius: 5px;
+                            overflow: hidden;
+                        }
+                        
+                        .custom-select::after {
+                            content: "\25BC";
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            padding: 10px;
+                            background-color: #ccc;
+                            color: #fff;
+                            pointer-events: none;
+                        }
+                        
+                        .custom-select select {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            opacity: 0;
+                            cursor: pointer;
+                        }
+                    </style>
 <label for="mark-dropdown" style="font-size: 1.2rem; font-weight: bold; color: #333;">Select Mark to be marked out of:</label>
 <select id="mark-dropdown" style="font-size: 1.2rem; padding: 10px; border-radius: 10px; border: 2px solid #ccc; background-color: #fff; color: #333;" required>
   <option value="" disabled selected>Select a mark</option>

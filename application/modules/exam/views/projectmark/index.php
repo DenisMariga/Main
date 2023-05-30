@@ -127,40 +127,40 @@
                         </tr>
                     </thead>
                     <style>
-  .custom-select {
-    position: relative;
-    font-size: 18px;
-    color: #333;
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .custom-select::after {
-    content: "\25BC";
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    background-color: #ccc;
-    color: #fff;
-    pointer-events: none;
-  }
-  
-  .custom-select select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-</style>
+                        .custom-select {
+                            position: relative;
+                            font-size: 18px;
+                            color: #333;
+                            width: 150px;
+                            height: 40px;
+                            line-height: 40px;
+                            background-color: #fff;
+                            border: 2px solid #ccc;
+                            border-radius: 5px;
+                            overflow: hidden;
+                        }
+                        
+                        .custom-select::after {
+                            content: "\25BC";
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            padding: 10px;
+                            background-color: #ccc;
+                            color: #fff;
+                            pointer-events: none;
+                        }
+                        
+                        .custom-select select {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            opacity: 0;
+                            cursor: pointer;
+                        }
+                    </style>
 <label for="mark-dropdown" style="font-size: 1.2rem; font-weight: bold; color: #333;">Select Mark to be marked out of:</label>
 <select id="mark-dropdown" style="font-size: 1.2rem; padding: 10px; border-radius: 10px; border: 2px solid #ccc; background-color: #fff; color: #333;" required>
   <option value="" disabled selected>Select a mark</option>
@@ -192,7 +192,7 @@
                             <?php foreach ($students as $obj) { ?>
                             <?php  $project_mark = get_exam_project_mark($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
                             <?php  $grouping = get_student_group($school_id, $obj->student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id); ?>
-                            <!-- $lesson_detail_id,$topic_details_id,$activity_id -->
+                            
                                 <tr>
                                 <?php if(!empty($grouping)){ ?>
                                     <td><?php echo $obj->roll_no; ?></td>

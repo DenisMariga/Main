@@ -23,7 +23,7 @@ class Alevelmark extends MY_Controller {
         
         // need to check school subscription status
         if($this->session->userdata('role_id') != SUPER_ADMIN){                 
-            if(!check_saas_status($this->session->userdata('school_id'), 'is_enable_exam_a_mark')){                        
+            if(!check_saas_status($this->session->userdata('school_id'), 'is_enable_exam_mark')){                        
               redirect('dashboard/index');
             }
         }

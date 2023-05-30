@@ -95,29 +95,269 @@
             <?php  if (isset($student) && !empty($student)) { ?>
             <div class="x_content">             
                 <div class="row">
-                    <div class="col-sm-6 col-xs-6  col-sm-offset-3  col-xs-offset-3 layout-box">
-                        <p>
-                            <?php if(isset($school)){ ?>
-                            <div>
-                                <?php if($school->logo){ ?>
-                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" /> 
-                                 <?php }else if($school->frontend_logo){ ?>
-                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->frontend_logo; ?>" alt="" /> 
-                                 <?php }else{ ?>                                                        
-                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $this->global_setting->brand_logo; ?>" alt=""  />
-                                 <?php } ?>
-                            </div>
-                            <h4><?php echo $school->school_name; ?></h4>
-                            <p> <?php echo $school->address; ?></p>
-                            <?php } ?>
-                            <h4><?php echo $this->lang->line('mark_sheet'); ?></h4> 
-                            <?php echo $this->lang->line('name'); ?> : <?php echo $student->name; ?><br/>
-                            <?php echo $this->lang->line('exam'); ?> : <?php echo $exam->title; ?><br/>
-                            <?php echo $this->lang->line('class'); ?> : <?php echo $student->class_name; ?>,
-                            <?php echo $this->lang->line('section'); ?> : <?php echo $student->section; ?>,
-                            <?php echo $this->lang->line('roll_no'); ?> : <?php echo $student->roll_no; ?>
-                        </p>
-                    </div>
+<!-- <div class="col-sm-6 col-xs-6 col-sm-offset-3 col-xs-offset-3 layout-box">
+    <p>
+        <?php if (isset($school)) { ?>
+            <div>
+                <?php if ($school->logo) { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" />
+                <?php } else if ($school->frontend_logo) { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->frontend_logo; ?>" alt="" />
+                <?php } else { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $this->global_setting->brand_logo; ?>" alt="" />
+                <?php } ?>
+            </div>
+            <h4><?php echo $school->school_name; ?></h4>
+            <p><?php echo $school->address; ?></p>
+        <?php } ?>
+        <h4><?php echo $this->lang->line('mark_sheet'); ?></h4>
+        <?php echo $this->lang->line('name'); ?> : <?php echo $student->name; ?><br />
+        <?php echo $this->lang->line('exam'); ?> : <?php echo $exam->title; ?><br />
+        <?php echo $this->lang->line('class'); ?> : <?php echo $student->class_name; ?>,
+        <?php echo $this->lang->line('section'); ?> : <?php echo $student->section; ?>,
+        <?php echo $this->lang->line('roll_no'); ?> : <?php echo $student->roll_no; ?>
+
+        <?php
+        // Get the sum of the first eight average_point values
+        $sum = 0;
+        if (isset($subjects) && !empty($subjects)) {
+            foreach ($subjects as $key => $obj) {
+                if ($key >= 8) {
+                    break;
+                }
+                $sum += $obj->average_point;
+            }
+        }
+
+        // Determine the division based on the sum
+        $division = '';
+        if ($sum <= 32) {
+            $division = 'Division 1';
+        } elseif ($sum <= 45) {
+            $division = 'Division 2';
+        } elseif ($sum <= 58) {
+            $division = 'Division 3';
+        } elseif ($sum > 58) {
+            // Check additional conditions for Division 4
+            $hasD1D2 = false;
+            $hasP7 = 0;
+            $hasD1D2C3C4C5C6 = 0;
+
+            foreach ($subjects as $obj) {
+                if (in_array($obj->grade_name, ['D1', 'D2'])) {
+                    $hasD1D2 = true;
+                }
+                if (in_array($obj->grade_name, ['P7'])) {
+                    $hasP7++;
+                }
+                if (in_array($obj->grade_name, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6', 'P7'])) {
+                    $hasD1D2C3C4C5C6++;
+                }
+            }
+
+            if (
+                $hasD1D2 ||
+                $hasP7 >= 2 ||
+                $hasD1D2C3C4C5C6 >= 3
+            ) {
+                $division = 'Division 4';
+            } else {
+                $division = 'Division 7';
+            }
+        }
+        
+        // Determine the rank based on the division and subject grades
+        $rank = '';
+        $englishGrade = '';
+        $mathematicsGrade = '';
+
+        // Find the English and Mathematics grades
+        foreach ($subjects as $obj) {
+            if ($obj->subject === 'English') {
+                $englishGrade = $obj->grade_name;
+            }
+            if ($obj->subject === 'Mathematics') {
+                $mathematicsGrade = $obj->grade_name;
+            }
+        }
+
+        if ($division === 'Division 1') {
+            if (in_array($englishGrade, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+                if (in_array($mathematicsGrade, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6', 'P7', 'P8'])) {
+                    $rank = 'Rank 1';
+                } else {
+                    $rank = 'Rank 2';
+                }
+            } else {
+                $rank = 'Rank 2';
+            }
+        } else {
+            $rank = 'Rank 2';
+        }
+        ?>
+
+        <br />
+        <strong>Aggregates:</strong> <?php echo $sum; ?><br />
+        <strong>Division:</strong> <?php echo $division; ?><br />
+        <strong>Rank:</strong> <?php echo $rank; ?>
+    </p>
+</div> -->
+<div class="col-sm-6 col-xs-6 col-sm-offset-3 col-xs-offset-3 layout-box">
+    <p>
+        <?php if (isset($school)) { ?>
+            <div>
+                <?php if ($school->logo) { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" />
+                <?php } else if ($school->frontend_logo) { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->frontend_logo; ?>" alt="" />
+                <?php } else { ?>
+                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $this->global_setting->brand_logo; ?>" alt="" />
+                <?php } ?>
+            </div>
+            <h4><?php echo $school->school_name; ?></h4>
+            <p><?php echo $school->address; ?></p>
+        <?php } ?>
+        <h4><?php echo $this->lang->line('mark_sheet'); ?></h4>
+        <?php echo $this->lang->line('name'); ?> : <?php echo $student->name; ?><br />
+        <?php echo $this->lang->line('exam'); ?> : <?php echo $exam->title; ?><br />
+        <?php echo $this->lang->line('class'); ?> : <?php echo $student->class_name; ?>,
+        <?php echo $this->lang->line('section'); ?> : <?php echo $student->section; ?>,
+        <?php echo $this->lang->line('roll_no'); ?> : <?php echo $student->roll_no; ?>
+
+        <?php
+        // Get the sum of the first eight average_point values
+        $sum = 0;
+        if (isset($subjects) && !empty($subjects)) {
+            foreach ($subjects as $key => $obj) {
+                if ($key >= 8) {
+                    break;
+                }
+                $sum += $obj->average_point;
+            }
+        }
+
+        // Determine the division based on the sum
+        $division = '';
+        if ($sum <= 32) {
+            $division = 'Division 1';
+        } elseif ($sum <= 45) {
+            $division = 'Division 2';
+        } elseif ($sum <= 58) {
+            $division = 'Division 3';
+        } elseif ($sum > 58) {
+            // Check additional conditions for Division 4
+            $hasD1D2 = false;
+            $hasP7 = false;
+            $hasD1D2C3C4C5C6 = 0;
+
+            foreach ($subjects as $obj) {
+                if (in_array($obj->grade_name, ['D1', 'D2'])) {
+                    $hasD1D2 = true;
+                }
+                if (in_array($obj->grade_name, ['P7'])) {
+                    $hasP7 = true;
+                }
+                if (in_array($obj->grade_name, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+                    $hasD1D2C3C4C5C6++;
+                }
+            }
+
+            if (($hasD1D2 || $hasP7) && $hasD1D2C3C4C5C6 >= 6) {
+                $division = 'Division 4';
+            } else {
+                $division = 'Division 7';
+            }
+        }
+
+     // Determine the rank based on the division and subject grades
+$rank = '';
+$englishGrade = '';
+$mathematicsGrade = '';
+
+// Find the English and Mathematics grades
+foreach ($subjects as $obj) {
+    if ($obj->subject === 'English') {
+        $englishGrade = $obj->grade_name;
+    }
+    if ($obj->subject === 'Mathematics') {
+        $mathematicsGrade = $obj->grade_name;
+    }
+}
+
+if ($division === 'Division 1') {
+    if (in_array($englishGrade, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+        if (in_array($mathematicsGrade, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6', 'P7', 'P8'])) {
+            $rank = 'Division 1';
+        } else {
+            $rank = 'Division 2';
+        }
+    } else {
+        $rank = 'Division 2';
+    }
+} elseif ($division === 'Division 2') {
+    // Condition for Rank 2
+    $d1d2c3c4c5c6Count = 0;
+    foreach ($subjects as $obj) {
+        if (in_array($obj->grade_name, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+            $d1d2c3c4c5c6Count++;
+        }
+    }
+    if ($d1d2c3c4c5c6Count >= 6 && in_array($englishGrade, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+        $rank = 'Division 2';
+    } else {
+        $rank = 'Division 3';
+    }
+} elseif ($division === 'Division 3') {
+    // Condition for Rank 3
+    $d1d2c3c4c5c6Count = 0;
+    foreach ($subjects as $obj) {
+        if (in_array($obj->grade_name, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+            $d1d2c3c4c5c6Count++;
+        }
+    }
+    if ($passingSubjectsCount >= 8 && $d1d2c3c4c5c6Count >= 3) {
+        $rank = 'Division 3';
+    } elseif ($passingSubjectsCount >= 7 && $d1d2c3c4c5c6Count >= 4) {
+        $rank = 'Division 3';
+    } elseif ($passingSubjectsCount >= 5 && $d1d2c3c4c5c6Count >= 1) {
+        $rank = 'Division 3';
+    } else {
+        $rank = 'Division 4';
+    }
+} elseif ($division === 'Division 4') {
+    // Condition for Rank 4
+    $hasD1D2C3C4C5C6 = false;
+    $hasP7 = false;
+    $d1d2c3c4c5c6Count = 0;
+    foreach ($subjects as $obj) {
+        if (in_array($obj->grade_name, ['D1', 'D2', 'C3', 'C4', 'C5', 'C6'])) {
+            $d1d2c3c4c5c6Count++;
+            $hasD1D2C3C4C5C6 = true;
+        }
+        if ($obj->grade_name === 'P7') {
+            $hasP7 = true;
+        }
+    }
+    if ($d1d2c3c4c5c6Count >= 3 || $hasP7 || $hasD1D2C3C4C5C6) {
+        $rank = 'Division 4';
+    } else {
+        $rank = 'Division 7';
+    }
+} else {
+    // Condition for Division 7
+    $rank = 'Division 7';
+}
+
+        ?>
+
+        <br />
+        <strong>Aggregates:</strong> <?php echo $sum; ?><br />
+        <!--<strong>Division:</strong> <?php echo $division; ?><br />-->
+        <strong>Division:</strong> <?php echo $rank; ?>
+    </p>
+</div>
+
+
                 </div>            
             </div>
              <?php } ?>

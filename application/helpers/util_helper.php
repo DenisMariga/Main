@@ -444,7 +444,7 @@ if (!function_exists('get_exam_aoi_mark')) {
 }
 if (!function_exists('get_exam_project_mark')) {
 
-    function get_exam_project_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id) {
+    function get_exam_project_mark($school_id, $student_id, $academic_year_id, $exam_id, $class_id, $section_id, $subject_id,$project_id) {
         $ci = & get_instance();
         $ci->db->select('P.*');
         $ci->db->from('project_marks AS P');
@@ -456,6 +456,7 @@ if (!function_exists('get_exam_project_mark')) {
             $ci->db->where('P.section_id', $section_id);
         }
         $ci->db->where('P.student_id', $student_id);
+        $ci->db->where('P.project_id', $project_id);
         $ci->db->where('P.subject_id', $subject_id);
         return $ci->db->get()->row();
     }
@@ -702,6 +703,26 @@ if (!function_exists('get_subject_list')) {
             $ci->db->where('M.section_id', $section_id);
         }
         $ci->db->where('M.student_id', $student_id);
+        $ci->db->where('M.exam_id', $exam_id);
+        return  $ci->db->get()->result();     
+    }
+
+}
+if (!function_exists('get_subject_Alist')) {
+
+    function get_subject_Alist($school_id, $academic_year_id, $exam_id, $class_id, $section_id = null) {
+        $ci = & get_instance();
+        $ci->db->select('M.*,S.name AS subject, G.point, G.name');
+        $ci->db->from('marks AS M');        
+        $ci->db->join('subjects AS S', 'S.id = M.subject_id', 'left');
+        $ci->db->join('grades AS G', 'G.id = M.grade_id', 'left');
+        $ci->db->where('M.school_id', $school_id);
+        $ci->db->where('M.academic_year_id', $academic_year_id);
+        $ci->db->where('M.class_id', $class_id);
+        if($section_id){
+            $ci->db->where('M.section_id', $section_id);
+        }
+        // $ci->db->where('M.student_id', $student_id);
         $ci->db->where('M.exam_id', $exam_id);
         return  $ci->db->get()->result();     
     }

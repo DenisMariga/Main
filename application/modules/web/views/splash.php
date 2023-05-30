@@ -45,7 +45,7 @@
     </head>
 
     <body>
-       
+    <div id="preloader"></div>
         <header>
             <div class="container container-big">
                 <div class="row">

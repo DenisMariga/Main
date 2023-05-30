@@ -40,7 +40,7 @@ class ProjectMark extends MY_Controller {
     * ********************************************************** */
     public function index() {
 
-        //check_permission(VIEW);
+        check_permission(VIEW);
 
         if ($_POST) {
 
@@ -157,7 +157,8 @@ class ProjectMark extends MY_Controller {
                 'exam_id' => $exam_id,
                 'class_id' => $class_id,
                 'academic_year_id' => $school->academic_year_id,
-                'subject_id' => $subject_id 
+                'subject_id' => $subject_id,
+                'project_id' => $project_id
             );
             
             if($section_id){

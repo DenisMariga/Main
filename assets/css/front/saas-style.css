@@ -204,7 +204,7 @@ ul li {
 }
 ul li::before {
     content: "";
-    background: #1700b9;
+    background: #3902FE;
     height: 12px;
     width: 12px;
     border-radius: 100px;
@@ -283,7 +283,7 @@ dd {
     color: #ffffff;
 }
 .section-title h2 span {
-    color: #1700b9;
+    color: #3902FE;
 }
 .section-title.white h2 span {
     color: #ffffff;
@@ -382,18 +382,18 @@ header .stellarnav.light  ul li a {
     color: #000000;
 }
 header .stellarnav.light ul li a:hover {
-    color: #1700b9;
+    color: #3902FE;
 }
 header .stellarnav.light ul li ul {
     text-align: left;
 }
 header .stellarnav.light ul li ul li {}
 header .stellarnav.light ul li ul li a {
-    color: #1700b9;
+    color: #3902FE;
     padding: 14px 14px;
 }
 header .stellarnav.light ul li ul li a:hover {
-    background-color: #1700b9;
+    background-color: #3902FE;
     color: #ffffff;
 }
 
@@ -421,7 +421,7 @@ header .stellarnav.light ul li ul li a:hover {
 }
 .hero-carousel .owl-nav > div:hover {
     background: #d7d7d7;
-    color: #1700b9;
+    color: #3902FE;
 }
 .hero-carousel .owl-nav .owl-prev {
     margin-right: 130px;
@@ -498,12 +498,12 @@ header .stellarnav.light ul li ul li a:hover {
 .single-pricing {
     text-align: left;
     background: #ffffff;
-    border: 1px solid #1700b9;
+    border: 1px solid #3902FE;
     border-radius: 0 25px 0 25px;
     margin: 0 0 30px;
 }
 .single-pricing .title {
-    background: #1700b9;
+    background: #3902FE;
     border-radius: 0 25px 0 0;
     padding: 20px 10px;
     font-size: 20px;
@@ -531,7 +531,7 @@ header .stellarnav.light ul li ul li a:hover {
 .single-pricing ul li .price {}
 .single-pricing a {
     display: inline-block;
-    border: 1px solid #1700b9;
+    border: 1px solid #3902FE;
     border-radius: 100px;
     padding: 8px 20px;
     font-size: 22px;
@@ -553,7 +553,7 @@ header .stellarnav.light ul li ul li a:hover {
 .single-subscription input[type="email"],
 .single-subscription input[type="number"],
 .single-subscription textarea {
-    border: 1px solid #1700b9;
+    border: 1px solid #3902FE;
     height: 56px;
     border-radius: 5px;
     padding: 0 20px;
@@ -567,7 +567,7 @@ header .stellarnav.light ul li ul li a:hover {
 }
 .single-subscription input[type="submit"] {
     display: inline-block;
-    border: 1px solid #1700b9;
+    border: 1px solid #3902FE;
     border-radius: 100px;
     padding: 8px 20px;
     font-size: 22px;
@@ -577,7 +577,7 @@ header .stellarnav.light ul li ul li a:hover {
     cursor: pointer;
 }
 .single-subscription input[type="submit"]:hover {
-    color: #1700b9;
+    color: #3902FE;
 }
 
 
@@ -674,10 +674,10 @@ header .stellarnav.light ul li ul li a:hover {
     background-color: #090909;
 }
 .single-feature-row:nth-child(odd) .single-feature-col:nth-child(even) .single-feature {
-    background-color: #1700b9;
+    background-color: #3902FE;
 }
 .single-feature-row:nth-child(even) .single-feature-col:nth-child(odd) .single-feature {
-    background-color: #1700b9;
+    background-color: #3902FE;
 }
 .single-feature-row:nth-child(even) .single-feature-col:nth-child(even) .single-feature {
     background-color: #090909;
@@ -727,7 +727,7 @@ header .stellarnav.light ul li ul li a:hover {
     top: 0;
     height: 100%;
     width: 36px;
-    border-right: 1px solid #1700b9;
+    border-right: 1px solid #3902FE;
 }
 
 
@@ -776,7 +776,7 @@ footer {
     margin: 0 10px 5px 0;
 }
 .footer-widget .social li a {
-    color: #1700b9;
+    color: #3902FE;
 }
 .footer-widget .social li::before {
     display: none;
@@ -786,7 +786,7 @@ footer {
     height: 460px;
 }
 .copyright {
-    border-top: 1px solid #1700b9;
+    border-top: 1px solid #3902FE;
     padding: 37px 0;
 }
 .copyright p {

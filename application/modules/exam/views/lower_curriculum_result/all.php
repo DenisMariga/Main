@@ -14,7 +14,7 @@
             </div>      
                
             <div class="x_content no-print"> 
-                <?php echo form_open_multipart(site_url('exam/lowercurriculumresult/index'), array('name' => 'lowercurriculumresult', 'id' => 'lowercurriculumresult', 'class' => 'form-horizontal form-label-left'), ''); ?>
+                <?php echo form_open_multipart(site_url('exam/lowercurriculumresult/all'), array('name' => 'lowercurriculumresult', 'id' => 'lowercurriculumresult', 'class' => 'form-horizontal form-label-left'), ''); ?>
                 <div class="row">  
                     
                     <?php $this->load->view('layout/school_list_filter'); ?> 
@@ -73,15 +73,7 @@
                             <div class="help-block"><?php echo form_error('section_id'); ?></div>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
-                        <div class="item form-group"> 
-                            <div><?php echo $this->lang->line('student'); ?>  <span class="required">*</span></div>
-                            <select  class="form-control col-md-7 col-xs-12" name="student_id" id="student_id" required="required">                                
-                                <option value="">--<?php echo $this->lang->line('select'); ?>--</option>
-                            </select>
-                            <div class="help-block"><?php echo form_error('student_id'); ?></div>
-                        </div>
-                    </div>
+                   
                     <?php } ?>    
                 
                     <div class="col-md-1 col-sm-1 col-xs-12">

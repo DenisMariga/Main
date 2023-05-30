@@ -58,7 +58,7 @@ class Formativecard extends MY_Controller {
         if ($this->session->userdata('role_id') != SUPER_ADMIN) {
             $condition['school_id'] = $this->session->userdata('school_id');
             $this->data['classes'] = $this->formativecard->get_list('classes',$condition, '', '', '', 'id', 'ASC');
-            $this->data['academic_years'] = $this->F_Average->get_list('academic_years',$condition, '', '', '', 'id', 'ASC');
+            $this->data['academic_years'] = $this->formativecard->get_list('academic_years',$condition, '', '', '', 'id', 'ASC');
         }
         
         $this->layout->title($this->lang->line('manage_formative_card') . ' | ' . SMS);
@@ -67,11 +67,9 @@ class Formativecard extends MY_Controller {
         }
         public function all() {
 
-            //check_permission(VIEW);
+            check_permission(VIEW);
     
-            if ($_POST) {
-    
-                    
+            if ($_POST) {                    
                 $school_id = $this->input->post('school_id');
                 $class_id = $this->input->post('class_id');
                 $section_id = $this->input->post('section_id');
@@ -92,14 +90,14 @@ class Formativecard extends MY_Controller {
                 $this->data['students'] = $students;
                 $this->data['class_id'] = $class_id;
                 $this->data['section_id'] = $section_id;
+                $this->data['subjects'] = $this->formativecard->get_subject_Alist($school_id, $class_id, $section_id, $academic_year_id);
                
             }
             
             
             $condition = array();
             $condition['status'] = 1;        
-            if($this->session->userdata('role_id') != SUPER_ADMIN){ 
-                
+            if($this->session->userdata('role_id') != SUPER_ADMIN){    
                 $condition['school_id'] = $this->session->userdata('school_id');            
                 $this->data['classes'] = $this->formativecard->get_list('classes', $condition, '','', '', 'id', 'ASC');
                 $this->data['academic_years'] = $this->formativecard->get_list('academic_years', $condition, '', '', '', 'id', 'ASC');

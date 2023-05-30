@@ -19,7 +19,7 @@ class Lowercurriculumresult extends MY_Controller {
     public function index() {
 
        // Check permission
-       // check_permission(VIEW);
+        check_permission(VIEW);
 
        if ($_POST) {
         // Retrieve form data
@@ -59,21 +59,22 @@ class Lowercurriculumresult extends MY_Controller {
     // Check user role
     if ($this->session->userdata('role_id') != SUPER_ADMIN) {
         $condition['school_id'] = $this->session->userdata('school_id');
-        $this->data['classes'] = $this->lowercurriculumresulttivecard->get_list('classes',$condition, '', '', '', 'id', 'ASC');
-        $this->data['academic_years'] = $this->F_Average->get_list('academic_years',$condition, '', '', '', 'id', 'ASC');
-        $this->data['exams'] = $this->lowercurriculumresulttivecard->get_list('exams',$condition, '', '', '', 'id', 'ASC');
+        $this->data['classes'] = $this->lowercurriculumresult->get_list('classes',$condition, '', '', '', 'id', 'ASC');
+        $this->data['academic_years'] = $this->lowercurriculumresult->get_list('academic_years',$condition, '', '', '', 'id', 'ASC');
+        $this->data['exams'] = $this->lowercurriculumresult->get_list('exams',$condition, '', '', '', 'id', 'ASC');
     }
     
     $this->layout->title($this->lang->line('manage_lower_curriculum_result') . ' | ' . SMS);
     $this->layout->view('lower_curriculum_result/index', $this->data);
     }    
-        public function all() {
+    public function all() {
 
-            //check_permission(VIEW);
+            check_permission(VIEW);
     
             if ($_POST) {
     
-                    
+      
+                
                 $school_id = $this->input->post('school_id');
                 $class_id = $this->input->post('class_id');
                 $section_id = $this->input->post('section_id');

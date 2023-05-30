@@ -128,9 +128,9 @@ class Paper extends MY_Controller {
         
         
         //$school = $this->paper->get_school_by_id($school_id);
-        //$this->data['papers'] = $this->paper->get_paper_list($school_id, $class_id, $subject_id, @$school->academic_year_id); 
+        $this->data['papers'] = $this->paper->get_paper_list($school_id, $class_id, $subject_id, @$school->academic_year_id); 
         
-        $this->data['papers'] = $this->paper->get_paper_list();   
+        // $this->data['papers'] = $this->paper->get_paper_list();   
         
         $condition = array();
         $condition['status'] = 1;        

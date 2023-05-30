@@ -70,12 +70,20 @@
                         </div>
                     </div>
                     <?php } ?>    
-                
                     <div class="col-md-1 col-sm-1 col-xs-12">
                         <div class="form-group"><br/>
                             <button id="send" type="submit" class="btn btn-success"><?php echo $this->lang->line('find'); ?></button>
                         </div>
                     </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div class="item form-group"> 
+                        <div>All</div>
+                        <a href="all" class="btn btn-primary">
+                            <i class="fa fa-eye"></i>VIEW ALL REPORT CARDS
+                        </a>
+                    </div>
+                </div>
+
                 </div>
                 <?php echo form_close(); ?>
             </div>
@@ -89,7 +97,7 @@
                         <h4><?php echo $school->school_name; ?></h4>
                         <p> <?php echo $school->address; ?></p>
                         <?php } ?>
-                        <h4><?php echo $this->lang->line('result_card'); ?></h4> 
+                        <h4><?php echo $this->lang->line('formative_card'); ?></h4> 
                         <div class="profile-pic">
                             <?php if ($student->photo != '') { ?>
                                <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $student->photo; ?>" alt="" width="80" /> 
@@ -113,6 +121,10 @@
                 .rowt {
                     margin-top: 20px; /* set a top margin for the second div */
                 }
+                #fn_mark td {
+  border: 2px solid black;
+}
+
               
 
             </style>
@@ -124,6 +136,7 @@
 
                                 <thead>
                                     <tr>
+                            <!-- <th rowspan="1"><?php echo $this->lang->line('sl_no'); ?></th> -->
                                         <th><?php echo $this->lang->line('subject'); ?></th>                                           
                                         <th><?php echo $this->lang->line('activity/twenty'); ?></th>                                                                                       
                                         <th><?php echo $this->lang->line('identifier'); ?></th>                                            
@@ -138,10 +151,13 @@
                                 <?php if (!empty($subjects)): ?>
                                     <?php 
                                         $total_identifiers = 0;
+                                     $count = 1;
+
                                         $total_subjects = count($subjects);
                                     ?>
                                     <?php foreach ($subjects as $subject): ?>
                                         <tr>
+                                    <!-- <td class="subject-count"><?php echo  $count++; ?></td> -->
                                             <td><?php echo $subject->subject; ?></td>
                                             <?php
                                             $total_score = 0;
@@ -207,8 +223,8 @@
                                         </td>
                                         <td style="font-weight:bold;">
                                             <?php 
-                                                if ($total_subjects != 0) {
-                                                    echo round($total_identifiers / $total_subjects, 1); // calculate the average identifier
+                                                if ($count != 0) {
+                                                    echo round($total_identifiers / $count, 1); // calculate the average identifier
                                                 } else {
                                                     echo '0';
                                                 }

@@ -138,7 +138,7 @@
                 <?php if(isset($settings->footer) && $settings->footer != ''){ ?>
                    <?php echo $settings->footer; ?>
                 <?php }else{ ?>
-                   <?php echo 'Copyright © '. date('Y').' <a target="_blank" href="https://codecanyon.net/user/codetroopers">Codetroopers Team.</a> All rights reserved.'; ?> 
+                   <?php echo 'Copyright © '. date('Y').' <a target="_blank" href="https://oraluneedu.com">Oralune.</a> All rights reserved.'; ?> 
                 <?php } ?>
            </p> 
        </div>

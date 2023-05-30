@@ -117,6 +117,48 @@
                                                                       
                         </tr>
                     </thead>
+                    <style>
+                        .custom-select {
+                            position: relative;
+                            font-size: 18px;
+                            color: #333;
+                            width: 150px;
+                            height: 40px;
+                            line-height: 40px;
+                            background-color: #fff;
+                            border: 2px solid #ccc;
+                            border-radius: 5px;
+                            overflow: hidden;
+                        }
+                        
+                        .custom-select::after {
+                            content: "\25BC";
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            padding: 10px;
+                            background-color: #ccc;
+                            color: #fff;
+                            pointer-events: none;
+                        }
+                        
+                        .custom-select select {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            opacity: 0;
+                            cursor: pointer;
+                        }
+                    </style>
+                    
+<label for="mark-dropdown" style="font-size: 1.2rem; font-weight: bold; color: #333;">Select Mark to be marked out of:</label>
+<select id="mark-dropdown" style="font-size: 1.2rem; padding: 10px; border-radius: 10px; border: 2px solid #ccc; background-color: #fff; color: #333;" required>
+  <option value="" disabled selected>Select a mark</option>
+  <option value="100">100</option>
+  <option value="80">80</option>
+</select> 
                     <tbody id="fn_mark">   
                         <?php
                         $count = 1;
@@ -137,7 +179,7 @@
                                     </td>  
                                     <td>
                                         <input type="hidden" value="<?php echo $obj->student_id; ?>"  name="students[]" />                                       
-                                        <input type="number" id="exam_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->exam_mark > 0){ echo $mark->exam_mark; }else{ echo '';} ?>"  name="exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total" required="required"  autocomplete="off"/>
+                                        <input type="number" id="exam_mark_<?php echo $obj->student_id; ?>" itemid="<?php echo $obj->student_id; ?>" value="<?php if(!empty($mark) && $mark->exam_mark > 0){ echo $mark->exam_mark; }else{ echo '';} ?>"  name="exam_mark[<?php echo $obj->student_id; ?>]" class="form-control form-mark col-md-7 col-xs-12 fn_mark_total marked_out_of" required="required"  autocomplete="off"/>
                                     </td>
                                     <td>
                                         <?php if(!empty($attendance)){ ?>
@@ -285,7 +327,15 @@
             }
         });         
     }
-  
+    $(document).ready(function(){
+                $('#mark-dropdown').on('change', function() {
+        // get the selected mark value
+        var mark = $(this).val();
+        
+        // set the activity_mark input for all students to the selected mark value
+        $('.marked_out_of').val(mark);
+        });
+    });
     $(document).ready(function(){
   
   $('.fn_mark_total').keyup(function(){         

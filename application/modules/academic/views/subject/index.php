@@ -138,6 +138,14 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input  class="form-control col-md-7 col-xs-12"  name="name"  id="name" value="<?php echo isset($post['name']) ?  $post['name'] : ''; ?>" placeholder="<?php echo $this->lang->line('name'); ?>" required="required" type="text" autocomplete="off">
                                         <div class="help-block"><?php echo form_error('name'); ?></div>
+                                        <p class="instructions">Please follow the provided naming conventions for English  Mathematics and Subsidiary subjects:</p>
+                                        <ul class="instructions">
+                                        <li>English: Subject Name should be "<b>English</b>".</li>
+                                        <li>Mathematics: Subject Name should be "<b>Mathematics</b>".</li>
+                                        <li>Subsidiary ICT: Subject Name should be "<b>Subsidiary ICT</b>".</li>
+                                        <li>Subsidiary Mathematics: Subject Name should be "<b>Subsidiary Mathematics</b>".</li>
+                                        <li>General Paper: Subject Name should be "<b>General Paper</b>".</li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="item form-group">

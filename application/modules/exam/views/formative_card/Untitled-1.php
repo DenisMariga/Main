@@ -94,27 +94,31 @@
 
             <?php  if (isset($student) && !empty($student)) { ?>
             <div class="x_content">             
-               <div class="row">
-                    <div class="col-sm-6 col-xs-6  col-sm-offset-3 col-xs-offset-3  layout-box">                       
-                        <?php if(isset($school)){ ?>
-                            <div><img   src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" width="70" /></div>
-                        <h4><?php echo $school->school_name; ?></h4>
-                        <p> <?php echo $school->address; ?></p>
-                        <?php } ?>
-                        <h4><?php echo $this->lang->line('result_card'); ?></h4> 
-                        <div class="profile-pic">
-                            <?php if ($student->photo != '') { ?>
-                               <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $student->photo; ?>" alt="" width="80" /> 
-                            <?php } else { ?>
-                                <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" /> 
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6  col-sm-offset-3  col-xs-offset-3 layout-box">
+                        <p>
+                            <?php if(isset($school)){ ?>
+                            <div>
+                                <?php if($school->logo){ ?>
+                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->logo; ?>" alt="" /> 
+                                 <?php }else if($school->frontend_logo){ ?>
+                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $school->frontend_logo; ?>" alt="" /> 
+                                 <?php }else{ ?>                                                        
+                                    <img src="<?php echo UPLOAD_PATH; ?>/logo/<?php echo $this->global_setting->brand_logo; ?>" alt=""  />
+                                 <?php } ?>
+                            </div>
+                            <h4><?php echo $school->school_name; ?></h4>
+                            <p> <?php echo $school->address; ?></p>
                             <?php } ?>
-                        </div>
-                        <?php echo $this->lang->line('name'); ?> : <?php echo $student->name; ?><br/>
-                        <?php echo $this->lang->line('class'); ?> : <?php echo $student->class_name; ?>,
-                        <?php echo $this->lang->line('section'); ?> : <?php echo $student->section; ?> <br>
-                        <?php echo $this->lang->line('adm_no'); ?> : <?php echo $student->admission_no; ?>                       
+                            <h4><?php echo $this->lang->line('mark_sheet'); ?></h4> 
+                            <?php echo $this->lang->line('name'); ?> : <?php echo $student->name; ?><br/>
+                            <?php echo $this->lang->line('exam'); ?> : <?php echo $exam->title; ?><br/>
+                            <?php echo $this->lang->line('class'); ?> : <?php echo $student->class_name; ?>,
+                            <?php echo $this->lang->line('section'); ?> : <?php echo $student->section; ?>,
+                            <?php echo $this->lang->line('roll_no'); ?> : <?php echo $student->roll_no; ?>
+                        </p>
                     </div>
-                </div>             
+                </div>            
             </div>
              <?php } ?>
             
@@ -186,6 +190,83 @@
         </tr>
     <?php
     }
+    // function printRanks($rank_counts, $subjects, $subject) {
+    //     echo "<ul>";
+    
+    //     // initialize variables to keep track of C5 and D2 ranks for this subject
+    //     $d1_rank = false;
+    //     $d2_rank = false;
+    //     $c3_rank = false;
+    //     $c4_rank = false;
+    //     $c5_rank = false;
+    //     $c6_rank = false;
+    //     $p7_rank = false;
+    //     $p8_rank = false;
+    //     $f9_rank = false;
+        
+    //     $num_ranks = 0; // keep track of number of ranks attained for this subject
+    
+    //     foreach ($subjects as $obj) {
+    //         if ($obj->subject == $subject) {
+    //             $num_ranks++; // increment the number of ranks attained for this subject
+    
+    //             // check if the rank is C5 or D2
+    //             if ($obj->name == "D1") {
+    //                 $d1_rank = true;
+    //             } elseif ($obj->name == "D2") {
+    //                 $d2_rank = true;
+    //             }
+    //             // check if the rank is C5 or D2
+    //             if ($obj->name == "C3") {
+    //                 $c3_rank = true;
+    //             } elseif ($obj->name == "C4") {
+    //                 $c4_rank = true;
+    //             } elseif ($obj->name == "C5") {
+    //                 $c5_rank = true;
+    //             } elseif ($obj->name == "C6") {
+    //                 $c6_rank = true;
+    //             } elseif ($obj->name == "P7") {
+    //                 $p7_rank = true;
+    //             } elseif ($obj->name == "P8") {
+    //                 $p8_rank = true;
+    //             } elseif ($obj->name == "F9") {
+    //                 $f9_rank = true;
+    //             }
+    //         }
+    //     }
+    
+    //     // check if only one rank was attained for this subject
+    //     if ($num_ranks == 1) {
+    //         if ($d1_rank) {
+    //             echo "<p>A</p>";
+    //         } elseif ($d2_rank) {
+    //             echo "<p>B</p>";
+    //         } elseif ($c3_rank) {
+    //             echo "<p>C</p>";
+    //         } elseif ($c4_rank) {
+    //             echo "<p>D</p>";
+    //         } elseif ($c5_rank) {
+    //             echo "<p>E</p>";
+    //         }  elseif ($c6_rank) {
+    //             echo "<p>O</p>";
+    //         }elseif ($p7_rank_rank || $p8_rank || $f9_rank ) {
+    //             echo "<p>F</p>";
+    //         }
+    //     } else {
+    //         // check if both C5 and D2 ranks were attained for this subject
+    //         if ($d1_rank && $d2_rank  || $d1_rank && $d1_rank || $d2_rank && $d2_rank ) {
+    //             echo "<p>You attained a D1 and a D2 so you get an A</p>";
+    //         } else {
+    //             // check if both C3 and C4 ranks were attained for this subject
+    //             if ($c3_rank && $d1_rank || $c3_rank && $d2_rank) {
+    //                 echo "<p>B</p>";
+    //             } else {
+    //                 echo "<p>Multiple ranks attained. Could not determine the overall rank.</p>";
+    //             }
+    //         }
+    //     }
+    //     echo "</ul>";
+    // }
     
     function printRanks($rank_counts, $subjects, $subject) {
         echo "<ul>";
@@ -200,8 +281,7 @@
         $p7_rank = false;
         $p8_rank = false;
         $f9_rank = false;
-        $distinctions = ['D1', 'D2'];
-
+        
         $num_ranks = 0; // keep track of number of ranks attained for this subject
         
         foreach ($subjects as $obj) {
@@ -275,61 +355,104 @@
             }
         } 
         elseif ($num_ranks == 3) {
-             if ($c3_rank && ($d1_rank || $d2_rank) && !$c4_rank && !$c5_rank && !$c6_rank && !$p7_rank && !$p8_rank && !$f9_rank) {
-                echo "<p>A</p>";  // At least one C3 rank and the rest are distinctions
-            }elseif (($c4_rank || $d1_rank || $d2_rank || $c3_rank) &&
-            (!$c5_rank && !$c6_rank && !$p7_rank && !$p8_rank && !$f9_rank)) {
-            echo "<p>B</p>"; // At worst C4 in one paper and higher grades in the rest
-            }elseif (($c5_rank || $d1_rank || $d2_rank || $c3_rank || $c4_rank) &&
-            (!$c6_rank && !$p7_rank && !$p8_rank && !$f9_rank)) {
-            echo "<p>C</p>"; // At worst C5 in one paper and higher grades in the rest
-            }elseif (($c6_rank || $d1_rank || $d2_rank || $c3_rank || $c4_rank || $c5_rank) &&
-            (!$p7_rank && !$p8_rank && !$f9_rank)) {
-            echo "<p>D</p>"; // At worst C6 in one paper and higher grades in the rest
-            }elseif (($p7_rank||$c6_rank || $d1_rank || $d2_rank || $c3_rank || $c4_rank || $c5_rank) &&
-            (!$p8_rank && !$f9_rank)) {
-            echo "<p>E</p>"; // At worst P7 in one paper and higher grades in the rest
-            }else if (($c3_rank || $d1_rank || $d2_rank || $c4_rank || $c5_rank || $c6_rank) &&
-            (!$p7_rank || !$p8_rank || !$f9_rank)) {
-            echo "<p>O</p>"; // At worst two passes in two papers or better grades in the rest
-             }
-            elseif (($p8_rank || $p7_rank || $c6_rank || $d1_rank || $d2_rank || $c3_rank || $c4_rank || $c5_rank) &&
-            (!$f9_rank)) {
-            echo "<p>E</p>"; // At worst P8 in one paper and higher grades in the rest
+            if (($f9_rank) && ($f9_rank)) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
+                    echo "<p>F</p>";
+                }    
+            }elseif ($f9_rank && $p8_rank) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
+                    echo "<p>F</p>";
+                } 
+            }else if ($f9_rank) {
+                if (($p7_rank && $p8_rank) || ($p7_rank && $p7_rank) || ($p8_rank && $p8_rank)) {
+                    echo "<p>F</p>";
+                    } 
+            }else if ($f9_rank) {
+            if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
+                echo "<p>O</p>";
+                } 
+            }elseif ($p7_rank && $p8_rank) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)) {
+                    echo "<p>O</p>";
+                }    
+            } elseif ($p7_rank || $p8_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
+                    echo "<p>E</p>";
+                }
+            }elseif ($c5_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)  || ($c3_rank && $c4_rank)) {
+                    echo "<p>C</p>";
+                }
+            }elseif ($c6_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)) {
+                    echo "<p>D</p>";
+                }
+            }elseif ($c4_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d2_rank && $c3_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)) {
+                    echo "<p>B</p>";
+                }
+            }elseif (($d1_rank && $p7_rank ) || ($d2_rank && $p7_rank )|| ($c3_rank && $p7_rank ) ||($c4_rank && $p7_rank )|| ($c5_rank && $p7_rank )|| ($c6_rank && $p7_rank )) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $p8_rank ) || ($d2_rank && $p8_rank )|| ($c3_rank && $p8_rank ) ||($c4_rank && $p8_rank )|| ($c5_rank && $p8_rank )|| ($c6_rank && $p8_rank )) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $f9_rank ) || ($d2_rank && $f9_rank )|| ($c3_rank && $f9_rank ) ||($c4_rank && $f9_rank )|| ($c5_rank && $f9_rank )|| ($c6_rank && $f9_rank)) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $d1_rank && $c3_rank) || ($d2_rank && $d2_rank && $c3_rank) || ($d1_rank && $d2_rank && $c3_rank )) {
+                echo "<p>A</p>";
             }
              else {
-                echo "F";
+                echo "Error: Invalid ranks for this subject";
             }
-        }   
-        elseif ($num_ranks == 4) {
-            if ($c3_rank && ($d1_rank || $d2_rank) && !$c4_rank && !$c5_rank && !$c6_rank && !$p7_rank && !$p8_rank && !$f9_rank) {
-                echo "<p>A</p>";  // At least one C3 rank and the rest are distinctions
-            } elseif ($c4_rank && ($d1_rank || $d2_rank) && $c3_rank) {
-                echo "<p>B</p>";  // At least one C4, rest three are higher ranks
-            }elseif ($c5_rank && ($d1_rank || $d2_rank) && ($c3_rank || $c4_rank) && !$c6_rank && !$p7_rank && !$p8_rank && !$f9_rank) {
-                echo "<p>C</p>";  // At least one C5 rank and the rest are higher ranks
-              // At least one C4, rest three are higher ranks
-            }elseif ($c6_rank && ($d1_rank || $d2_rank) && ($c3_rank || $c4_rank || $c5_rank) && !$p7_rank && !$p8_rank && !$f9_rank) {
-                echo "<p>D</p>";  // At least one C6 rank and the rest are higher ranks
-            }elseif ($p7_rank && ($d1_rank || $d2_rank) && ($c3_rank || $c4_rank || $c5_rank || $c6_rank) && !$p8_rank && !$f9_rank) {
-                echo "<p>E</p>";  // At least one P7 rank and the rest are higher ranks
-            }elseif (($p7_rank >= 3 && !$p8_rank && !$f9_rank) || ($p8_rank || $f9_rank) && ($d1_rank || $d2_rank || $c3_rank || $c4_rank || $c5_rank || $c6_rank || $p7_rank) || (($p8_rank && $p7_rank) || ($p7_rank >= 2 && $f9_rank)) && ($d1_rank || $d2_rank || $c3_rank || $c4_rank || $c5_rank || $c6_rank)) {
-                if ($f9_rank < 2) {
-                    echo "<p>O</p>";  // Conditions for an O grade
-                } else {
+        }    elseif ($num_ranks == 4) {
+            if (($f9_rank) && ($f9_rank)) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
                     echo "<p>F</p>";
+                }    
+            }elseif ($f9_rank && $p8_rank) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)){
+                    echo "<p>F</p>";
+                } 
+            }else if ($f9_rank) {
+                if (($p7_rank && $p8_rank) || ($p7_rank && $p7_rank) || ($p8_rank && $p8_rank)) {
+                    echo "<p>F</p>";
+                    } 
+            }else if ($f9_rank) {
+            if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
+                echo "<p>O</p>";
+                } 
+            }elseif ($p7_rank && $p8_rank) {
+                if (($d1_rank) || ($d2_rank) || ($c3_rank)  || ($c4_rank) || ($c5_rank) || ($c6_rank)) {
+                    echo "<p>O</p>";
+                }    
+            } elseif ($p7_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d1_rank && $c6_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank)  || ($d2_rank && $c6_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)  || ($c3_rank && $c6_rank)) {
+                    echo "<p>E</p>";
                 }
-            // Condition for F grade
-             } elseif (($f9_rank >= 2) || ($f9_rank && $p8_rank) || ($f9_rank && ($p7_rank >= 2)) || ($p8_rank && ($p7_rank >= 2)) || ($p7_rank == $num_ranks)) {
-                echo "<p>F</p>";  // Conditions for an F grade
+            }elseif ($c5_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)  || ($c3_rank && $c4_rank)) {
+                    echo "<p>C</p>";
+                }
+            }elseif ($c6_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d1_rank && $c4_rank)  || ($d1_rank && $c5_rank) || ($d2_rank && $c3_rank) || ($d2_rank && $c4_rank)  || ($d2_rank && $c5_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)|| ($c3_rank && $c4_rank)|| ($c3_rank && $c5_rank)) {
+                    echo "<p>D</p>";
+                }
+            }elseif ($c4_rank) {
+                if (($d1_rank && $d2_rank) || ($d1_rank && $c3_rank) || ($d2_rank && $c3_rank) || ($d1_rank && $d1_rank) || ($d2_rank && $d2_rank) || ($c3_rank && $c3_rank)) {
+                    echo "<p>B</p>";
+                }
+            }elseif (($d1_rank && $p7_rank ) || ($d2_rank && $p7_rank )|| ($c3_rank && $p7_rank ) ||($c4_rank && $p7_rank )|| ($c5_rank && $p7_rank )|| ($c6_rank && $p7_rank )) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $p8_rank ) || ($d2_rank && $p8_rank )|| ($c3_rank && $p8_rank ) ||($c4_rank && $p8_rank )|| ($c5_rank && $p8_rank )|| ($c6_rank && $p8_rank )) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $f9_rank ) || ($d2_rank && $f9_rank )|| ($c3_rank && $f9_rank ) ||($c4_rank && $f9_rank )|| ($c5_rank && $f9_rank )|| ($c6_rank && $f9_rank)) {
+                echo "<p>O</p>";
+            }elseif (($d1_rank && $d1_rank && $c3_rank) || ($d2_rank && $d2_rank && $c3_rank) || ($d1_rank && $d2_rank && $c3_rank )) {
+                echo "<p>A</p>";
             }
-            else {
-                echo "F";
+             else {
+                echo "Error: Invalid ranks for this subject";
             }
-        
-        
-        
-       }      
+        }       
         else {
             echo "Error: Invalid number of ranks for this subject";
         }
@@ -362,7 +485,6 @@
                                 .paper-title {
                                     font-style: italic;
                                 }
-                                
                             
 
                             </style>

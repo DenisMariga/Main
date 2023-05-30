@@ -27,6 +27,24 @@ class Gradefourresult_Model extends MY_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    // public function get_subject_list($school_id, $exam_id, $class_id, $section_id, $student_id, $academic_year_id) {
+    //     $this->db->select('S.id, S.name AS subject, FLOOR(AVG(G.point)) AS average_point, (SELECT name FROM grades WHERE point <= AVG(G.point) ORDER BY point DESC LIMIT 1) AS grade_name');
+    //     $this->db->from('grade_four_marks AS M');
+    //     $this->db->join('subjects AS S', 'S.id = M.subject_id');
+    //     $this->db->join('grades AS G', 'G.id = M.grade_id');
+    //     $this->db->where('M.school_id', $school_id);
+    //     $this->db->where('M.exam_id', $exam_id);
+    //     $this->db->where('M.class_id', $class_id);
+    //     $this->db->where('M.section_id', $section_id);
+    //     $this->db->where('M.student_id', $student_id);
+    //     $this->db->where('M.academic_year_id', $academic_year_id);
+    //     $this->db->group_by('S.id, S.name');
+    //     $this->db->having('average_point >', 0);
+    //     $this->db->order_by('average_point ASC');
+    //     // $this->db->limit(15);
+    //     $query = $this->db->get();
+    //     return $query->result();
+    // }
     // public function get_division($school_id, $exam_id, $class_id, $section_id, $student_id, $academic_year_id) {
     //     $english_passed = $this->db->get_where('grade_four_marks', array('school_id' => $school_id, 'exam_id' => $exam_id, 'class_id' => $class_id, 'section_id' => $section_id, 'student_id' => $student_id, 'academic_year_id' => $academic_year_id, 'subject_id' => 1))->row();
     //     $humanity_passed = $this->db->get_where('grade_four_marks', array('school_id' => $school_id, 'exam_id' => $exam_id, 'class_id' => $class_id, 'section_id' => $section_id, 'student_id' => $student_id, 'academic_year_id' => $academic_year_id, 'group' => 'humanity', 'grade_id >=' => 7))->result();
