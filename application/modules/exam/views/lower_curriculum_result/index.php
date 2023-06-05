@@ -102,7 +102,6 @@
                         <h4><?php echo $school->school_name; ?></h4>
                         <p> <?php echo $school->address; ?></p>
                         <?php } ?>
-                        <h4><?php echo $this->lang->line('result_card'); ?></h4> 
                         <div class="profile-pic">
                             <?php if ($student->photo != '') { ?>
                                <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $student->photo; ?>" alt="" width="80" /> 

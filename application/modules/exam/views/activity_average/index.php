@@ -95,12 +95,12 @@
                             <div>
                             <?php if(isset($class)){ ?>
                             <?php echo $this->lang->line('class'); ?>: <?php echo $class; ?>
-                            <?php } ?>
+                            <?php } ?><br/>
                             <?php if(isset($section)){ ?>
-                            , <?php echo $this->lang->line('section'); ?>: <?php echo $section; ?>
-                            <?php } ?>
+                             <?php echo $this->lang->line('section'); ?>: <?php echo $section; ?>
+                            <?php } ?><br/>
                             <?php if(isset($subject)){ ?>
-                            , <?php echo $this->lang->line('subject'); ?>: <?php echo $subject; ?>
+                            <?php echo $this->lang->line('subject'); ?>: <?php echo $subject; ?>
                             <?php } ?>
                             </div>
                          </p>
@@ -110,71 +110,70 @@
           
             <div class="x_content">
     <table id="datatable-responsive" class="table table-striped_ table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th><?php echo $this->lang->line('roll_no'); ?></th>
-                <th><?php echo $this->lang->line('name'); ?></th>
-                <th><?php echo $this->lang->line('photo'); ?></th>
-                <th><?php echo $this->lang->line('Activity_Score'); ?></th>
-                <th><?php echo $this->lang->line('Averages'); ?></th>
-                <th>Descriptor/Achievement Level</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $groups = array();
-            foreach ($activityaverage as $obj) {
-                $name = $obj->student;
-                $roll = $obj->roll_no;
-                $score = $obj->activity_score;
+    <thead>
+    <tr>
+        <th><?php echo $this->lang->line('admission_no'); ?></th>
+        <th><?php echo $this->lang->line('name'); ?></th>
+        <!-- <th><?php echo $this->lang->line('photo'); ?></th> -->
+        <th><?php echo $this->lang->line('Activity_Score'); ?></th>
+        <th><?php echo $this->lang->line('Averages'); ?></th>
+        <th>Descriptor/Achievement Level</th>
+    </tr>
+</thead>
+<tbody>
+    <?php
+    $groups = array();
+    foreach ($activityaverage as $obj) {
+        $name = $obj->student;
+        $admission_no = $obj->admission_no;
+        $score = $obj->activity_score;
 
-                if (isset($groups[$name][$roll])) {
-                    $groups[$name][$roll][] = $score;
-                } else {
-                    $groups[$name][$roll] = array($score);
-                }
+        if (isset($groups[$name][$admission_no])) {
+            $groups[$name][$admission_no][] = $score;
+        } else {
+            $groups[$name][$admission_no] = array($score);
+        }
+    }
+
+    foreach ($groups as $name => $admission_nos) {
+        foreach ($admission_nos as $admission_no => $scores) {
+            $avg = number_format(array_sum($scores) / count($scores), 1);
+            $level = '';
+
+            if ($avg >= 2.5 && $avg <= 3.0) {
+                $level = 'Outstanding';
+            } elseif ($avg >= 1.5 && $avg <= 2.49) {
+                $level = 'Moderate';
+            } elseif ($avg >= 0.9 && $avg <= 1.49) {
+                $level = 'Basic';
             }
 
-            foreach ($groups as $name => $rolls) {
-                foreach ($rolls as $roll => $scores) {
-                    $avg = number_format(array_sum($scores) / count($scores), 1);
-                    $level = '';
-
-                    if ($avg >= 2.5 && $avg <= 3.0) {
-                        $level = 'Outstanding';
-                    } elseif ($avg >= 1.5 && $avg <= 2.49) {
-                        $level = 'Moderate';
-                    } elseif ($avg >= 0.9 && $avg <= 1.49) {
-                        $level = 'Basic';
+            ?>
+            <tr>
+                <td><?php echo $admission_no; ?></td>
+                <td><?php echo $name; ?></td>
+                <!-- <td>
+                    <?php
+                    $student = $students[$name][$admission_no];
+                    $photo = $student->photo;
+                    if ($photo != '') {
+                        ?>
+                        <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $photo; ?>" alt="" width="45" />
+                    <?php } else { ?>
+                        <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" />
+                    <?php } ?>
+                    <input type="hidden" value="<?php echo $student->id; ?>" name="students[]" />
+                </td> -->
+                <td>
+                    <?php
+                    foreach ($scores as $key => $score) {
+                        echo 'Topic ' . ($key + 1) . ' => <strong>' . $score . '</strong>, ';
                     }
-
                     ?>
-                    <tr>
-                        <?php if ($roll != '') { ?>
-                            <td><?php echo $roll; ?></td>
-                        <?php } else { ?>
-                            <td><?php echo $this->lang->line('not_assigned'); ?></td>
-                        <?php } ?>
-                        <td><?php echo $name; ?></td>
-                        <td>
-                            <?php if ($obj->photo != '') { ?>
-                                <img src="<?php echo UPLOAD_PATH; ?>/student-photo/<?php echo $obj->photo; ?>" alt="" width="45" />
-                            <?php } else { ?>
-                                <img src="<?php echo IMG_URL; ?>/default-user.png" alt="" width="45" />
-                            <?php } ?>
-                            <input type="hidden" value="<?php echo $obj->id; ?>" name="students[]" />
-                        </td>
-                        <td>
-                            <?php 
-                            foreach ($scores as $key => $score) {
-                                echo 'Topic ' . ($key + 1) . ' => <strong>' . $score . '</strong>, ';
-                            }
-                            ?>
-                        </td>
-
-                        <td><?php echo $avg; ?></td>
-                        <td><?php echo $level; ?></td>
-                    </tr>
+                </td>
+                <td><?php echo $avg; ?></td>
+                <td><?php echo $level; ?></td>
+            </tr>
                 <?php }
             }
             if (empty($groups)) {

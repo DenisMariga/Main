@@ -12,7 +12,7 @@ class ActivityAverage_Model extends MY_Model {
     
     public function get_average_list($school_id, $academic_year_id, $class_id, $section_id, $subject_id){
         
-        $this->db->select('FR.*, E.roll_no, ST.name AS student, ST.photo, C.name AS class_name, S.name AS section, AY.session_year');
+        $this->db->select('FR.*, E.roll_no, ST.name AS student, ST.photo,ST.admission_no, C.name AS class_name, S.name AS section, AY.session_year');
         $this->db->from('aoi_marks AS FR');   
         $this->db->join('enrollments AS E', 'E.student_id = FR.student_id', 'left');
         $this->db->join('students AS ST', 'ST.id = E.student_id', 'left');

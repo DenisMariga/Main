@@ -40,7 +40,7 @@ class Gradefourresult extends MY_Controller {
     * ********************************************************** */
     public function index() {
 
-        //check_permission(VIEW);
+       check_permission(VIEW);
 
         if ($_POST) {
 

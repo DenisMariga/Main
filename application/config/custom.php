@@ -1664,3 +1664,6 @@ $config['my_exam']['lowercurriculumresult']['2'] = '1|1|1|0';
 $config['my_exam']['gradefourresult']['2'] = '1|1|1|0';
 $config['my_exam']['alevelmark']['2'] = '1|1|1|0';
 $config['my_exam']['alevelresult']['2'] = '1|1|1|0';
+$config['my_exam']['gradefourresult']['5'] = '1|1|1|0';
+$config['my_exam']['alevelmark']['5'] = '1|1|1|0';
+$config['my_exam']['alevelresult']['5'] = '1|1|1|0';
